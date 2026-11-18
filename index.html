@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OnePane — безкоштовний SEO-аудит сторінки за URL</title>
+<meta name="description" content="Перевірте будь-яку сторінку за хвилину: індексація, мета-теги, hreflang, мікророзмітка, швидкість і варіанти title від ШІ. Безкоштовно, без реєстрації.">
+<link rel="canonical" href="https://shevlyakovaseo-bot.github.io/onepane/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://shevlyakovaseo-bot.github.io/onepane/">
+<meta property="og:title" content="OnePane — безкоштовний SEO-аудит сторінки за URL">
+<meta property="og:description" content="Перевірте будь-яку сторінку за хвилину: індексація, мета-теги, hreflang, мікророзмітка, швидкість і варіанти title від ШІ. Безкоштовно, без реєстрації.">
+<meta property="og:locale" content="uk_UA">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#0E1116">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237C9CFF'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--op-bg:#0E1116;--op-surface:#151A22;--op-alt:#11151C;--op-border:#262D38;--op-line:#1C222C;--op-text:#E6EAF0;--op-text2:#B4BDCA;--op-muted:#9AA4B2;--op-accent:#7C9CFF;--op-on-accent:#0E1116;--op-link:#A9BCFF;--op-link-hover:#D3DDFF;--op-mono:'JetBrains Mono',ui-monospace,monospace}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--op-bg);color:var(--op-text);font-family:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.op a{color:var(--op-link)}.op a:hover{color:var(--op-link-hover)}
+.op :focus-visible{outline:2px solid var(--op-accent);outline-offset:2px;border-radius:6px}
+.op-container{max-width:1200px;margin:0 auto;padding:0 32px;box-sizing:border-box}
+.op-section{padding:88px 0}
+.op-section-alt{background:var(--op-alt);border-top:1px solid var(--op-line);border-bottom:1px solid var(--op-line)}
+.op h1,.op h2,.op h3{margin:0;color:var(--op-text);letter-spacing:-0.01em}
+.op h1{font-size:56px;line-height:1.05;font-weight:800;letter-spacing:-0.02em}
+.op h2{font-size:34px;line-height:1.2;font-weight:800}
+.op h3{font-size:19px;line-height:1.35;font-weight:700}
+.op p{margin:0}
+.op-lead{font-size:19px;color:var(--op-text2);max-width:640px}
+.op-muted{color:var(--op-muted)}
+.op-mono{font-family:var(--op-mono)}
+.op-head{display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
+/* Шапка */
+.op-header{position:sticky;top:0;z-index:50;background:rgba(14,17,22,.92);backdrop-filter:blur(8px);border-bottom:1px solid #222936}
+.op-nav{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:16px;padding-bottom:16px}
+.op-logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;color:var(--op-text)!important;text-decoration:none}
+.op-logo-mark{width:26px;height:26px;border-radius:7px;background:var(--op-accent);display:inline-block}
+.op-menu{display:flex;gap:24px;flex-wrap:wrap;font-size:15px}
+.op-menu a{color:var(--op-muted);text-decoration:none}.op-menu a:hover{color:var(--op-text)}
+/* Hero */
+.op-hero{padding:72px 0 88px}
+.op-hero-top{display:flex;flex-direction:column;gap:20px;margin-bottom:32px}
+.op-pill{align-self:flex-start;font-family:var(--op-mono);font-size:13px;color:var(--op-accent);border:1px solid #2E3850;background:#141A28;padding:6px 12px;border-radius:999px}
+.op-privacy{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--op-muted);margin-top:16px}
+.op-tool{background:var(--op-surface);border:1px solid var(--op-border);border-radius:20px;padding:28px}
+/* Картки */
+.op-grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.op-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.op-grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.op-card{background:var(--op-surface);border:1px solid var(--op-border);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.op-card p{font-size:15px;color:var(--op-text2);line-height:1.55}
+.op-src{align-self:flex-start;font-family:var(--op-mono);font-size:11px;color:var(--op-muted);border:1px solid #2B3341;border-radius:6px;padding:3px 8px}
+.op-step-n{font-family:var(--op-mono);font-size:14px;color:var(--op-accent)}
+.op-soon{align-self:flex-start;font-family:var(--op-mono);font-size:12px;color:#FCD34D;background:#3A3018;border-radius:999px;padding:3px 10px}
+.op-icon{width:28px;height:28px;stroke:var(--op-accent)}
+/* Таблиця */
+.op-table-wrap{overflow-x:auto;border:1px solid var(--op-border);border-radius:16px;background:var(--op-surface)}
+.op-table{width:100%;min-width:640px;border-collapse:collapse;font-size:15px}
+.op-table th{text-align:left;font-size:13px;font-weight:600;color:var(--op-muted);padding:14px 18px;border-bottom:1px solid var(--op-border)}
+.op-table td{padding:14px 18px;border-bottom:1px solid var(--op-line);color:var(--op-text2);vertical-align:top}
+.op-table tr:last-child td{border-bottom:none}
+.op-table td:first-child{color:var(--op-text);font-weight:600}
+.op-limits{margin:20px 0 0;padding-left:20px;color:var(--op-text2);font-size:15px}
+.op-limits li{margin-bottom:6px}
+/* FAQ */
+.op-faq{display:flex;flex-direction:column;gap:12px;max-width:860px}
+.op-faq details{background:var(--op-surface);border:1px solid var(--op-border);border-radius:14px;padding:0 22px}
+.op-faq summary{cursor:pointer;list-style:none;font-weight:700;font-size:17px;padding:18px 28px 18px 0;position:relative}
+.op-faq summary::-webkit-details-marker{display:none}
+.op-faq summary::after{content:'+';position:absolute;right:0;top:14px;font-size:24px;color:var(--op-accent);font-weight:400}
+.op-faq details[open] summary::after{content:'−'}
+.op-faq details p{padding:0 0 20px;color:var(--op-text2);font-size:16px}
+/* Футер */
+.op-footer{border-top:1px solid #222936;padding:28px 0;font-size:14px;color:var(--op-muted)}
+.op-footer-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+.op-footer-links{display:flex;flex-wrap:wrap;gap:20px}
+.op-footer a{color:var(--op-muted);text-decoration:none}.op-footer a:hover{color:var(--op-text)}
+/* Інструмент аудиту: темна тема */
+#seo-audit.sa{--sa-bg:#151A22;--sa-surface:#0F141B;--sa-border:#262D38;--sa-text:#E6EAF0;--sa-muted:#9AA4B2;--sa-accent:#7C9CFF;--sa-pass:#86EFAC;--sa-pass-bg:#16301F;--sa-warn:#FCD34D;--sa-warn-bg:#3A3018;--sa-fail:#FCA5A5;--sa-fail-bg:#3A1E22;--sa-info:#A9C4FF;--sa-info-bg:#1C2740;max-width:none;font-family:'Manrope',system-ui,sans-serif}
+#seo-audit .sa-input{background:#0F141B}
+#seo-audit .sa-btn{color:#0E1116}
+#seo-audit .sa-btn-ghost{color:#E6EAF0}
+#seo-audit .sa-kpi strong,#seo-audit .sa-table td:nth-child(4){font-family:'JetBrains Mono',monospace}
+#seo-audit .sa-serp{background:#FFFFFF;border-color:#FFFFFF}
+#seo-audit .sa-serp-url{color:#4d5156}
+/* Адаптив */
+@media (max-width:991px){.op-grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}.op-grid-3{grid-template-columns:repeat(2,minmax(0,1fr))}.op h1{font-size:46px}}
+@media (max-width:767px){.op-container{padding:0 20px}.op-section{padding:64px 0}.op-hero{padding:48px 0 64px}.op h1{font-size:36px}.op h2{font-size:26px}.op-lead{font-size:17px}.op-grid-4,.op-grid-3,.op-grid-2{grid-template-columns:minmax(0,1fr)}.op-menu{gap:16px;font-size:14px;width:100%;overflow-x:auto;flex-wrap:nowrap}.op-tool{padding:16px;border-radius:16px}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "OnePane",
+  "url": "https://shevlyakovaseo-bot.github.io/onepane/",
+  "description": "Безкоштовний SEO-аудит сторінки за URL: індексація, мета-теги, hreflang, мікророзмітка, швидкість і варіанти title від ШІ.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "inLanguage": "uk",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "UAH"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Чи це безкоштовно?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Так. OnePane не має платних функцій і не потребує реєстрації."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Чи зберігаються адреси та результати перевірок?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ні. Сторінка завантажується лише на час перевірки, а розбір відбувається у вашому браузері. Історія перевірок ніде не зберігається."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Чому в мене не працює блок ШІ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Варіанти title генерує вбудований ШІ Google Chrome просто на вашому компʼютері. Він доступний у Chrome 148 і новіших версіях на компʼютері. В інших браузерах цей блок прихований, а решта перевірок працює."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Чому результати відрізняються від Screaming Frog?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "OnePane перевіряє одну сторінку так, як її бачить бот без виконання JavaScript, і використовує пороги з розділу «Як рахуємо». Краулер аналізує весь сайт і має власні налаштування."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Що робити, якщо сайт рендериться через JavaScript?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Частина контенту може не потрапити в розбір. Перевірте таку сторінку інструментом перевірки URL у Google Search Console — він показує HTML після рендерингу."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Звідки дані про швидкість?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "З Google PageSpeed Insights: лабораторна оцінка Lighthouse і реальні дані користувачів Chrome (CrUX) за останні 28 днів, якщо сторінка має достатньо трафіку."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="op op-header">
+  <nav class="op-container op-nav" aria-label="Головне меню">
+    <a class="op-logo" href="#audit"><span class="op-logo-mark" aria-hidden="true"></span>OnePane</a>
+    <div class="op-menu">
+      <a href="#audit">Аудит</a>
+      <a href="#checks">Що перевіряє</a>
+      <a href="#how">Як це працює</a>
+      <a href="#method">Як рахуємо</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </nav>
+</header>
+
+<section id="audit" class="op op-hero">
+  <div class="op-container">
+    <div class="op-hero-top">
+      <span class="op-pill">Безкоштовний SEO-аудит</span>
+      <h1>SEO-аудит сторінки за URL — усе на одній панелі</h1>
+      <p class="op-lead">Вставте адресу — і за хвилину побачите проблеми з індексацією, мета-тегами, мовними версіями, мікророзміткою та швидкістю.</p>
+    </div>
+    <div class="op-tool">
+      <div id="seo-audit"></div>
+    </div>
+    <p class="op-privacy">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9AA4B2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+      Розбір відбувається у вашому браузері. Адреси й результати ніде не зберігаються.
+    </p>
+  </div>
+</section>
+
+<script>
+  window.SEO_AUDIT_CONFIG = {
+    workerUrl: '',
+    psiKey: ''
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/gh/shevlyakovaseo-bot/onepane@v1.0.0/seo-audit.js" defer></script>
+
+<section id="checks" class="op op-section">
+  <div class="op-container">
+    <div class="op-head">
+      <h2>Що перевіряє OnePane</h2>
+      <p class="op-lead">Вісім блоків, які SEO-фахівець зазвичай збирає з п’яти різних інструментів.</p>
+    </div>
+    <div class="op-grid-4">
+      <div class="op-card"><span class="op-src">HTML</span><h3>Доступність</h3><p>Код відповіді сервера і весь ланцюжок редиректів до фінальної адреси.</p></div>
+      <div class="op-card"><span class="op-src">HTML · robots.txt</span><h3>Індексація</h3><p>Meta robots, X-Robots-Tag, правило robots.txt для Googlebot і canonical.</p></div>
+      <div class="op-card"><span class="op-src">HTML</span><h3>Мета-теги й превʼю</h3><p>Title у символах і пікселях, description, Open Graph і вигляд сніпета у видачі.</p></div>
+      <div class="op-card"><span class="op-src">HTML</span><h3>Контент і заголовки</h3><p>Кількість H1, структура H1–H3, обсяг тексту, внутрішні та зовнішні посилання.</p></div>
+      <div class="op-card"><span class="op-src">HTML · Chrome AI</span><h3>Мови та hreflang</h3><p>Коди hreflang, посилання на себе, x-default і чи збігається реальна мова тексту з розміткою.</p></div>
+      <div class="op-card"><span class="op-src">HTML</span><h3>Мікророзмітка</h3><p>Знайдені типи JSON-LD і помилки в самому JSON.</p></div>
+      <div class="op-card"><span class="op-src">PageSpeed · CrUX</span><h3>Швидкість</h3><p>Оцінка Lighthouse, LCP, INP і CLS реальних користувачів Chrome та підказки щодо SEO.</p></div>
+      <div class="op-card"><span class="op-src">Chrome AI</span><h3>Варіанти title від ШІ</h3><p>Три нових title до 60 символів з ключем на початку — як пропозиції, не як готове рішення.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how" class="op op-section op-section-alt">
+  <div class="op-container">
+    <div class="op-head">
+      <h2>Як це працює</h2>
+    </div>
+    <div class="op-grid-3">
+      <div class="op-card"><span class="op-step-n">01</span><h3>Вставте URL</h3><p>Будь-яку публічну сторінку: послугу, категорію, статтю чи головну.</p></div>
+      <div class="op-card"><span class="op-step-n">02</span><h3>OnePane завантажує сторінку</h3><p>Отримує HTML так, як його бачить бот, читає robots.txt і паралельно запускає PageSpeed.</p></div>
+      <div class="op-card"><span class="op-step-n">03</span><h3>Отримайте розбір</h3><p>Перевірки зі статусами «помилка», «увага», «OK» і копіювання результатів у Google Таблиці одним кліком.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="op op-section">
+  <div class="op-container">
+    <div class="op-grid-2">
+      <div class="op-card">
+        <svg class="op-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8"></path><path d="M12 16v4"></path></svg>
+        <h3>ШІ працює на вашому компʼютері</h3>
+        <p>Варіанти title пише вбудована модель Gemini Nano в Chrome 148 і новіших. Текст сторінки не відправляється в хмарні сервіси. В інших браузерах блок ШІ прихований, решта перевірок працює.</p>
+      </div>
+      <div class="op-card">
+        <svg class="op-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+        <h3>Дані не зберігаються</h3>
+        <p>Сторінка завантажується лише на час перевірки, а розбір відбувається у вашому браузері. Немає реєстрації, історії перевірок і бази даних.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="method" class="op op-section op-section-alt">
+  <div class="op-container">
+    <div class="op-head">
+      <h2>Як рахуємо</h2>
+      <p class="op-lead">Цифри рахує код за фіксованими правилами — їх можна перевірити вручну.</p>
+    </div>
+    <div class="op-table-wrap">
+      <table class="op-table">
+        <thead><tr><th>Перевірка</th><th>Правило</th></tr></thead>
+        <tbody>
+          <tr><td>Title</td><td>До 60 символів і до 600 px (Arial 20px, як у видачі на компʼютері)</td></tr>
+          <tr><td>Meta description</td><td>Від 70 до 160 символів</td></tr>
+          <tr><td>H1</td><td>Рівно один на сторінці</td></tr>
+          <tr><td>Обсяг тексту</td><td>Менше 150 слів у HTML — статус «увага»</td></tr>
+          <tr><td>robots.txt</td><td>Група Googlebot, якщо є, інакше «*». Діє найдовше правило, за рівної довжини перемагає Allow</td></tr>
+          <tr><td>Canonical</td><td>Один тег; «OK», якщо вказує на саму сторінку</td></tr>
+          <tr><td>hreflang</td><td>Валідний код мови, посилання на себе, наявність x-default, збіг із реальною мовою тексту</td></tr>
+          <tr><td>Core Web Vitals</td><td>75-й перцентиль реальних користувачів Chrome (CrUX) за 28 днів</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="op-limits">
+      <li>Сторінка аналізується без виконання JavaScript — сайти, які малюють контент скриптами, покажуть менше тексту.</li>
+      <li>ШІ і визначення мови доступні лише в Chrome 148+ на компʼютері.</li>
+      <li>Деякі сайти блокують автоматичні запити — тоді інструмент покаже помилку завантаження.</li>
+      <li>Для сторінок із малим трафіком реальних даних про швидкість немає.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="op op-section">
+  <div class="op-container">
+    <div class="op-head">
+      <h2>Далі в OnePane</h2>
+    </div>
+    <div class="op-grid-2">
+      <div class="op-card"><span class="op-soon">незабаром</span><h3>Робочий простір із файлів</h3><p>Завантажуєте експорти Screaming Frog і Search Console — отримуєте технічне здоровʼя сайту, точки росту і план задач.</p></div>
+      <div class="op-card"><span class="op-soon">незабаром</span><h3>Підключення Search Console</h3><p>Вхід через Google-акаунт і живі дані про кліки, покази та позиції без ручних експортів.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="op op-section op-section-alt">
+  <div class="op-container">
+    <div class="op-head">
+      <h2>Часті питання</h2>
+    </div>
+    <div class="op-faq">
+      <details><summary>Чи це безкоштовно?</summary><p>Так. OnePane не має платних функцій і не потребує реєстрації.</p></details>
+      <details><summary>Чи зберігаються адреси та результати перевірок?</summary><p>Ні. Сторінка завантажується лише на час перевірки, а розбір відбувається у вашому браузері. Історія перевірок ніде не зберігається.</p></details>
+      <details><summary>Чому в мене не працює блок ШІ?</summary><p>Варіанти title генерує вбудований ШІ Google Chrome просто на вашому компʼютері. Він доступний у Chrome 148 і новіших версіях на компʼютері. В інших браузерах цей блок прихований, а решта перевірок працює.</p></details>
+      <details><summary>Чому результати відрізняються від Screaming Frog?</summary><p>OnePane перевіряє одну сторінку так, як її бачить бот без виконання JavaScript, і використовує пороги з розділу «Як рахуємо». Краулер аналізує весь сайт і має власні налаштування.</p></details>
+      <details><summary>Що робити, якщо сайт рендериться через JavaScript?</summary><p>Частина контенту може не потрапити в розбір. Перевірте таку сторінку інструментом перевірки URL у Google Search Console — він показує HTML після рендерингу.</p></details>
+      <details><summary>Звідки дані про швидкість?</summary><p>З Google PageSpeed Insights: лабораторна оцінка Lighthouse і реальні дані користувачів Chrome (CrUX) за останні 28 днів, якщо сторінка має достатньо трафіку.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer class="op op-footer">
+  <div class="op-container op-footer-row">
+    <span>© 2026 OnePane</span>
+    <div class="op-footer-links">
+      <a href="mailto:shevlyakova.seo@gmail.com">shevlyakova.seo@gmail.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
