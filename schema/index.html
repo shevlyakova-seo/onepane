@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Генератор мікророзмітки JSON-LD — OnePane</title>
+<meta name="description" content="Створіть валідну мікророзмітку JSON-LD за 2 хвилини: організація, локальний бізнес, клініка, товар, послуга, стаття, FAQ і хлібні крихти. Імпорт зі сторінки й перевірка.">
+<link rel="canonical" href="https://shevlyakova-seo.github.io/onepane/schema/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://shevlyakova-seo.github.io/onepane/schema/">
+<meta property="og:title" content="Генератор мікророзмітки JSON-LD — OnePane">
+<meta property="og:description" content="Організація, локальний бізнес, клініка, товар, послуга, стаття, FAQ і хлібні крихти — в одному @graph, з імпортом зі сторінки й перевіркою.">
+<meta property="og:locale" content="uk_UA">
+<meta name="theme-color" content="#0E1116">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237C9CFF'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/onepane.css">
+<style>
+.typecard .body{gap:12px}
+.typehead{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.code{background:#0B0F14;border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:0;font-family:var(--mono);font-size:12.5px;line-height:1.55;color:#C9D4E5;white-space:pre-wrap;word-break:break-word;max-height:calc(100vh - 330px);overflow:auto}
+.code .k{color:#A9BCFF}.code .s{color:#86EFAC}.code .n{color:#FCD34D}
+.issues{display:flex;flex-direction:column;gap:6px;max-height:220px;overflow:auto}
+.issue{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--text2)}
+.found{display:flex;flex-wrap:wrap;gap:6px}
+.rowline.r2{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) 36px}
+.rowline.rqa{grid-template-columns:minmax(0,1fr) 36px}
+.rowline.rqa textarea{grid-column:1/2;min-height:64px}
+.rowline.rh{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr) 36px}
+@media (max-width:767px){.rowline.r2,.rowline.rh{grid-template-columns:minmax(0,1fr) 36px}.rowline.r2 input:nth-child(2),.rowline.rh select+input,.rowline.rh input+input{grid-column:1/2}.code{max-height:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../"><i aria-hidden="true"></i>OnePane</a>
+    <nav class="menu" aria-label="Інструменти">
+      <a href="../#audit">Аудит URL</a>
+      <a href="../brief/">Генератор ТЗ</a>
+      <a href="./" aria-current="page">Мікророзмітка</a>
+      <a href="../report/">Звіт</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Генератор мікророзмітки JSON-LD</h1>
+    <p>Оберіть нішу або типи, заповніть поля — і отримаєте валідний JSON-LD в одному <code>@graph</code> зі звʼязками між сутностями. Можна підтягнути дані з наявної сторінки.</p>
+  </section>
+
+  <div class="layout">
+    <div class="form" id="form">
+      <section class="card pad" style="display:flex;flex-direction:column;gap:12px">
+        <strong>1. Імпорт зі сторінки <span class="note" style="font-weight:500">(необовʼязково)</span></strong>
+        <div class="btns" style="flex-wrap:nowrap">
+          <label class="f" style="flex:1 1 auto"><span class="sr" style="position:absolute;left:-9999px">URL сторінки</span><input type="url" id="importUrl" placeholder="https://example.com/storinka/" aria-label="URL сторінки для імпорту"></label>
+          <button type="button" class="btn" id="importBtn">Підтягнути</button>
+        </div>
+        <div class="status" id="importStatus" role="status" aria-live="polite"></div>
+        <div id="importOut"></div>
+      </section>
+
+      <section class="card pad" style="display:flex;flex-direction:column;gap:12px">
+        <strong>2. Ніша (готовий набір типів)</strong>
+        <div class="chips" id="presets"></div>
+        <strong style="margin-top:6px">Або оберіть типи вручну</strong>
+        <div class="chips" id="typeChips"></div>
+      </section>
+
+      <div id="typeCards" style="display:flex;flex-direction:column;gap:14px"></div>
+    </div>
+
+    <aside class="side" aria-label="Готовий код">
+      <div class="btns">
+        <button type="button" class="btn" id="copy">Копіювати код</button>
+        <button type="button" class="btn ghost" id="dl">.json</button>
+        <a class="btn ghost" href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Rich Results Test</a>
+        <a class="btn ghost" href="https://validator.schema.org/" target="_blank" rel="noopener">Validator</a>
+      </div>
+      <div class="status" id="exportStatus" role="status" aria-live="polite"></div>
+      <pre class="code" id="code" tabindex="0" aria-label="Код JSON-LD"></pre>
+      <section class="card pad" style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><strong>Перевірка</strong><span id="summary"></span></div>
+        <div class="issues" id="issues"></div>
+        <p class="note">Розмітка має відповідати тому, що видно на сторінці. Код вставляється в <code>&lt;head&gt;</code> або в кінець <code>&lt;body&gt;</code>.</p>
+      </section>
+      <div class="btns"><button type="button" class="btn ghost small" id="reset">Очистити все</button><button type="button" class="btn ghost small" id="demo">Демо</button></div>
+    </aside>
+  </div>
+</main>
+
+<footer class="foot"><div class="wrap">© 2026 OnePane · <a href="../">Аудит URL</a> · <a href="../brief/">Генератор ТЗ</a> · <a href="../report/">Звіт</a> · <a href="mailto:shevlyakova.seo@gmail.com">shevlyakova.seo@gmail.com</a></div></footer>
+
+<script>
+(function () {
+  'use strict';
+  var WORKER = 'https://onepane-audit.shevlyakova-seo.workers.dev';
+  var STORE = 'onepane-schema-draft';
+
+  var LB_SUBTYPES = [['LocalBusiness', 'Локальний бізнес (загальний)'], ['MedicalClinic', 'Медична клініка'], ['Dentist', 'Стоматологія'], ['Hospital', 'Лікарня'], ['Pharmacy', 'Аптека'], ['MedicalBusiness', 'Медичний бізнес (інше)'], ['HomeAndConstructionBusiness', 'Ремонт і будівництво'], ['HVACBusiness', 'Клімат, опалення, вентиляція'], ['AutoDealer', 'Автосалон'], ['AutoRepair', 'Автосервіс'], ['Store', 'Магазин'], ['BeautySalon', 'Салон краси'], ['Restaurant', 'Ресторан / кафе'], ['LegalService', 'Юридичні послуги'], ['RealEstateAgent', 'Нерухомість'], ['ProfessionalService', 'Професійні послуги']];
+  var MEDICAL = ['MedicalClinic', 'Dentist', 'Hospital', 'Pharmacy', 'MedicalBusiness'];
+  var SPECIALTIES = [['', '—'], ['PrimaryCare', 'Сімейна медицина'], ['Dentistry', 'Стоматологія'], ['Pediatric', 'Педіатрія'], ['Cardiovascular', 'Кардіологія'], ['Dermatology', 'Дерматологія'], ['Gynecologic', 'Гінекологія'], ['Otolaryngologic', 'ЛОР'], ['Neurologic', 'Неврологія'], ['Physiotherapy', 'Фізіотерапія'], ['Radiography', 'Рентген / діагностика'], ['Surgical', 'Хірургія'], ['Urologic', 'Урологія'], ['Gastroenterologic', 'Гастроентерологія'], ['Endocrine', 'Ендокринологія'], ['Musculoskeletal', 'Ортопедія']];
+  var DAYS = [['Mo-Fr', 'Пн–Пт'], ['Mo-Sa', 'Пн–Сб'], ['Mo-Su', 'Щодня'], ['Sa', 'Субота'], ['Su', 'Неділя'], ['Sa-Su', 'Сб–Нд'], ['Mo', 'Пн'], ['Tu', 'Вт'], ['We', 'Ср'], ['Th', 'Чт'], ['Fr', 'Пт']];
+  var DAYMAP = { Mo: 'Monday', Tu: 'Tuesday', We: 'Wednesday', Th: 'Thursday', Fr: 'Friday', Sa: 'Saturday', Su: 'Sunday' };
+  var DAYORDER = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+
+  var ADDRESS = [
+    { k: 'street', label: 'Вулиця, будинок', req: true }, { k: 'locality', label: 'Місто', req: true },
+    { k: 'region', label: 'Область' }, { k: 'postal', label: 'Індекс' }, { k: 'country', label: 'Країна (код)', req: true, def: 'UA', help: 'UA, PL, CZ, KZ, CA…' }
+  ];
+
+  var TYPES = [
+    { id: 'org', label: 'Організація', type: 'Organization', fields: [
+      { k: 'name', label: 'Назва компанії', req: true }, { k: 'url', label: 'Сайт', t: 'url', req: true }, { k: 'logo', label: 'Логотип (URL зображення)', t: 'url', rec: true, help: 'Квадрат або прямокутник, від 112×112 px' },
+      { k: 'description', label: 'Короткий опис', t: 'textarea' }, { k: 'telephone', label: 'Телефон', t: 'tel', rec: true, help: 'У форматі +380…' }, { k: 'email', label: 'Email', t: 'email' },
+      { k: 'sameAs', label: 'Соцмережі та профілі', t: 'lines', help: 'Facebook, Instagram, LinkedIn, YouTube — кожен з нового рядка' }, { k: 'address', label: 'Адреса (необовʼязково)', t: 'address', optional: true }
+    ] },
+    { id: 'website', label: 'Сайт', type: 'WebSite', fields: [
+      { k: 'name', label: 'Назва сайту', req: true }, { k: 'url', label: 'Головна сторінка', t: 'url', req: true }, { k: 'inLanguage', label: 'Мова (код)', def: 'uk', help: 'uk, ru, en, pl…' }
+    ] },
+    { id: 'local', label: 'Локальний бізнес / клініка', type: 'LocalBusiness', fields: [
+      { k: 'subtype', label: 'Тип бізнесу', t: 'select', opts: LB_SUBTYPES, def: 'LocalBusiness' }, { k: 'name', label: 'Назва (як у Google Business Profile)', req: true },
+      { k: 'url', label: 'Сторінка філії / сайт', t: 'url', rec: true }, { k: 'telephone', label: 'Телефон', t: 'tel', rec: true, help: 'У форматі +380…' },
+      { k: 'image', label: 'Фото (URL)', t: 'url', rec: true }, { k: 'priceRange', label: 'Рівень цін', help: 'Наприклад: $$ або 500–3000 грн' },
+      { k: 'address', label: 'Адреса', t: 'address' },
+      { k: 'lat', label: 'Широта', t: 'number', rec: true, help: 'З Google Maps, напр. 48.6208' }, { k: 'lng', label: 'Довгота', t: 'number', rec: true, help: 'напр. 22.2879' },
+      { k: 'hours', label: 'Години роботи', t: 'hours', rec: true },
+      { k: 'medicalSpecialty', label: 'Медична спеціалізація', t: 'select', opts: SPECIALTIES, medical: true },
+      { k: 'areaServed', label: 'Регіон обслуговування', help: 'Місто або область' }, { k: 'sameAs', label: 'Профілі (Google Maps, соцмережі)', t: 'lines' }
+    ] },
+    { id: 'person', label: 'Автор / лікар / експерт', type: 'Person', fields: [
+      { k: 'name', label: 'Імʼя та прізвище', req: true }, { k: 'jobTitle', label: 'Посада', rec: true, help: 'Лікар-кардіолог, SEO-спеціаліст…' }, { k: 'url', label: 'Сторінка автора', t: 'url', rec: true },
+      { k: 'image', label: 'Фото (URL)', t: 'url' }, { k: 'alumniOf', label: 'Освіта (заклад)' }, { k: 'knowsAbout', label: 'Експертиза (теми)', t: 'lines' }, { k: 'sameAs', label: 'Профілі (LinkedIn тощо)', t: 'lines' }
+    ] },
+    { id: 'service', label: 'Послуга', type: 'Service', fields: [
+      { k: 'name', label: 'Назва послуги', req: true }, { k: 'serviceType', label: 'Категорія послуги', rec: true }, { k: 'description', label: 'Опис', t: 'textarea', rec: true },
+      { k: 'url', label: 'URL сторінки послуги', t: 'url' }, { k: 'areaServed', label: 'Регіон' }, { k: 'price', label: 'Ціна від', t: 'number' }, { k: 'priceCurrency', label: 'Валюта', def: 'UAH' }
+    ] },
+    { id: 'product', label: 'Товар', type: 'Product', fields: [
+      { k: 'name', label: 'Назва товару', req: true }, { k: 'image', label: 'Зображення (URL)', t: 'url', req: true }, { k: 'description', label: 'Опис', t: 'textarea', rec: true },
+      { k: 'sku', label: 'Артикул (SKU)', rec: true }, { k: 'brand', label: 'Бренд', rec: true }, { k: 'gtin', label: 'GTIN / штрихкод' },
+      { k: 'price', label: 'Ціна', t: 'number', req: true }, { k: 'priceCurrency', label: 'Валюта', def: 'UAH', req: true },
+      { k: 'availability', label: 'Наявність', t: 'select', def: 'InStock', opts: [['InStock', 'В наявності'], ['OutOfStock', 'Немає в наявності'], ['PreOrder', 'Передзамовлення'], ['BackOrder', 'Під замовлення']] },
+      { k: 'url', label: 'URL товару', t: 'url', rec: true }, { k: 'priceValidUntil', label: 'Ціна дійсна до', t: 'date' },
+      { k: 'ratingValue', label: 'Рейтинг (1–5)', t: 'number', help: 'Лише якщо відгуки реально показані на сторінці' }, { k: 'reviewCount', label: 'Кількість відгуків', t: 'number' }
+    ] },
+    { id: 'article', label: 'Стаття', type: 'BlogPosting', fields: [
+      { k: 'subtype', label: 'Тип', t: 'select', def: 'BlogPosting', opts: [['BlogPosting', 'Стаття в блозі'], ['Article', 'Стаття'], ['NewsArticle', 'Новина']] },
+      { k: 'headline', label: 'Заголовок', req: true, help: 'До 110 символів' }, { k: 'description', label: 'Короткий опис', t: 'textarea' }, { k: 'url', label: 'URL статті', t: 'url', rec: true },
+      { k: 'image', label: 'Головне зображення (URL)', t: 'url', rec: true }, { k: 'datePublished', label: 'Дата публікації', t: 'date', req: true }, { k: 'dateModified', label: 'Дата оновлення', t: 'date', rec: true },
+      { k: 'authorName', label: 'Автор (якщо не заповнено блок «Автор»)', rec: true }
+    ] },
+    { id: 'faq', label: 'FAQ', type: 'FAQPage', fields: [{ k: 'items', label: 'Питання й відповіді', t: 'qa', req: true }] },
+    { id: 'breadcrumbs', label: 'Хлібні крихти', type: 'BreadcrumbList', fields: [{ k: 'items', label: 'Шлях від головної до поточної сторінки', t: 'crumbs', req: true }] }
+  ];
+  var TYPE_BY_ID = {}; TYPES.forEach(function (t) { TYPE_BY_ID[t.id] = t; });
+
+  var PRESETS = [
+    { label: 'Медична клініка', on: ['org', 'website', 'local', 'person', 'faq', 'breadcrumbs'], sub: 'MedicalClinic' },
+    { label: 'Стоматологія', on: ['org', 'website', 'local', 'service', 'faq', 'breadcrumbs'], sub: 'Dentist' },
+    { label: 'Локальні послуги', on: ['org', 'local', 'service', 'faq', 'breadcrumbs'], sub: 'HomeAndConstructionBusiness' },
+    { label: 'Товар в інтернет-магазині', on: ['org', 'product', 'breadcrumbs'] },
+    { label: 'Стаття в блозі', on: ['org', 'article', 'person', 'faq', 'breadcrumbs'] },
+    { label: 'Головна сторінка', on: ['org', 'website'] }
+  ];
+
+  var state = blank();
+  function blank() { return { on: ['org', 'website'], v: {} }; }
+
+  /* ---------- утиліти ---------- */
+  function $(id) { return document.getElementById(id); }
+  function esc(v) { return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function clean(t) { return String(t == null ? '' : t).replace(/\s+/g, ' ').trim(); }
+  function lines(t) { return String(t || '').split(/\r?\n/).map(clean).filter(Boolean); }
+  function vals(id) { if (!state.v[id]) state.v[id] = {}; var t = TYPE_BY_ID[id]; t.fields.forEach(function (f) { if (f.def != null && state.v[id][f.k] == null) state.v[id][f.k] = f.def; if (f.t === 'address' && !state.v[id].address) state.v[id].address = { country: 'UA' }; if ((f.t === 'qa' || f.t === 'crumbs' || f.t === 'hours') && !Array.isArray(state.v[id][f.k])) state.v[id][f.k] = f.t === 'hours' ? [{ d: 'Mo-Fr', o: '09:00', c: '18:00' }] : [{}]; }); return state.v[id]; }
+  function isOn(id) { return state.on.indexOf(id) !== -1; }
+  function isUrl(u) { return /^https?:\/\/[^\s.]+\.[^\s]+$/i.test(u); }
+  function prune(o) {
+    if (Array.isArray(o)) { var a = o.map(prune).filter(function (x) { return x !== undefined; }); return a.length ? a : undefined; }
+    if (o && typeof o === 'object') {
+      var r = {}, has = false;
+      Object.keys(o).forEach(function (k) { var v = prune(o[k]); if (v !== undefined) { r[k] = v; if (k !== '@type' && k !== '@context') has = true; } });
+      return has ? r : undefined;
+    }
+    if (o === null || o === undefined) return undefined;
+    if (typeof o === 'string') { var s = o.trim(); return s ? s : undefined; }
+    return o;
+  }
+  function baseUrl() {
+    var cands = [state.v.org && state.v.org.url, state.v.website && state.v.website.url, state.v.local && state.v.local.url];
+    for (var i = 0; i < cands.length; i++) if (cands[i] && isUrl(cands[i])) { try { return new URL(cands[i]).origin + '/'; } catch (e) {} }
+    return '';
+  }
+  function num(v) { if (v === '' || v == null) return undefined; var n = Number(String(v).replace(',', '.')); return isNaN(n) ? undefined : n; }
+  function postal(a) { if (!a) return undefined; return { '@type': 'PostalAddress', streetAddress: a.street, addressLocality: a.locality, addressRegion: a.region, postalCode: a.postal, addressCountry: a.country }; }
+  function expandDays(d) {
+    if (d.indexOf('-') === -1) return [DAYMAP[d]];
+    var p = d.split('-'), a = DAYORDER.indexOf(p[0]), b = DAYORDER.indexOf(p[1]), out = [];
+    for (var i = a; i <= b; i++) out.push(DAYMAP[DAYORDER[i]]);
+    return out;
+  }
+
+  /* ---------- побудова @graph ---------- */
+  function build() {
+    var base = baseUrl();
+    var ids = {};
+    if (base) { ids.org = base + '#organization'; ids.website = base + '#website'; ids.local = base + '#localbusiness'; ids.person = base + '#author'; }
+    var ref = function (id, name) { return ids[id] ? { '@id': ids[id] } : (name ? { '@type': id === 'person' ? 'Person' : 'Organization', name: name } : undefined); };
+    var graph = [];
+    var orgName = isOn('org') ? (state.v.org || {}).name : '';
+
+    if (isOn('org')) { var o = vals('org'); graph.push({ '@type': 'Organization', '@id': ids.org, name: o.name, url: o.url, logo: o.logo ? { '@type': 'ImageObject', url: o.logo } : undefined, description: o.description, telephone: o.telephone, email: o.email, sameAs: lines(o.sameAs), address: (o.address && (clean(o.address.street) || clean(o.address.locality))) ? postal(o.address) : undefined }); }
+    if (isOn('website')) { var w = vals('website'); graph.push({ '@type': 'WebSite', '@id': ids.website, name: w.name, url: w.url, inLanguage: w.inLanguage, publisher: isOn('org') ? ref('org', orgName) : undefined }); }
+    if (isOn('local')) {
+      var l = vals('local');
+      var hours = (l.hours || []).filter(function (h) { return h.d && h.o && h.c; }).map(function (h) { return { '@type': 'OpeningHoursSpecification', dayOfWeek: expandDays(h.d), opens: h.o, closes: h.c }; });
+      graph.push({ '@type': l.subtype || 'LocalBusiness', '@id': ids.local, name: l.name, url: l.url, telephone: l.telephone, image: l.image, priceRange: l.priceRange, address: postal(l.address),
+        geo: (num(l.lat) != null && num(l.lng) != null) ? { '@type': 'GeoCoordinates', latitude: num(l.lat), longitude: num(l.lng) } : undefined,
+        openingHoursSpecification: hours, medicalSpecialty: MEDICAL.indexOf(l.subtype) !== -1 && l.medicalSpecialty ? l.medicalSpecialty : undefined,
+        areaServed: l.areaServed, sameAs: lines(l.sameAs), parentOrganization: isOn('org') ? ref('org', orgName) : undefined });
+    }
+    if (isOn('person')) { var p = vals('person'); graph.push({ '@type': 'Person', '@id': ids.person, name: p.name, jobTitle: p.jobTitle, url: p.url, image: p.image, alumniOf: p.alumniOf ? { '@type': 'EducationalOrganization', name: p.alumniOf } : undefined, knowsAbout: lines(p.knowsAbout), sameAs: lines(p.sameAs), worksFor: isOn('local') ? ref('local', (state.v.local || {}).name) : (isOn('org') ? ref('org', orgName) : undefined) }); }
+    if (isOn('service')) { var s = vals('service'); graph.push({ '@type': 'Service', name: s.name, serviceType: s.serviceType, description: s.description, url: s.url, areaServed: s.areaServed, provider: isOn('local') ? ref('local', (state.v.local || {}).name) : (isOn('org') ? ref('org', orgName) : undefined), offers: num(s.price) != null ? { '@type': 'Offer', price: String(num(s.price)), priceCurrency: s.priceCurrency || 'UAH' } : undefined }); }
+    if (isOn('product')) {
+      var pr = vals('product');
+      graph.push({ '@type': 'Product', name: pr.name, image: pr.image, description: pr.description, sku: pr.sku, gtin: pr.gtin, brand: pr.brand ? { '@type': 'Brand', name: pr.brand } : undefined,
+        offers: { '@type': 'Offer', url: pr.url, price: num(pr.price) != null ? String(num(pr.price)) : undefined, priceCurrency: pr.priceCurrency, availability: pr.availability ? 'https://schema.org/' + pr.availability : undefined, itemCondition: 'https://schema.org/NewCondition', priceValidUntil: pr.priceValidUntil, seller: isOn('org') ? ref('org', orgName) : undefined },
+        aggregateRating: (num(pr.ratingValue) != null && num(pr.reviewCount)) ? { '@type': 'AggregateRating', ratingValue: num(pr.ratingValue), reviewCount: num(pr.reviewCount) } : undefined });
+    }
+    if (isOn('article')) {
+      var a = vals('article');
+      graph.push({ '@type': a.subtype || 'BlogPosting', headline: a.headline, description: a.description, url: a.url, mainEntityOfPage: a.url, image: a.image, datePublished: a.datePublished, dateModified: a.dateModified || undefined,
+        author: isOn('person') ? ref('person', (state.v.person || {}).name) : (a.authorName ? { '@type': 'Person', name: a.authorName } : undefined), publisher: isOn('org') ? ref('org', orgName) : undefined, inLanguage: isOn('website') ? (state.v.website || {}).inLanguage : undefined });
+    }
+    if (isOn('faq')) { var fq = vals('faq'); graph.push({ '@type': 'FAQPage', mainEntity: (fq.items || []).filter(function (x) { return clean(x.q) && clean(x.a); }).map(function (x) { return { '@type': 'Question', name: clean(x.q), acceptedAnswer: { '@type': 'Answer', text: clean(x.a) } }; }) }); }
+    if (isOn('breadcrumbs')) { var bc = vals('breadcrumbs'); graph.push({ '@type': 'BreadcrumbList', itemListElement: (bc.items || []).filter(function (x) { return clean(x.name); }).map(function (x, i, arr) { return { '@type': 'ListItem', position: i + 1, name: clean(x.name), item: i === arr.length - 1 && !clean(x.url) ? undefined : clean(x.url) }; }) }); }
+
+    var g = graph.map(prune).filter(Boolean);
+    if (!g.length) return null;
+    return g.length === 1 ? Object.assign({ '@context': 'https://schema.org' }, g[0]) : { '@context': 'https://schema.org', '@graph': g };
+  }
+
+  /* ---------- перевірка ---------- */
+  function validate() {
+    var out = [];
+    var add = function (lvl, type, msg) { out.push({ lvl: lvl, type: type, msg: msg }); };
+    state.on.forEach(function (id) {
+      var t = TYPE_BY_ID[id], v = vals(id);
+      t.fields.forEach(function (f) {
+        if (f.medical && MEDICAL.indexOf(v.subtype) === -1) return;
+        var val = v[f.k];
+        if (f.t === 'address') {
+          if (f.optional && !(val && (val.street || val.locality))) return;
+          ADDRESS.forEach(function (af) { if (af.req && !clean(val && val[af.k])) add('err', t.label, 'Адреса: заповніть «' + af.label + '»'); });
+          if (val && val.country && !/^[A-Z]{2}$/.test(val.country)) add('warn', t.label, 'Код країни — 2 великі латинські літери (UA, PL…)');
+          return;
+        }
+        if (f.t === 'qa') { var ok = (val || []).filter(function (x) { return clean(x.q) && clean(x.a); }); if (!ok.length) add('err', t.label, 'Додайте хоча б одне питання з відповіддю'); return; }
+        if (f.t === 'crumbs') {
+          var cr = (val || []).filter(function (x) { return clean(x.name); });
+          if (cr.length < 2) add('err', t.label, 'Потрібно щонайменше 2 рівні: головна → поточна сторінка');
+          cr.forEach(function (x, i) { if (i < cr.length - 1 && !isUrl(clean(x.url))) add('err', t.label, 'Рівень «' + clean(x.name) + '»: потрібен повний URL'); });
+          return;
+        }
+        if (f.t === 'hours') { if (!(val || []).some(function (h) { return h.o && h.c; })) add('warn', t.label, 'Рекомендовано: години роботи'); return; }
+        var empty = Array.isArray(val) ? !val.length : !clean(val);
+        if (empty) { if (f.req) add('err', t.label, 'Обовʼязкове поле: «' + f.label + '»'); else if (f.rec) add('warn', t.label, 'Рекомендовано: «' + f.label + '»'); return; }
+        if (f.t === 'url') { if (!isUrl(clean(val))) add('err', t.label, '«' + f.label + '» — потрібен повний URL з https://'); }
+        if (f.t === 'lines' && /sameAs/.test(f.k)) lines(val).forEach(function (u) { if (!isUrl(u)) add('warn', t.label, 'Профіль «' + u + '» — це має бути повний URL'); });
+        if (f.t === 'tel' && !/^\+\d[\d\s()-]{7,}$/.test(clean(val))) add('warn', t.label, 'Телефон краще в міжнародному форматі: +380 …');
+        if (f.t === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(clean(val))) add('err', t.label, 'Некоректний email');
+        if (f.k === 'priceCurrency' && !/^[A-Z]{3}$/.test(clean(val))) add('err', t.label, 'Валюта — код ISO 4217: UAH, USD, EUR');
+        if (f.k === 'headline' && clean(val).length > 110) add('warn', t.label, 'Заголовок довший за 110 символів');
+        if (f.k === 'ratingValue' && (num(val) < 1 || num(val) > 5)) add('err', t.label, 'Рейтинг має бути від 1 до 5');
+        if (f.k === 'lat' && (num(val) == null || Math.abs(num(val)) > 90)) add('err', t.label, 'Широта — число від −90 до 90');
+        if (f.k === 'lng' && (num(val) == null || Math.abs(num(val)) > 180)) add('err', t.label, 'Довгота — число від −180 до 180');
+      });
+      if (id === 'product' && clean(v.ratingValue) && !clean(v.reviewCount)) add('err', t.label, 'Для рейтингу потрібна кількість відгуків');
+      if (id === 'product' && clean(v.ratingValue)) add('info', t.label, 'Рейтинг додавайте лише тоді, коли відгуки покупців реально показані на сторінці.');
+      if (id === 'article' && v.datePublished && v.dateModified && v.dateModified < v.datePublished) add('err', t.label, 'Дата оновлення раніше за дату публікації');
+      if (id === 'faq') add('info', t.label, 'Google показує FAQ-сніпети лише для авторитетних державних і медичних сайтів. Розмітка все одно допомагає пошуковикам і ШІ зрозуміти сторінку — питання й відповіді мають бути видимі на сторінці.');
+      if (id === 'local' && isOn('local') && MEDICAL.indexOf(v.subtype) !== -1 && !v.medicalSpecialty) add('warn', t.label, 'Рекомендовано: медична спеціалізація');
+    });
+    if (!baseUrl() && state.on.length > 1) add('warn', 'Звʼязки', 'Вкажіть URL сайту в «Організації» або «Сайті» — тоді сутності звʼяжуться через @id.');
+    return out;
+  }
+
+  /* ---------- рендер ---------- */
+  function fieldHtml(id, f, v) {
+    var name = id + '.' + f.k;
+    var mark = f.req ? ' <span class="req" title="обовʼязкове">*</span>' : (f.rec ? ' <span class="rec" title="рекомендоване">•</span>' : '');
+    var help = f.help ? '<small>' + esc(f.help) + '</small>' : '';
+    var val = v[f.k];
+    if (f.medical && MEDICAL.indexOf(v.subtype) === -1) return '';
+    if (f.t === 'address') {
+      var a = val || {};
+      return '<fieldset style="border:1px solid var(--border);border-radius:12px;padding:12px;margin:0;display:flex;flex-direction:column;gap:10px"><legend style="font-size:14px;font-weight:600;color:var(--text2);padding:0 6px">' + esc(f.label) + '</legend><div class="row">' +
+        ADDRESS.map(function (af) { return '<label class="f">' + esc(af.label) + (af.req && !f.optional ? ' <span class="req">*</span>' : '') + (af.help ? '<small>' + esc(af.help) + '</small>' : '') + '<input type="text" data-addr="' + esc(name) + '" data-ak="' + af.k + '" value="' + esc(a[af.k] || '') + '"></label>'; }).join('') + '</div></fieldset>';
+    }
+    if (f.t === 'qa' || f.t === 'crumbs' || f.t === 'hours') {
+      var rows = val || [];
+      var inner = rows.map(function (r, i) {
+        if (f.t === 'qa') return '<div class="rowline rqa" data-rows="' + esc(name) + '" data-i="' + i + '"><input type="text" data-rk="q" value="' + esc(r.q || '') + '" placeholder="Питання" aria-label="Питання ' + (i + 1) + '"><button type="button" class="icon" data-delrow aria-label="Видалити">✕</button><textarea data-rk="a" placeholder="Відповідь (як на сторінці)" aria-label="Відповідь ' + (i + 1) + '">' + esc(r.a || '') + '</textarea></div>';
+        if (f.t === 'crumbs') return '<div class="rowline r2" data-rows="' + esc(name) + '" data-i="' + i + '"><input type="text" data-rk="name" value="' + esc(r.name || '') + '" placeholder="' + (i ? 'Розділ' : 'Головна') + '" aria-label="Назва рівня ' + (i + 1) + '"><input type="url" data-rk="url" value="' + esc(r.url || '') + '" placeholder="https://…" aria-label="URL рівня ' + (i + 1) + '"><button type="button" class="icon" data-delrow aria-label="Видалити">✕</button></div>';
+        return '<div class="rowline rh" data-rows="' + esc(name) + '" data-i="' + i + '"><select data-rk="d" aria-label="Дні">' + DAYS.map(function (d) { return '<option value="' + d[0] + '"' + (r.d === d[0] ? ' selected' : '') + '>' + d[1] + '</option>'; }).join('') + '</select><input type="time" data-rk="o" value="' + esc(r.o || '') + '" aria-label="Відкриття"><input type="time" data-rk="c" value="' + esc(r.c || '') + '" aria-label="Закриття"><button type="button" class="icon" data-delrow aria-label="Видалити">✕</button></div>';
+      }).join('');
+      var addLabel = f.t === 'qa' ? '+ Питання' : f.t === 'crumbs' ? '+ Рівень' : '+ Інтервал';
+      var extra = f.t === 'qa' ? ' <button type="button" class="btn ghost small" data-aifaq><span class="ai">ШІ</span> FAQ з тексту сторінки</button>' : '';
+      return '<div class="f" style="display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:600;color:var(--text2)"><span>' + esc(f.label) + mark + '</span><div class="rows">' + inner + '</div><div class="btns"><button type="button" class="btn ghost small" data-addrow="' + esc(name) + '">' + addLabel + '</button>' + extra + '</div>' + (f.t === 'crumbs' ? '<small class="note">Для останнього рівня (поточна сторінка) URL можна не вказувати.</small>' : '') + '</div>';
+    }
+    var control;
+    if (f.t === 'select') control = '<select data-field="' + esc(name) + '">' + f.opts.map(function (o) { return '<option value="' + esc(o[0]) + '"' + (val === o[0] ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join('') + '</select>';
+    else if (f.t === 'textarea' || f.t === 'lines') control = '<textarea data-field="' + esc(name) + '" rows="' + (f.t === 'lines' ? 3 : 3) + '">' + esc(val || '') + '</textarea>';
+    else control = '<input type="' + (f.t === 'number' ? 'text' : (f.t || 'text')) + '"' + (f.t === 'number' ? ' inputmode="decimal"' : '') + ' data-field="' + esc(name) + '" value="' + esc(val == null ? '' : val) + '">';
+    return '<label class="f">' + esc(f.label) + mark + help + control + '</label>';
+  }
+
+  function renderCards() {
+    $('typeCards').innerHTML = state.on.map(function (id) {
+      var t = TYPE_BY_ID[id], v = vals(id);
+      var simple = t.fields.filter(function (f) { return !f.t || ['url', 'tel', 'email', 'number', 'date', 'select'].indexOf(f.t) !== -1; });
+      var complex = t.fields.filter(function (f) { return simple.indexOf(f) === -1; });
+      var grid = '<div class="row">' + simple.map(function (f) { return fieldHtml(id, f, v); }).join('') + '</div>';
+      return '<details class="card typecard" open data-type="' + id + '"><summary><span class="n">' + esc(id === 'local' ? (v.subtype || t.type) : t.type) + '</span>' + esc(t.label) + '<span class="s"></span></summary><div class="body">' + grid + complex.map(function (f) { return fieldHtml(id, f, v); }).join('') + '</div></details>';
+    }).join('') || '<p class="note">Оберіть нішу або хоча б один тип.</p>';
+  }
+
+  function renderChips() {
+    $('presets').innerHTML = PRESETS.map(function (p, i) { return '<button type="button" class="chip" data-preset="' + i + '">' + esc(p.label) + '</button>'; }).join('');
+    $('typeChips').innerHTML = TYPES.map(function (t) { return '<button type="button" class="chip" data-toggle="' + t.id + '" aria-pressed="' + isOn(t.id) + '">' + esc(t.label) + '</button>'; }).join('');
+  }
+
+  function highlight(json) {
+    return esc(json).replace(/(&quot;(?:[^&]|&(?!quot;))*?&quot;)(\s*:)?|\b(true|false|null)\b|-?\b\d+(?:\.\d+)?\b/g, function (m, str, colon) {
+      if (str) return colon ? '<span class="k">' + str + '</span>' + colon : '<span class="s">' + str + '</span>';
+      return '<span class="n">' + m + '</span>';
+    });
+  }
+
+  function scriptTag() { var d = build(); return d ? '<script type="application/ld+json">\n' + JSON.stringify(d, null, 2) + '\n<\/script>' : ''; }
+
+  var saveT;
+  function update() {
+    var d = build();
+    $('code').innerHTML = d ? highlight('<script type="application/ld+json">\n' + JSON.stringify(d, null, 2) + '\n<\/script>') : '<span style="color:var(--muted)">Оберіть типи й заповніть поля — код зʼявиться тут.</span>';
+    var issues = validate();
+    var e = issues.filter(function (i) { return i.lvl === 'err'; }).length, w = issues.filter(function (i) { return i.lvl === 'warn'; }).length;
+    $('summary').innerHTML = e ? '<span class="badge b-err">Помилок: ' + e + '</span>' + (w ? ' <span class="badge b-warn">Рекомендацій: ' + w + '</span>' : '') : (w ? '<span class="badge b-warn">Рекомендацій: ' + w + '</span>' : '<span class="badge b-ok">Без помилок</span>');
+    var lbl = { err: ['b-err', 'Помилка'], warn: ['b-warn', 'Увага'], info: ['b-info', 'Інфо'] };
+    $('issues').innerHTML = issues.length ? issues.map(function (i) { return '<div class="issue"><span class="badge ' + lbl[i.lvl][0] + '">' + lbl[i.lvl][1] + '</span><span><b>' + esc(i.type) + ':</b> ' + esc(i.msg) + '</span></div>'; }).join('') : '<p class="note">Обовʼязкові й рекомендовані поля заповнені.</p>';
+    Array.prototype.forEach.call(document.querySelectorAll('.typecard'), function (c) {
+      var t = TYPE_BY_ID[c.dataset.type]; var n = issues.filter(function (i) { return i.type === t.label && i.lvl === 'err'; }).length;
+      c.querySelector('summary .s').innerHTML = n ? '<span class="badge b-err">' + n + '</span>' : '<span class="badge b-ok">OK</span>';
+    });
+    clearTimeout(saveT); saveT = setTimeout(function () { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (er) {} }, 400);
+  }
+
+  /* ---------- події ---------- */
+  var form = $('form');
+  form.addEventListener('input', function (e) {
+    var el = e.target;
+    if (el.dataset.field) { var p = el.dataset.field.split('.'); vals(p[0])[p[1]] = el.value; if (p[1] === 'subtype') { renderCards(); } update(); return; }
+    if (el.dataset.addr) { var q = el.dataset.addr.split('.'); var v = vals(q[0]); v[q[1]] = v[q[1]] || {}; v[q[1]][el.dataset.ak] = el.value; update(); return; }
+    var row = el.closest('[data-rows]');
+    if (row && el.dataset.rk) { var r = row.dataset.rows.split('.'); vals(r[0])[r[1]][+row.dataset.i][el.dataset.rk] = el.value; update(); }
+  });
+  form.addEventListener('change', function (e) { if (e.target.dataset.field && /subtype$/.test(e.target.dataset.field)) { renderCards(); update(); } });
+  form.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.preset != null) {
+      var p = PRESETS[+b.dataset.preset];
+      state.on = p.on.slice();
+      if (p.sub) vals('local').subtype = p.sub;
+      if (p.on.indexOf('article') !== -1 && !vals('article').datePublished) vals('article').datePublished = new Date().toISOString().slice(0, 10);
+      renderChips(); renderCards(); update(); return;
+    }
+    if (b.dataset.toggle) {
+      var id = b.dataset.toggle, i = state.on.indexOf(id);
+      if (i === -1) { state.on.push(id); state.on.sort(function (x, y) { return TYPES.indexOf(TYPE_BY_ID[x]) - TYPES.indexOf(TYPE_BY_ID[y]); }); } else state.on.splice(i, 1);
+      renderChips(); renderCards(); update(); return;
+    }
+    if (b.dataset.addrow) { var a = b.dataset.addrow.split('.'); var f = TYPE_BY_ID[a[0]].fields.filter(function (x) { return x.k === a[1]; })[0]; vals(a[0])[a[1]].push(f.t === 'hours' ? { d: 'Sa', o: '10:00', c: '15:00' } : {}); renderCards(); update(); return; }
+    if (b.hasAttribute('data-delrow')) { var row = b.closest('[data-rows]'); var k = row.dataset.rows.split('.'); vals(k[0])[k[1]].splice(+row.dataset.i, 1); renderCards(); update(); return; }
+    if (b.hasAttribute('data-aifaq')) { aiFaq(b); return; }
+    if (b.id === 'importBtn') { doImport(b); return; }
+  });
+  $('importUrl').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); doImport($('importBtn')); } });
+
+  /* ---------- імпорт ---------- */
+  var imported = { text: '' };
+  function doImport(btn) {
+    var u = clean($('importUrl').value);
+    if (!/^https?:\/\//i.test(u)) u = u ? 'https://' + u : '';
+    if (!u) { $('importStatus').textContent = 'Вставте адресу сторінки.'; return; }
+    btn.disabled = true; $('importStatus').textContent = 'Завантажую сторінку…';
+    fetch(WORKER + '/?url=' + encodeURIComponent(u)).then(function (r) { return r.json().then(function (d) { if (!r.ok) throw new Error(d.error || 'Помилка ' + r.status); return d; }); })
+      .then(function (d) { applyImport(d.html, d.finalUrl || u); })
+      .catch(function (e) { $('importStatus').textContent = 'Не вдалося: ' + e.message; })
+      .then(function () { btn.disabled = false; });
+  }
+
+  function applyImport(html, url) {
+    var doc = new DOMParser().parseFromString(html || '', 'text/html');
+    var meta = function (sel) { var m = doc.querySelector(sel); return m ? clean(m.getAttribute('content') || m.getAttribute('href')) : ''; };
+    var existing = [], errors = 0, ld = [];
+    Array.prototype.forEach.call(doc.querySelectorAll('script[type="application/ld+json" i]'), function (s) {
+      try { var j = JSON.parse(s.textContent); ld.push(j); (function walk(n) { if (Array.isArray(n)) return n.forEach(walk); if (n && typeof n === 'object') { if (n['@type']) [].concat(n['@type']).forEach(function (t) { existing.push(String(t)); }); if (n['@graph']) walk(n['@graph']); } })(j); }
+      catch (e) { errors++; }
+    });
+    var origin = ''; try { origin = new URL(url).origin + '/'; } catch (e) {}
+    var canonical = meta('link[rel~="canonical" i]') || url;
+    var title = meta('meta[property="og:title" i]') || clean((doc.querySelector('title') || {}).textContent);
+    var desc = meta('meta[property="og:description" i]') || meta('meta[name="description" i]');
+    var image = meta('meta[property="og:image" i]');
+    var site = meta('meta[property="og:site_name" i]');
+    var lang = (doc.documentElement.getAttribute('lang') || '').split('-')[0];
+    var tel = (doc.querySelector('a[href^="tel:" i]') || { getAttribute: function () { return ''; } }).getAttribute('href').replace(/^tel:/i, '');
+    var mail = (doc.querySelector('a[href^="mailto:" i]') || { getAttribute: function () { return ''; } }).getAttribute('href').replace(/^mailto:/i, '').split('?')[0];
+    var social = []; Array.prototype.forEach.call(doc.querySelectorAll('a[href]'), function (a) { var h = a.getAttribute('href'); if (/^https?:\/\/(www\.)?(facebook|instagram|linkedin|youtube|tiktok|t\.me|x\.com|twitter)\b/i.test(h) && social.indexOf(h) === -1 && !/sharer|share\?|intent\//i.test(h)) social.push(h); });
+    var h1 = clean((doc.querySelector('h1') || {}).textContent);
+    var published = meta('meta[property="article:published_time" i]').slice(0, 10), modified = meta('meta[property="article:modified_time" i]').slice(0, 10);
+    var price = meta('meta[property="product:price:amount" i]') || meta('meta[property="og:price:amount" i]') || clean(((doc.querySelector('[itemprop=price]') || {}).getAttribute || function () { return ''; }).call(doc.querySelector('[itemprop=price]') || { getAttribute: function () { return ''; } }, 'content'));
+    var currency = meta('meta[property="product:price:currency" i]') || meta('meta[property="og:price:currency" i]');
+
+    var faqs = [];
+    ld.forEach(function walk(n) { if (Array.isArray(n)) return n.forEach(walk); if (!n || typeof n !== 'object') return; if (n['@graph']) walk(n['@graph']); if (String(n['@type']) === 'FAQPage') [].concat(n.mainEntity || []).forEach(function (q) { if (q && q.name) faqs.push({ q: clean(q.name), a: clean(q.acceptedAnswer && q.acceptedAnswer.text).replace(/<[^>]+>/g, '') }); }); });
+    if (!faqs.length) {
+      Array.prototype.forEach.call(doc.querySelectorAll('details'), function (d) { var s = d.querySelector('summary'); if (!s) return; var q = clean(s.textContent); var a = clean(d.textContent.replace(s.textContent, '')); if (q && a) faqs.push({ q: q, a: a.slice(0, 600) }); });
+      Array.prototype.forEach.call(doc.querySelectorAll('h2,h3,h4'), function (h) { var q = clean(h.textContent); if (!/\?$/.test(q) || faqs.length >= 10) return; var n = h.nextElementSibling; var a = ''; while (n && !/^H[1-4]$/.test(n.tagName) && a.length < 600) { a += ' ' + clean(n.textContent); n = n.nextElementSibling; } a = clean(a); if (a) faqs.push({ q: q, a: a.slice(0, 600) }); });
+    }
+    var crumbs = [];
+    ld.forEach(function walk(n) { if (Array.isArray(n)) return n.forEach(walk); if (!n || typeof n !== 'object') return; if (n['@graph']) walk(n['@graph']); if (String(n['@type']) === 'BreadcrumbList') [].concat(n.itemListElement || []).forEach(function (it) { var item = it.item; crumbs.push({ name: clean(it.name || (item && item.name)), url: clean(typeof item === 'string' ? item : (item && (item['@id'] || item.url)) || '') }); }); });
+
+    var body = doc.body ? doc.body.cloneNode(true) : null;
+    if (body) Array.prototype.forEach.call(body.querySelectorAll('script,style,noscript,nav,header,footer,aside,form,svg'), function (n) { n.remove(); });
+    imported.text = body ? clean(body.textContent).slice(0, 6000) : '';
+    imported.lang = lang;
+
+    var setIf = function (id, k, v) { if (!v) return; var o = vals(id); if (!clean(o[k])) o[k] = v; };
+    setIf('org', 'url', origin); setIf('org', 'name', site); setIf('org', 'telephone', tel); setIf('org', 'email', mail); setIf('org', 'sameAs', social.join('\n'));
+    setIf('website', 'url', origin); setIf('website', 'name', site); if (lang) vals('website').inLanguage = lang;
+    setIf('local', 'name', site); setIf('local', 'url', canonical); setIf('local', 'telephone', tel); setIf('local', 'image', image); setIf('local', 'sameAs', social.join('\n'));
+    setIf('service', 'name', h1 || title); setIf('service', 'description', desc); setIf('service', 'url', canonical);
+    setIf('product', 'name', h1 || title); setIf('product', 'image', image); setIf('product', 'description', desc); setIf('product', 'url', canonical); setIf('product', 'price', price); if (currency) vals('product').priceCurrency = currency;
+    setIf('article', 'headline', h1 || title); setIf('article', 'description', desc); setIf('article', 'url', canonical); setIf('article', 'image', image); setIf('article', 'datePublished', published); setIf('article', 'dateModified', modified);
+    if (faqs.length && !(vals('faq').items || []).some(function (x) { return clean(x.q); })) vals('faq').items = faqs.slice(0, 10);
+    if (crumbs.length && !(vals('breadcrumbs').items || []).some(function (x) { return clean(x.name); })) vals('breadcrumbs').items = crumbs;
+    else if (!(vals('breadcrumbs').items || []).some(function (x) { return clean(x.name); }) && origin) vals('breadcrumbs').items = [{ name: 'Головна', url: origin }, { name: h1 || title, url: '' }];
+
+    var uniq = existing.filter(function (t, i) { return existing.indexOf(t) === i; });
+    $('importStatus').textContent = 'Дані підтягнуто в порожні поля. Перевірте їх перед використанням.';
+    $('importOut').innerHTML = '<p class="note" style="margin-bottom:6px">Наявна розмітка на сторінці:</p><div class="found">' + (uniq.length ? uniq.map(function (t) { return '<span class="badge b-info">' + esc(t) + '</span>'; }).join('') : '<span class="badge b-warn">не знайдено</span>') + (errors ? ' <span class="badge b-err">помилка JSON у ' + errors + ' блоці(ах)</span>' : '') + '</div>' + (faqs.length ? '<p class="note" style="margin-top:8px">Знайдено питань для FAQ: ' + faqs.length + '</p>' : '');
+    renderCards(); update();
+  }
+
+  /* ---------- ШІ: FAQ ---------- */
+  function aiFaq(btn) {
+    var st = $('importStatus');
+    if (!imported.text) { st.textContent = 'Спершу підтягніть сторінку в кроці 1 — ШІ складе FAQ з її тексту.'; $('importUrl').focus(); return; }
+    if (!('LanguageModel' in self)) { st.textContent = 'Вбудований ШІ доступний лише в Google Chrome 148+ на компʼютері.'; return; }
+    btn.disabled = true; st.textContent = 'Готую модель ШІ…';
+    var LM = self.LanguageModel, langs = [imported.lang || 'uk', 'en'];
+    (function pick(i) {
+      if (i >= langs.length) return Promise.reject(new Error('Модель ШІ недоступна на цьому пристрої.'));
+      var o = { expectedInputs: [{ type: 'text', languages: [langs[i]] }], expectedOutputs: [{ type: 'text', languages: [langs[i]] }] };
+      return LM.availability(o).then(function (a) { return a === 'unavailable' ? pick(i + 1) : o; });
+    })(0).then(function (o) {
+      o.monitor = function (m) { m.addEventListener('downloadprogress', function (e) { st.textContent = 'Завантаження моделі ШІ: ' + Math.round(e.loaded * 100) + '%'; }); };
+      return LM.create(o);
+    }).then(function (s) {
+      st.textContent = 'ШІ пише FAQ…';
+      var schema = { type: 'object', properties: { items: { type: 'array', minItems: 3, maxItems: 6, items: { type: 'object', properties: { q: { type: 'string' }, a: { type: 'string' } }, required: ['q', 'a'] } } }, required: ['items'] };
+      return s.prompt('Create 3-6 FAQ items for this web page. Questions are real user search queries. Answers: 1-3 sentences, factual, based ONLY on the page text, no invented numbers or promises. Same language as the page.\n\nPage text:\n' + imported.text.slice(0, 4000), { responseConstraint: schema }).then(function (r) { if (s.destroy) s.destroy(); return JSON.parse(r).items; });
+    }).then(function (items) {
+      var cur = (vals('faq').items || []).filter(function (x) { return clean(x.q); });
+      vals('faq').items = cur.concat(items.map(function (x) { return { q: clean(x.q), a: clean(x.a) }; }));
+      st.textContent = 'Готово. FAQ від ШІ — чернетка: ці питання й відповіді мають бути видимі на сторінці.'; renderCards(); update();
+    }).catch(function (e) { st.textContent = e.message; }).then(function () { btn.disabled = false; });
+  }
+
+  /* ---------- експорт ---------- */
+  function flash(t) { $('exportStatus').textContent = t; setTimeout(function () { if ($('exportStatus').textContent === t) $('exportStatus').textContent = ''; }, 3500); }
+  $('copy').addEventListener('click', function () {
+    var t = scriptTag(); if (!t) { flash('Немає коду для копіювання.'); return; }
+    var e = validate().filter(function (i) { return i.lvl === 'err'; }).length;
+    navigator.clipboard.writeText(t).then(function () { flash(e ? 'Скопійовано, але є помилки — виправте їх перед публікацією.' : 'Скопійовано. Перевірте в Rich Results Test перед публікацією.'); }, function () { flash('Не вдалося скопіювати — виділіть код вручну.'); });
+  });
+  $('dl').addEventListener('click', function () {
+    var d = build(); if (!d) { flash('Немає коду.'); return; }
+    var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(d, null, 2)], { type: 'application/ld+json' })); a.download = 'schema.json'; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 400);
+  });
+  $('reset').addEventListener('click', function () { if (!confirm('Очистити всі поля?')) return; state = blank(); imported = { text: '' }; $('importOut').innerHTML = ''; $('importStatus').textContent = ''; renderChips(); renderCards(); update(); });
+  $('demo').addEventListener('click', function () {
+    state = { on: ['org', 'website', 'local', 'person', 'faq', 'breadcrumbs'], v: {
+      org: { name: 'Клініка «Демо Здоровʼя»', url: 'https://demo-clinic.com.ua/', logo: 'https://demo-clinic.com.ua/logo.png', telephone: '+380 50 000 00 00', email: 'info@demo-clinic.com.ua', sameAs: 'https://www.facebook.com/democlinic\nhttps://www.instagram.com/democlinic' },
+      website: { name: 'Демо Здоровʼя', url: 'https://demo-clinic.com.ua/', inLanguage: 'uk' },
+      local: { subtype: 'MedicalClinic', name: 'Клініка «Демо Здоровʼя» — Ужгород', url: 'https://demo-clinic.com.ua/uzhhorod/', telephone: '+380 50 000 00 00', image: 'https://demo-clinic.com.ua/foto.jpg', priceRange: '400–2500 грн', address: { street: 'вул. Демонстраційна, 1', locality: 'Ужгород', region: 'Закарпатська область', postal: '88000', country: 'UA' }, lat: '48.6208', lng: '22.2879', hours: [{ d: 'Mo-Fr', o: '08:00', c: '19:00' }, { d: 'Sa', o: '09:00', c: '15:00' }], medicalSpecialty: 'PrimaryCare', areaServed: 'Ужгород' },
+      person: { name: 'Олена Демченко', jobTitle: 'Лікарка сімейної медицини', url: 'https://demo-clinic.com.ua/likari/demchenko/', knowsAbout: 'сімейна медицина\nпрофілактичні огляди' },
+      faq: { items: [{ q: 'Чи потрібне направлення до сімейного лікаря?', a: 'Ні, на консультацію можна записатися без направлення телефоном або онлайн.' }, { q: 'Скільки триває перший прийом?', a: 'Перший прийом триває до 40 хвилин: лікар збирає анамнез і складає план обстеження.' }] },
+      breadcrumbs: { items: [{ name: 'Головна', url: 'https://demo-clinic.com.ua/' }, { name: 'Клініки', url: 'https://demo-clinic.com.ua/kliniky/' }, { name: 'Ужгород', url: '' }] }
+    } };
+    renderChips(); renderCards(); update(); flash('Завантажено демо з вигаданими даними.');
+  });
+
+  try { var saved = localStorage.getItem(STORE); if (saved) { var s = JSON.parse(saved); if (s && Array.isArray(s.on)) state = s; } } catch (e) {}
+  renderChips(); renderCards(); update();
+  window.OnePaneSchema = { build: build, validate: validate, applyImport: applyImport, getState: function () { return state; } };
+})();
+</script>
+</body>
+</html>
