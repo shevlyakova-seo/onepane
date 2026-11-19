@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Звіт для клієнта з SEO за місяць — OnePane</title>
+<meta name="description" content="Зберіть місячний SEO-звіт для клієнта за 10 хвилин: експорти Search Console, позиції, швидкість, виконані роботи й план. Графіки, висновки й PDF. Безкоштовно.">
+<link rel="canonical" href="https://shevlyakova-seo.github.io/onepane/report/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://shevlyakova-seo.github.io/onepane/report/">
+<meta property="og:title" content="Звіт для клієнта з SEO за місяць — OnePane">
+<meta property="og:description" content="Search Console, позиції, швидкість, роботи й план — у зрозумілому звіті з графіками та PDF.">
+<meta property="og:locale" content="uk_UA">
+<meta name="theme-color" content="#0E1116">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237C9CFF'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/onepane.css">
+<style>
+.side{top:76px}
+.rep{background:#FFFFFF;color:#1F2430;border-radius:14px;padding:36px 40px;max-height:calc(100vh - 170px);overflow:auto;font-family:'Manrope',Arial,sans-serif;font-size:13.5px;line-height:1.5;--acc:#2F6FEB}
+.rep h1{font-size:26px;margin:0;line-height:1.2;color:#111}
+.rep h2{font-size:18px;margin:26px 0 10px;color:#111;display:flex;align-items:center;gap:10px}
+.rep h2::before{content:'';width:6px;height:18px;border-radius:3px;background:var(--acc)}
+.rep h3{font-size:14px;margin:14px 0 6px;color:#111}
+.rep p{margin:0 0 8px}
+.rep .cover{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;border-bottom:2px solid #EEF0F3;padding-bottom:18px}
+.rep .cover img{max-height:56px;max-width:180px;object-fit:contain}
+.rep .sub{color:#5D6676;font-size:14px;margin-top:6px}
+.rep .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.rep .tile{border:1px solid #E3E6EB;border-radius:12px;padding:12px 14px}
+.rep .tile span{display:block;font-size:12px;color:#5D6676}
+.rep .tile strong{display:block;font-size:22px;color:#111;margin-top:2px}
+.rep .up{color:#137A44}.rep .down{color:#B42318}.rep .flat{color:#5D6676}
+.rep table{width:100%;border-collapse:collapse;font-size:12.5px;margin:4px 0 10px}
+.rep th,.rep td{border-bottom:1px solid #E8EBEF;padding:6px 8px;text-align:left;vertical-align:top}
+.rep th{font-size:11.5px;color:#5D6676;font-weight:700;background:#F6F7F9}
+.rep td.r,.rep th.r{text-align:right;white-space:nowrap}
+.rep .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.rep .chart{width:100%;height:auto;display:block}
+.rep .legend{display:flex;gap:16px;font-size:12px;color:#5D6676;margin:4px 0 8px}
+.rep .legend i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.rep .pill{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:99px;background:#EEF2FF;color:#3346A8}
+.rep .pill.done{background:#E5F5EC;color:#137A44}.rep .pill.wip{background:#FDF1D8;color:#8A5A00}.rep .pill.plan{background:#EEF0F3;color:#5D6676}
+.rep .comment{background:#F6F7F9;border-radius:12px;padding:14px 16px;white-space:pre-line}
+.rep .src{font-size:11.5px;color:#7A8394;margin-top:4px}
+.rep .empty{color:#9AA3B2;font-style:italic}
+section.sec{break-inside:avoid}
+.mapper{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.rowline.task{grid-template-columns:150px minmax(0,1fr) 130px 36px}
+.rowline.kpi{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr) 36px}
+.rowline.planr{grid-template-columns:150px minmax(0,1fr) 36px}
+.filelist{display:flex;flex-wrap:wrap;gap:6px}
+@media (max-width:767px){.rep{padding:22px 16px;max-height:none}.rep .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.rep .two{grid-template-columns:minmax(0,1fr)}.rowline.task,.rowline.kpi,.rowline.planr{grid-template-columns:minmax(0,1fr) 36px}.rowline.task>*:not(.icon),.rowline.kpi>*:not(.icon),.rowline.planr>*:not(.icon){grid-column:1/2}}
+@media print{
+  @page{size:A4;margin:12mm}
+  body{background:#fff}
+  .top,.hero,.form,.foot,.side>*:not(#rep){display:none!important}
+  .layout{display:block;padding:0}.side{position:static}
+  .rep{max-height:none;overflow:visible;padding:0;border-radius:0;font-size:11.5px}
+  .rep .tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .rep .two{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rep h2{break-after:avoid}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../"><i aria-hidden="true"></i>OnePane</a>
+    <nav class="menu" aria-label="Інструменти">
+      <a href="../#audit">Аудит URL</a>
+      <a href="../brief/">Генератор ТЗ</a>
+      <a href="../schema/">Мікророзмітка</a>
+      <a href="./" aria-current="page">Звіт</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Звіт для клієнта за місяць</h1>
+    <p>Завантажте експорти Search Console і позицій, додайте виконані роботи — отримаєте зрозумілий звіт з графіками, висновками й PDF. Файли обробляються лише у вашому браузері.</p>
+  </section>
+
+  <div class="layout">
+    <div class="form" id="form">
+
+      <details class="card" open>
+        <summary><span class="n">1</span>Проєкт і період</summary>
+        <div class="body">
+          <div class="row">
+            <label class="f">Проєкт / клієнт<input type="text" data-m="project" placeholder="Назва клієнта"></label>
+            <label class="f">Сайт<input type="text" data-m="domain" placeholder="example.com"></label>
+          </div>
+          <div class="row">
+            <label class="f">Звітний період<input type="text" data-m="period" placeholder="Жовтень 2026"></label>
+            <label class="f">Порівнюємо з<input type="text" data-m="prevLabel" placeholder="Вересень 2026"></label>
+          </div>
+          <div class="row">
+            <label class="f">Підготував(ла)<input type="text" data-m="author" placeholder="Імʼя, посада"></label>
+            <label class="f">Колір акценту<input type="color" data-m="accent" value="#2F6FEB"></label>
+          </div>
+          <label class="f">Логотип клієнта (необовʼязково)<small>PNG / JPG / SVG, зберігається лише в браузері</small><input type="file" id="logo" accept="image/png,image/jpeg,image/svg+xml,image/webp"></label>
+          <div class="btns"><button type="button" class="btn ghost small" id="logoDel">Прибрати логотип</button></div>
+        </div>
+      </details>
+
+      <details class="card" open>
+        <summary><span class="n">2</span>Search Console <span class="s">CSV або ZIP</span></summary>
+        <div class="body">
+          <p class="note">У Search Console: <b>Ефективність → Експорт → Завантажити CSV</b>. Підійде ZIP цілком або окремі файли «Запити», «Сторінки», «Дати». Можна одним експортом у режимі <b>порівняння періодів</b> — тоді другий блок не потрібен.</p>
+          <div class="drop" data-drop="cur">
+            <strong>Поточний період</strong>
+            <span class="note">Перетягніть файли сюди або оберіть</span>
+            <input type="file" multiple accept=".csv,.zip,text/csv,application/zip" data-files="cur" aria-label="Файли поточного періоду">
+            <div class="filelist" id="files-cur"></div>
+          </div>
+          <div class="drop" data-drop="prev">
+            <strong>Попередній період <span class="note" style="font-weight:500">(якщо не використовували порівняння)</span></strong>
+            <input type="file" multiple accept=".csv,.zip,text/csv,application/zip" data-files="prev" aria-label="Файли попереднього періоду">
+            <div class="filelist" id="files-prev"></div>
+          </div>
+          <div class="status" id="gscStatus" role="status" aria-live="polite"></div>
+          <div class="btns"><button type="button" class="btn ghost small" id="gscClear">Очистити дані Search Console</button></div>
+        </div>
+      </details>
+
+      <details class="card" open>
+        <summary><span class="n">3</span>Позиції <span class="s">Serpstat, Ahrefs, SE Ranking…</span></summary>
+        <div class="body">
+          <p class="note">CSV з трекера позицій: ключ, поточна позиція, бажано — попередня позиція. Після завантаження вкажіть, яка колонка що означає.</p>
+          <input type="file" accept=".csv,text/csv" id="posFile" aria-label="Файл позицій">
+          <div id="mapper"></div>
+          <div class="status" id="posStatus" role="status" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="card">
+        <summary><span class="n">4</span>Бізнес-показники <span class="s">GA4, CRM — вручну</span></summary>
+        <div class="body">
+          <p class="note">Те, що важливо клієнту: органічні сесії, заявки, дзвінки, продажі. Значення — за поточний і попередній період.</p>
+          <div class="rows" id="kpis"></div>
+          <div class="btns"><button type="button" class="btn ghost small" id="addKpi">+ Показник</button></div>
+        </div>
+      </details>
+
+      <details class="card">
+        <summary><span class="n">5</span>Швидкість сторінок <span class="s">PageSpeed, наживо</span></summary>
+        <div class="body">
+          <label class="f">Ключові сторінки (до 5, кожна з нового рядка)<textarea id="psiUrls" rows="3" placeholder="https://example.com/&#10;https://example.com/katalog/"></textarea></label>
+          <div class="btns"><button type="button" class="btn" id="psiRun">Перевірити швидкість</button></div>
+          <div class="status" id="psiStatus" role="status" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="card" open>
+        <summary><span class="n">6</span>Виконані роботи</summary>
+        <div class="body">
+          <div class="rows" id="tasks"></div>
+          <div class="btns"><button type="button" class="btn ghost small" id="addTask">+ Робота</button></div>
+          <label class="f">Вставити з Google Таблиць<small>Колонки: категорія, опис, статус — або лише опис. Кожен рядок — окрема робота</small><textarea id="pasteTasks" rows="2"></textarea></label>
+          <div class="btns"><button type="button" class="btn ghost small" id="pasteBtn">Додати зі вставленого</button></div>
+        </div>
+      </details>
+
+      <details class="card">
+        <summary><span class="n">7</span>План на наступний період</summary>
+        <div class="body">
+          <div class="rows" id="plan"></div>
+          <div class="btns"><button type="button" class="btn ghost small" id="addPlan">+ Пункт плану</button></div>
+        </div>
+      </details>
+
+      <details class="card" open>
+        <summary><span class="n">8</span>Висновок спеціаліста</summary>
+        <div class="body">
+          <label class="f">Коментар для клієнта<textarea data-m="comment" rows="5" placeholder="Що змінилось, чому, що робимо далі — простою мовою"></textarea></label>
+          <div class="btns"><button type="button" class="btn ghost small" id="aiComment"><span class="ai">ШІ</span> Чернетка з цифр звіту</button></div>
+          <div class="status" id="aiStatus" role="status" aria-live="polite"></div>
+          <strong style="font-size:14px;color:var(--text2)">Розділи звіту</strong>
+          <div class="checks" id="sections"></div>
+        </div>
+      </details>
+    </div>
+
+    <aside class="side" aria-label="Звіт">
+      <div class="btns">
+        <button type="button" class="btn" id="print">Зберегти PDF</button>
+        <button type="button" class="btn ghost" id="demo">Демо-звіт</button>
+        <button type="button" class="btn ghost small" id="reset">Очистити</button>
+      </div>
+      <div class="status" id="topStatus" role="status" aria-live="polite"></div>
+      <article class="rep" id="rep"></article>
+    </aside>
+  </div>
+</main>
+
+<footer class="foot"><div class="wrap">© 2026 OnePane · <a href="../">Аудит URL</a> · <a href="../brief/">Генератор ТЗ</a> · <a href="../schema/">Мікророзмітка</a> · <a href="mailto:shevlyakova.seo@gmail.com">shevlyakova.seo@gmail.com</a></div></footer>
+
+<script>
+(function () {
+  'use strict';
+  var PSI_KEY = 'AIzaSyD_DZS569nGv_tN7IPONq8-3ZLy6WEAp7o';
+  var JSZIP = 'https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js';
+  var STORE = 'onepane-report';
+  var TASK_CATS = ['Технічне SEO', 'Контент', 'Посилання', 'Локальне SEO', 'Мікророзмітка', 'Аналітика', 'Швидкість', 'Інше'];
+  var STATUSES = [['done', 'Виконано'], ['wip', 'У процесі'], ['plan', 'Заплановано']];
+  var SECTIONS = [['summary', 'Головне за період'], ['traffic', 'Динаміка трафіку'], ['queries', 'Запити'], ['pages', 'Сторінки'], ['positions', 'Позиції'], ['kpi', 'Бізнес-показники'], ['speed', 'Швидкість'], ['tasks', 'Виконані роботи'], ['plan', 'План'], ['comment', 'Висновок']];
+
+  var state = blank();
+  function blank() {
+    var s = { meta: { project: '', domain: '', period: '', prevLabel: '', author: '', accent: '#2F6FEB', logo: '', comment: '' },
+      gsc: { cur: {}, prev: {}, files: { cur: [], prev: [] } },
+      pos: { rows: [], header: [], raw: [], map: {}, file: '' },
+      kpis: [{ label: 'Органічні сесії (GA4)', cur: '', prev: '' }, { label: 'Заявки з органіки', cur: '', prev: '' }],
+      psi: { urls: '', results: [] }, tasks: [], plan: [], sections: {} };
+    SECTIONS.forEach(function (x) { s.sections[x[0]] = true; });
+    return s;
+  }
+
+  /* ---------- утиліти ---------- */
+  function $(id) { return document.getElementById(id); }
+  function esc(v) { return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function clean(t) { return String(t == null ? '' : t).replace(/\s+/g, ' ').trim(); }
+  function lines(t) { return String(t || '').split(/\r?\n/).map(clean).filter(Boolean); }
+  function fmt(n, d) { if (n == null || isNaN(n)) return '—'; return Number(n).toLocaleString('uk-UA', { maximumFractionDigits: d == null ? 0 : d, minimumFractionDigits: d && d > 0 ? Math.min(d, 1) : 0 }); }
+  function pct(n) { return n == null || isNaN(n) ? '—' : (n * 100).toLocaleString('uk-UA', { maximumFractionDigits: 2 }) + '%'; }
+  function parseNum(s) {
+    if (s == null) return null;
+    var t = String(s).replace(/[\s  %]/g, '');
+    if (!t || /^[-–—]$/.test(t)) return null;
+    if (/^>?100\+?$/.test(t) && /[>+]/.test(t)) return 101;
+    if (t.indexOf(',') !== -1 && t.indexOf('.') !== -1) t = t.replace(/,/g, '');
+    else if (t.indexOf(',') !== -1) t = /^\d{1,3}(,\d{3})+$/.test(t) ? t.replace(/,/g, '') : t.replace(',', '.');
+    var n = parseFloat(t.replace(/[^\d.\-]/g, ''));
+    return isNaN(n) ? null : n;
+  }
+  function change(cur, prev) { if (cur == null || prev == null || prev === 0) return null; return (cur - prev) / Math.abs(prev); }
+
+  function parseCsv(text) {
+    text = String(text || '').replace(/^﻿/, '');
+    var first = text.split(/\r?\n/)[0] || '';
+    var delim = [',', ';', '\t'].map(function (d) { return [d, first.split(d).length]; }).sort(function (a, b) { return b[1] - a[1]; })[0][0];
+    var rows = [], row = [], cell = '', q = false;
+    for (var i = 0; i < text.length; i++) {
+      var c = text[i];
+      if (q) { if (c === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; } else cell += c; continue; }
+      if (c === '"') q = true;
+      else if (c === delim) { row.push(cell); cell = ''; }
+      else if (c === '\n' || c === '\r') { if (c === '\r' && text[i + 1] === '\n') i++; row.push(cell); rows.push(row); row = []; cell = ''; }
+      else cell += c;
+    }
+    if (cell !== '' || row.length) { row.push(cell); rows.push(row); }
+    return rows.filter(function (r) { return r.some(function (x) { return clean(x); }); });
+  }
+
+  /* ---------- Search Console ---------- */
+  var RX = {
+    query: /quer|запит|запрос|zapyt|dotaz|suchanfrag|requête|consulta/i,
+    page: /^(top )?page|сторін|страниц|stron|strán|seite|url/i,
+    date: /^date|дата|^data|datum|fecha/i,
+    clicks: /click|клік|клик|klik|kliknię|clic/i,
+    impr: /impress|показ|wyświetl|zobrazen|impressionen|impresion/i,
+    ctr: /ctr/i,
+    pos: /position|позиц|pozycj|pozice|posición/i,
+    prev: /previous|попередн|предыдущ|poprzedn|předchoz|vorherig|anterior|prev/i
+  };
+
+  function ingestCsv(text, name, zone) {
+    var rows = parseCsv(text);
+    if (rows.length < 2) return null;
+    var h = rows[0].map(clean);
+    var dim = RX.date.test(h[0]) ? 'dates' : RX.query.test(h[0]) ? 'queries' : RX.page.test(h[0]) ? 'pages' : null;
+    if (!dim) return null;
+    var cols = [];
+    h.forEach(function (name, i) {
+      if (!i) return;
+      var m = RX.clicks.test(name) ? 'clicks' : RX.impr.test(name) ? 'impressions' : RX.ctr.test(name) ? 'ctr' : RX.pos.test(name) ? 'position' : null;
+      if (!m) return;
+      cols.push({ i: i, m: m, per: RX.prev.test(name) ? 'prev' : 'cur' });
+    });
+    if (!cols.length) return null;
+    var hasPrev = cols.some(function (c) { return c.per === 'prev'; });
+    var out = { cur: [], prev: [] };
+    rows.slice(1).forEach(function (r) {
+      var key = clean(r[0]); if (!key) return;
+      var a = { key: key }, b = { key: key };
+      cols.forEach(function (c) { var raw = r[c.i]; var v = parseNum(raw); if (c.m === 'ctr' && v != null && (/%/.test(String(raw)) || v > 1)) v = v / 100; (c.per === 'prev' ? b : a)[c.m] = v; });
+      out.cur.push(a); if (hasPrev) out.prev.push(b);
+    });
+    var target = zone === 'prev' ? 'prev' : 'cur';
+    state.gsc[target][dim] = out.cur;
+    if (hasPrev && zone !== 'prev') state.gsc.prev[dim] = out.prev;
+    return { dim: dim, rows: out.cur.length, compare: hasPrev };
+  }
+
+  function loadScript(src) { return new Promise(function (res, rej) { if (window.JSZip) return res(); var s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = function () { rej(new Error('не вдалося завантажити бібліотеку для ZIP')); }; document.head.appendChild(s); }); }
+
+  function handleFiles(files, zone) {
+    var list = Array.prototype.slice.call(files || []);
+    if (!list.length) return;
+    var st = $('gscStatus'); st.textContent = 'Читаю файли…';
+    var results = [];
+    var jobs = list.map(function (file) {
+      if (/\.zip$/i.test(file.name) || file.type === 'application/zip') {
+        return loadScript(JSZIP).then(function () { return window.JSZip.loadAsync(file); }).then(function (zip) {
+          var csvs = Object.keys(zip.files).filter(function (n) { return /\.csv$/i.test(n) && !zip.files[n].dir; });
+          return Promise.all(csvs.map(function (n) { return zip.files[n].async('string').then(function (t) { var r = ingestCsv(t, n, zone); if (r) results.push(r); }); }));
+        });
+      }
+      return file.text().then(function (t) { var r = ingestCsv(t, file.name, zone); if (r) results.push(r); else results.push({ skip: file.name }); });
+    });
+    Promise.all(jobs).then(function () {
+      state.gsc.files[zone] = list.map(function (f) { return f.name; });
+      var ok = results.filter(function (r) { return r.dim; });
+      var names = { queries: 'запити', pages: 'сторінки', dates: 'дати' };
+      st.textContent = ok.length ? 'Прочитано: ' + ok.map(function (r) { return names[r.dim] + ' (' + fmt(r.rows) + ')'; }).join(', ') + (ok.some(function (r) { return r.compare; }) ? ' · знайдено порівняння періодів' : '') + '.' : 'Не знайдено таблиць Search Console. Потрібен CSV «Запити», «Сторінки» або «Дати».';
+      renderFiles(); render(); save();
+    }).catch(function (e) { st.textContent = 'Помилка: ' + e.message; });
+  }
+
+  function pickSource() {
+    var c = state.gsc.cur || {}, p = state.gsc.prev || {};
+    var has = function (g, k) { return g[k] && g[k].length; };
+    var order = ['dates', 'pages', 'queries'];
+    var anyPrev = order.some(function (k) { return has(p, k); });
+    for (var i = 0; i < order.length; i++) { var k = order[i]; if (has(c, k) && (!anyPrev || has(p, k))) return k; }
+    for (var j = 0; j < order.length; j++) if (has(c, order[j])) return order[j];
+    return null;
+  }
+  function totals(per) {
+    var g = state.gsc[per] || {};
+    var src = pickSource();
+    if (!src || !g[src] || !g[src].length) return null;
+    var rows = g[src], c = 0, im = 0, pw = 0, pn = 0;
+    rows.forEach(function (r) { c += r.clicks || 0; im += r.impressions || 0; if (r.position != null) { var w = r.impressions || 1; pw += r.position * w; pn += w; } });
+    return { clicks: c, impressions: im, ctr: im ? c / im : null, position: pn ? pw / pn : null, src: src };
+  }
+
+  function joinRows(cur, prev) {
+    var m = {}; (prev || []).forEach(function (r) { m[r.key] = r; });
+    return (cur || []).map(function (r) { var p = m[r.key] || {}; return { key: r.key, clicks: r.clicks || 0, impressions: r.impressions || 0, position: r.position, pClicks: p.clicks || 0, pPosition: p.position, d: (r.clicks || 0) - (p.clicks || 0), hasPrev: !!m[r.key] }; })
+      .concat((prev || []).filter(function (r) { return !(cur || []).some(function (x) { return x.key === r.key; }); }).map(function (p) { return { key: p.key, clicks: 0, impressions: 0, position: null, pClicks: p.clicks || 0, pPosition: p.position, d: -(p.clicks || 0), hasPrev: true }; }));
+  }
+
+  /* ---------- позиції ---------- */
+  var PRX = { kw: /keyword|ключ|запит|запрос|query|фраза|phrase|słowo/i, pos: /position|позиц|rank|місце|место|pozycj/i, old: /prev|попер|пред|old|was|start|початк|нач|initial|вчора|yesterday|last/i, diff: /change|зміна|измен|diff|динам|delta|Δ/i, url: /url|сторінк|страниц|page|landing|адрес/i, vol: /volume|частот|обсяг|объем|search vol|вол/i };
+  function guessMap(h) {
+    var m = { kw: '', cur: '', prev: '', url: '', vol: '' };
+    h.forEach(function (name, i) {
+      var s = String(i);
+      if (m.kw === '' && PRX.kw.test(name)) m.kw = s;
+      else if (PRX.pos.test(name) && !PRX.diff.test(name)) { if (PRX.old.test(name)) { if (m.prev === '') m.prev = s; } else if (m.cur === '') m.cur = s; }
+      else if (m.url === '' && PRX.url.test(name)) m.url = s;
+      else if (m.vol === '' && PRX.vol.test(name)) m.vol = s;
+    });
+    if (m.kw === '') m.kw = '0';
+    return m;
+  }
+  function applyPosMap() {
+    var p = state.pos, m = p.map;
+    var posVal = function (v) { var n = parseNum(v); if (n == null) return null; return n > 100 ? 101 : n; };
+    p.rows = p.raw.map(function (r) { return { kw: clean(r[+m.kw]), cur: m.cur !== '' ? posVal(r[+m.cur]) : null, prev: m.prev !== '' ? posVal(r[+m.prev]) : null, url: m.url !== '' ? clean(r[+m.url]) : '', vol: m.vol !== '' ? parseNum(r[+m.vol]) : null }; })
+      .filter(function (r) { return r.kw; });
+  }
+  function renderMapper() {
+    var p = state.pos;
+    if (!p.header.length) { $('mapper').innerHTML = ''; return; }
+    var opt = function (key, label, req) {
+      return '<label class="f">' + label + (req ? ' <span class="req">*</span>' : '') + '<select data-map="' + key + '"><option value="">—</option>' + p.header.map(function (h, i) { return '<option value="' + i + '"' + (String(p.map[key]) === String(i) ? ' selected' : '') + '>' + esc(h || ('Колонка ' + (i + 1))) + '</option>'; }).join('') + '</select></label>';
+    };
+    $('mapper').innerHTML = '<div class="mapper">' + opt('kw', 'Ключ', true) + opt('cur', 'Поточна позиція', true) + opt('prev', 'Попередня позиція') + opt('url', 'URL') + opt('vol', 'Частота') + '</div>';
+    $('posStatus').textContent = 'Файл «' + p.file + '»: ' + fmt(p.rows.length) + ' ключів.' + (p.map.cur === '' ? ' Оберіть колонку з поточною позицією.' : '');
+  }
+  function posStats() {
+    var rows = state.pos.rows.filter(function (r) { return r.cur != null || r.prev != null; });
+    if (!rows.length) return null;
+    var B = [['1–3', 1, 3], ['4–10', 4, 10], ['11–30', 11, 30], ['31–100', 31, 100], ['>100', 101, 1e9]];
+    var dist = function (k) { return B.map(function (b) { return rows.filter(function (r) { var v = r[k] == null ? 101 : r[k]; return v >= b[1] && v <= b[2]; }).length; }); };
+    var hasPrev = rows.some(function (r) { return r.prev != null; });
+    var moved = rows.filter(function (r) { return r.cur != null && r.prev != null; }).map(function (r) { return Object.assign({ d: r.prev - r.cur }, r); });
+    return { n: rows.length, labels: B.map(function (b) { return b[0]; }), cur: dist('cur'), prev: hasPrev ? dist('prev') : null, hasPrev: hasPrev,
+      top10: rows.filter(function (r) { return r.cur != null && r.cur <= 10; }).length, top10p: hasPrev ? rows.filter(function (r) { return r.prev != null && r.prev <= 10; }).length : null,
+      up: moved.filter(function (r) { return r.d > 0; }).sort(function (a, b) { return b.d - a.d; }).slice(0, 8),
+      down: moved.filter(function (r) { return r.d < 0; }).sort(function (a, b) { return a.d - b.d; }).slice(0, 8),
+      improved: moved.filter(function (r) { return r.d > 0; }).length, worsened: moved.filter(function (r) { return r.d < 0; }).length };
+  }
+
+  /* ---------- графіки ---------- */
+  function lineChart(cur, prev, labels, color) {
+    var W = 640, H = 200, P = { l: 44, r: 10, t: 10, b: 26 };
+    var all = cur.concat(prev || []).filter(function (v) { return v != null; });
+    var max = Math.max.apply(null, all.concat([1])); var step = Math.pow(10, Math.floor(Math.log10(max))); max = Math.ceil(max / step) * step;
+    var n = Math.max(cur.length, (prev || []).length);
+    var x = function (i) { return P.l + (n > 1 ? i * (W - P.l - P.r) / (n - 1) : 0); };
+    var y = function (v) { return H - P.b - (v / max) * (H - P.t - P.b); };
+    var path = function (arr) { return arr.map(function (v, i) { return (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v || 0).toFixed(1); }).join(' '); };
+    var grid = [0, 0.5, 1].map(function (f) { var v = max * f; return '<line x1="' + P.l + '" x2="' + (W - P.r) + '" y1="' + y(v) + '" y2="' + y(v) + '" stroke="#E8EBEF"/><text x="' + (P.l - 6) + '" y="' + (y(v) + 4) + '" text-anchor="end" font-size="10" fill="#7A8394">' + fmt(v) + '</text>'; }).join('');
+    var ticks = labels.map(function (l, i) { if (n > 8 && i % Math.ceil(n / 6) && i !== n - 1) return ''; return '<text x="' + x(i) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="10" fill="#7A8394">' + esc(l) + '</text>'; }).join('');
+    return '<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Графік кліків">' + grid + ticks +
+      (prev && prev.length ? '<path d="' + path(prev) + '" fill="none" stroke="#B8C0CC" stroke-width="2" stroke-dasharray="5 4"/>' : '') +
+      '<path d="' + path(cur) + '" fill="none" stroke="' + color + '" stroke-width="2.5"/></svg>';
+  }
+  function barChart(labels, cur, prev, color) {
+    var W = 640, H = 190, P = { l: 30, r: 10, t: 16, b: 26 };
+    var max = Math.max.apply(null, cur.concat(prev || []).concat([1]));
+    var gw = (W - P.l - P.r) / labels.length, bw = prev ? gw * 0.32 : gw * 0.5;
+    var y = function (v) { return H - P.b - (v / max) * (H - P.t - P.b); };
+    var out = labels.map(function (l, i) {
+      var x0 = P.l + i * gw + gw / 2;
+      var s = '';
+      if (prev) s += '<rect x="' + (x0 - bw - 2) + '" y="' + y(prev[i]) + '" width="' + bw + '" height="' + (H - P.b - y(prev[i])) + '" fill="#C9D0DA" rx="3"/><text x="' + (x0 - bw / 2 - 2) + '" y="' + (y(prev[i]) - 4) + '" text-anchor="middle" font-size="10" fill="#7A8394">' + prev[i] + '</text>';
+      var cx = prev ? x0 + 2 : x0 - bw / 2;
+      s += '<rect x="' + cx + '" y="' + y(cur[i]) + '" width="' + bw + '" height="' + (H - P.b - y(cur[i])) + '" fill="' + color + '" rx="3"/><text x="' + (cx + bw / 2) + '" y="' + (y(cur[i]) - 4) + '" text-anchor="middle" font-size="10" font-weight="700" fill="#1F2430">' + cur[i] + '</text>';
+      s += '<text x="' + x0 + '" y="' + (H - 8) + '" text-anchor="middle" font-size="11" fill="#5D6676">' + esc(l) + '</text>';
+      return s;
+    }).join('');
+    return '<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Розподіл позицій"><line x1="' + P.l + '" x2="' + (W - P.r) + '" y1="' + (H - P.b) + '" y2="' + (H - P.b) + '" stroke="#E3E6EB"/>' + out + '</svg>';
+  }
+
+  /* ---------- звіт ---------- */
+  function deltaHtml(ch, invert, suffix) {
+    if (ch == null) return '<span class="flat">немає даних для порівняння</span>';
+    var good = invert ? ch < 0 : ch > 0;
+    var cls = Math.abs(ch) < 0.005 ? 'flat' : good ? 'up' : 'down';
+    var arrow = ch > 0 ? '▲' : ch < 0 ? '▼' : '•';
+    return '<span class="' + cls + '">' + arrow + ' ' + (suffix === 'pp' ? Math.abs(ch * 100).toLocaleString('uk-UA', { maximumFractionDigits: 2 }) + ' п.п.' : suffix === 'abs' ? Math.abs(ch).toLocaleString('uk-UA', { maximumFractionDigits: 1 }) : Math.abs(ch * 100).toLocaleString('uk-UA', { maximumFractionDigits: 1 }) + '%') + '</span>';
+  }
+
+  function summaryFacts() {
+    var c = totals('cur'), p = totals('prev'), ps = posStats(), f = [];
+    if (c) {
+      var ch = p ? change(c.clicks, p.clicks) : null;
+      f.push('Кліки з Google: ' + fmt(c.clicks) + (ch != null ? ' (' + (ch >= 0 ? '+' : '−') + Math.abs(ch * 100).toLocaleString('uk-UA', { maximumFractionDigits: 1 }) + '% до попереднього періоду)' : '') + '.');
+      if (p) { var ci = change(c.impressions, p.impressions); f.push('Покази у видачі: ' + fmt(c.impressions) + (ci != null ? ' (' + (ci >= 0 ? '+' : '−') + Math.abs(ci * 100).toLocaleString('uk-UA', { maximumFractionDigits: 1 }) + '%)' : '') + '.'); }
+      if (c.position != null && p && p.position != null) f.push('Середня позиція ' + (c.position < p.position ? 'покращилась' : c.position > p.position ? 'знизилась' : 'не змінилась') + ': ' + fmt(p.position, 1) + ' → ' + fmt(c.position, 1) + '.');
+    }
+    if (ps) f.push('Ключів у ТОП-10: ' + ps.top10 + (ps.top10p != null ? ' (було ' + ps.top10p + ')' : '') + ' з ' + ps.n + ' відстежуваних.' + (ps.hasPrev ? ' Покращили позиції: ' + ps.improved + ', погіршили: ' + ps.worsened + '.' : ''));
+    var q = joinRows(state.gsc.cur.queries, state.gsc.prev.queries).filter(function (r) { return r.hasPrev; }).sort(function (a, b) { return b.d - a.d; })[0];
+    if (q && q.d > 0) f.push('Найбільше зростання серед запитів: «' + q.key + '» (+' + fmt(q.d) + ' кліків).');
+    var done = state.tasks.filter(function (t) { return clean(t.text) && t.status === 'done'; }).length;
+    if (done) f.push('Виконано робіт: ' + done + '.');
+    return f;
+  }
+
+  function topTable(rows, label, isPage) {
+    var short = function (k) { if (!isPage) return esc(k); try { var u = new URL(k); return esc(decodeURIComponent(u.pathname + u.search) || '/'); } catch (e) { return esc(k); } };
+    return '<table><thead><tr><th>' + label + '</th><th class="r">Кліки</th><th class="r">Було</th><th class="r">Зміна</th><th class="r">Позиція</th></tr></thead><tbody>' +
+      rows.map(function (r) { return '<tr><td>' + short(r.key) + '</td><td class="r">' + fmt(r.clicks) + '</td><td class="r">' + (r.hasPrev ? fmt(r.pClicks) : '—') + '</td><td class="r ' + (r.d > 0 ? 'up' : r.d < 0 ? 'down' : 'flat') + '">' + (r.hasPrev ? (r.d > 0 ? '+' : r.d < 0 ? '−' : '') + fmt(Math.abs(r.d)) : 'нове') + '</td><td class="r">' + (r.position != null ? fmt(r.position, 1) : '—') + '</td></tr>'; }).join('') + '</tbody></table>';
+  }
+
+  function dimSection(dim, title, label, isPage) {
+    var cur = state.gsc.cur[dim], prev = state.gsc.prev[dim];
+    if (!cur || !cur.length) return '';
+    var j = joinRows(cur, prev);
+    var top = j.slice().sort(function (a, b) { return b.clicks - a.clicks; }).slice(0, 10);
+    var h = '<section class="sec"><h2>' + title + '</h2><h3>ТОП-10 за кліками</h3>' + topTable(top, label, isPage);
+    if (prev && prev.length) {
+      var up = j.filter(function (r) { return r.d > 0; }).sort(function (a, b) { return b.d - a.d; }).slice(0, 5);
+      var down = j.filter(function (r) { return r.d < 0; }).sort(function (a, b) { return a.d - b.d; }).slice(0, 5);
+      h += '<div class="two"><div><h3>Найбільше зростання</h3>' + (up.length ? topTable(up, label, isPage) : '<p class="empty">немає</p>') + '</div><div><h3>Найбільше падіння</h3>' + (down.length ? topTable(down, label, isPage) : '<p class="empty">немає</p>') + '</div></div>';
+    }
+    return h + '</section>';
+  }
+
+  function render() {
+    var s = state, m = s.meta, S = s.sections, acc = m.accent || '#2F6FEB';
+    var rep = $('rep'); rep.style.setProperty('--acc', acc);
+    var h = [];
+    h.push('<div class="cover"><div><h1>SEO-звіт' + (m.project ? ': ' + esc(m.project) : '') + '</h1><div class="sub">' + (m.period ? esc(m.period) : 'Звітний період') + (m.prevLabel ? ' · порівняння з: ' + esc(m.prevLabel) : '') + (m.domain ? ' · ' + esc(m.domain) : '') + '</div>' + (m.author ? '<div class="sub">Підготував(ла): ' + esc(m.author) + '</div>' : '') + '</div>' + (m.logo ? '<img src="' + esc(m.logo) + '" alt="Логотип ' + esc(m.project || 'клієнта') + '">' : '') + '</div>');
+
+    var c = totals('cur'), p = totals('prev'), ps = posStats();
+    if (S.summary) {
+      h.push('<section class="sec"><h2>Головне за період</h2>');
+      if (c || ps) {
+        var tiles = [];
+        if (c) {
+          tiles.push(['Кліки', fmt(c.clicks), deltaHtml(p ? change(c.clicks, p.clicks) : null)]);
+          tiles.push(['Покази', fmt(c.impressions), deltaHtml(p ? change(c.impressions, p.impressions) : null)]);
+          tiles.push(['CTR', pct(c.ctr), deltaHtml(p && c.ctr != null && p.ctr != null ? c.ctr - p.ctr : null, false, 'pp')]);
+          tiles.push(['Середня позиція', fmt(c.position, 1), deltaHtml(p && c.position != null && p.position != null ? c.position - p.position : null, true, 'abs')]);
+        }
+        if (ps) tiles.push(['Ключів у ТОП-10', fmt(ps.top10), deltaHtml(ps.top10p != null ? change(ps.top10, ps.top10p) : null)]);
+        s.kpis.forEach(function (k) { var cv = parseNum(k.cur), pv = parseNum(k.prev); if (clean(k.label) && cv != null) tiles.push([k.label, fmt(cv), deltaHtml(change(cv, pv))]); });
+        h.push('<div class="tiles">' + tiles.slice(0, 8).map(function (t) { return '<div class="tile"><span>' + esc(t[0]) + '</span><strong>' + t[1] + '</strong>' + t[2] + '</div>'; }).join('') + '</div>');
+        var facts = summaryFacts();
+        if (facts.length) h.push('<ul style="margin:12px 0 0;padding-left:18px">' + facts.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>');
+        if (c) h.push('<p class="src">Джерело: Google Search Console' + (c.src === 'queries' ? ' (сума за запитами — менша за реальну через анонімізовані запити; додайте файл «Дати» для точних підсумків)' : c.src === 'pages' ? ' (сума за сторінками)' : '') + '.</p>');
+      } else h.push('<p class="empty">Завантажте експорт Search Console або позиції — тут зʼявляться головні цифри.</p>');
+      h.push('</section>');
+    }
+
+    if (S.traffic && s.gsc.cur.dates && s.gsc.cur.dates.length) {
+      var dc = s.gsc.cur.dates.slice().sort(function (a, b) { return a.key < b.key ? -1 : 1; });
+      var dp = (s.gsc.prev.dates || []).slice().sort(function (a, b) { return a.key < b.key ? -1 : 1; });
+      var labels = dc.map(function (r) { var d = new Date(r.key); return isNaN(d) ? r.key : d.toLocaleDateString('uk-UA', { day: 'numeric', month: 'short' }); });
+      h.push('<section class="sec"><h2>Динаміка трафіку</h2><div class="legend"><span><i style="background:' + esc(acc) + '"></i>Кліки, ' + esc(m.period || 'поточний період') + '</span>' + (dp.length ? '<span><i style="background:#B8C0CC"></i>' + esc(m.prevLabel || 'попередній період') + '</span>' : '') + '</div>' + lineChart(dc.map(function (r) { return r.clicks || 0; }), dp.map(function (r) { return r.clicks || 0; }), labels, acc) + '</section>');
+    }
+    if (S.queries) h.push(dimSection('queries', 'Пошукові запити', 'Запит', false));
+    if (S.pages) h.push(dimSection('pages', 'Сторінки', 'Сторінка', true));
+
+    if (S.positions && ps) {
+      h.push('<section class="sec"><h2>Позиції ключових слів</h2><div class="legend"><span><i style="background:' + esc(acc) + '"></i>' + esc(m.period || 'Зараз') + '</span>' + (ps.prev ? '<span><i style="background:#C9D0DA"></i>' + esc(m.prevLabel || 'Було') + '</span>' : '') + '</div>' + barChart(ps.labels, ps.cur, ps.prev, acc));
+      if (ps.hasPrev) {
+        var mv = function (arr) { return arr.length ? '<table><thead><tr><th>Ключ</th><th class="r">Було</th><th class="r">Стало</th></tr></thead><tbody>' + arr.map(function (r) { return '<tr><td>' + esc(r.kw) + '</td><td class="r">' + (r.prev > 100 ? '>100' : fmt(r.prev)) + '</td><td class="r ' + (r.d > 0 ? 'up' : 'down') + '">' + (r.cur > 100 ? '>100' : fmt(r.cur)) + '</td></tr>'; }).join('') + '</tbody></table>' : '<p class="empty">немає</p>'; };
+        h.push('<div class="two"><div><h3>Найбільше зростання</h3>' + mv(ps.up) + '</div><div><h3>Найбільше падіння</h3>' + mv(ps.down) + '</div></div>');
+      }
+      h.push('<p class="src">Джерело: ' + esc(s.pos.file || 'трекер позицій') + ', ' + ps.n + ' ключів.</p></section>');
+    }
+
+    if (S.kpi) {
+      var ks = s.kpis.filter(function (k) { return clean(k.label) && parseNum(k.cur) != null; });
+      if (ks.length) h.push('<section class="sec"><h2>Бізнес-показники</h2><table><thead><tr><th>Показник</th><th class="r">' + esc(m.period || 'Зараз') + '</th><th class="r">' + esc(m.prevLabel || 'Було') + '</th><th class="r">Зміна</th></tr></thead><tbody>' + ks.map(function (k) { var cv = parseNum(k.cur), pv = parseNum(k.prev); return '<tr><td>' + esc(k.label) + '</td><td class="r">' + fmt(cv) + '</td><td class="r">' + fmt(pv) + '</td><td class="r">' + deltaHtml(change(cv, pv)) + '</td></tr>'; }).join('') + '</tbody></table></section>');
+    }
+
+    if (S.speed && s.psi.results.length) {
+      var cat = function (x) { return !x ? '—' : '<span class="' + (x.category === 'FAST' ? 'up' : x.category === 'SLOW' ? 'down' : 'flat') + '">' + esc(x.value) + '</span>'; };
+      h.push('<section class="sec"><h2>Швидкість сторінок</h2><table><thead><tr><th>Сторінка</th><th class="r">Оцінка (моб.)</th><th class="r">LCP</th><th class="r">INP</th><th class="r">CLS</th></tr></thead><tbody>' + s.psi.results.map(function (r) {
+        var u = r.url; try { var x = new URL(r.url); u = decodeURIComponent(x.pathname) || '/'; } catch (e) {}
+        return r.error ? '<tr><td>' + esc(u) + '</td><td colspan="4">' + esc(r.error) + '</td></tr>' : '<tr><td>' + esc(u) + '</td><td class="r"><b class="' + (r.score >= 90 ? 'up' : r.score < 50 ? 'down' : 'flat') + '">' + r.score + '</b></td><td class="r">' + cat(r.lcp) + '</td><td class="r">' + cat(r.inp) + '</td><td class="r">' + cat(r.cls) + '</td></tr>';
+      }).join('') + '</tbody></table><p class="src">Джерело: Google PageSpeed Insights; LCP, INP, CLS — реальні користувачі Chrome (CrUX), зелене — добре.</p></section>');
+    }
+
+    var st = { done: ['done', 'Виконано'], wip: ['wip', 'У процесі'], plan: ['plan', 'Заплановано'] };
+    var tasks = s.tasks.filter(function (t) { return clean(t.text); });
+    if (S.tasks && tasks.length) {
+      var groups = {}; tasks.forEach(function (t) { (groups[t.cat || 'Інше'] = groups[t.cat || 'Інше'] || []).push(t); });
+      h.push('<section class="sec"><h2>Виконані роботи</h2><table><thead><tr><th style="width:24%">Напрям</th><th>Що зроблено</th><th style="width:14%">Статус</th></tr></thead><tbody>' + Object.keys(groups).map(function (g) { return groups[g].map(function (t, i) { return '<tr><td>' + (i ? '' : '<b>' + esc(g) + '</b>') + '</td><td>' + esc(t.text) + '</td><td><span class="pill ' + (st[t.status] || st.done)[0] + '">' + (st[t.status] || st.done)[1] + '</span></td></tr>'; }).join(''); }).join('') + '</tbody></table></section>');
+    }
+    var plan = s.plan.filter(function (t) { return clean(t.text); });
+    if (S.plan && plan.length) h.push('<section class="sec"><h2>План на наступний період</h2><ol style="margin:0;padding-left:20px">' + plan.map(function (t) { return '<li>' + (t.cat ? '<b>' + esc(t.cat) + ':</b> ' : '') + esc(t.text) + '</li>'; }).join('') + '</ol></section>');
+    if (S.comment && clean(m.comment)) h.push('<section class="sec"><h2>Висновок</h2><div class="comment">' + esc(m.comment) + '</div></section>');
+
+    rep.innerHTML = h.join('');
+  }
+
+  /* ---------- форма ---------- */
+  function renderFiles() {
+    ['cur', 'prev'].forEach(function (z) { $('files-' + z).innerHTML = (state.gsc.files[z] || []).map(function (n) { return '<span class="badge b-info">' + esc(n) + '</span>'; }).join(''); });
+  }
+  function opts(list, val) { return list.map(function (o) { var v = Array.isArray(o) ? o[0] : o, l = Array.isArray(o) ? o[1] : o; return '<option value="' + esc(v) + '"' + (v === val ? ' selected' : '') + '>' + esc(l) + '</option>'; }).join(''); }
+  function renderLists() {
+    $('kpis').innerHTML = state.kpis.map(function (k, i) { return '<div class="rowline kpi" data-list="kpis" data-i="' + i + '"><input type="text" data-k="label" value="' + esc(k.label) + '" placeholder="Показник" aria-label="Назва показника"><input type="text" inputmode="decimal" data-k="cur" value="' + esc(k.cur) + '" placeholder="Зараз" aria-label="Поточне значення"><input type="text" inputmode="decimal" data-k="prev" value="' + esc(k.prev) + '" placeholder="Було" aria-label="Попереднє значення"><button type="button" class="icon" data-del aria-label="Видалити">✕</button></div>'; }).join('');
+    $('tasks').innerHTML = state.tasks.length ? state.tasks.map(function (t, i) { return '<div class="rowline task" data-list="tasks" data-i="' + i + '"><select data-k="cat" aria-label="Напрям">' + opts(TASK_CATS, t.cat) + '</select><input type="text" data-k="text" value="' + esc(t.text) + '" placeholder="Що зроблено" aria-label="Опис роботи"><select data-k="status" aria-label="Статус">' + opts(STATUSES, t.status) + '</select><button type="button" class="icon" data-del aria-label="Видалити">✕</button></div>'; }).join('') : '<p class="note">Ще немає робіт.</p>';
+    $('plan').innerHTML = state.plan.length ? state.plan.map(function (t, i) { return '<div class="rowline planr" data-list="plan" data-i="' + i + '"><select data-k="cat" aria-label="Напрям">' + opts([''].concat(TASK_CATS), t.cat) + '</select><input type="text" data-k="text" value="' + esc(t.text) + '" placeholder="Що зробимо" aria-label="Пункт плану"><button type="button" class="icon" data-del aria-label="Видалити">✕</button></div>'; }).join('') : '<p class="note">Ще немає пунктів.</p>';
+    $('sections').innerHTML = SECTIONS.map(function (x) { return '<label><input type="checkbox" data-sec="' + x[0] + '"' + (state.sections[x[0]] !== false ? ' checked' : '') + '> ' + esc(x[1]) + '</label>'; }).join('');
+  }
+  function writeMeta() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-m]'), function (el) { el.value = state.meta[el.dataset.m] || (el.type === 'color' ? '#2F6FEB' : ''); });
+    $('psiUrls').value = state.psi.urls || '';
+  }
+  var saveT;
+  function save() { clearTimeout(saveT); saveT = setTimeout(function () { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) { $('topStatus').textContent = 'Дані завеликі для автозбереження в браузері — звіт працює, але після перезавантаження файли треба буде завантажити знову.'; } }, 500); }
+
+  var form = $('form');
+  form.addEventListener('input', function (e) {
+    var el = e.target;
+    if (el.dataset.m) { state.meta[el.dataset.m] = el.value; render(); save(); return; }
+    var row = el.closest('[data-list]');
+    if (row && el.dataset.k) { state[row.dataset.list][+row.dataset.i][el.dataset.k] = el.value; render(); save(); return; }
+    if (el.dataset.sec) { state.sections[el.dataset.sec] = el.checked; render(); save(); return; }
+    if (el.id === 'psiUrls') { state.psi.urls = el.value; save(); }
+  });
+  form.addEventListener('change', function (e) {
+    var el = e.target;
+    if (el.dataset.files) { handleFiles(el.files, el.dataset.files); el.value = ''; return; }
+    if (el.dataset.map) { state.pos.map[el.dataset.map] = el.value; applyPosMap(); renderMapper(); render(); save(); return; }
+    if (el.dataset.sec) { state.sections[el.dataset.sec] = el.checked; render(); save(); return; }
+    var row = el.closest('[data-list]');
+    if (row && el.dataset.k) { state[row.dataset.list][+row.dataset.i][el.dataset.k] = el.value; render(); save(); }
+  });
+  form.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var row = b.closest('[data-list]');
+    if (row && b.hasAttribute('data-del')) { state[row.dataset.list].splice(+row.dataset.i, 1); renderLists(); render(); save(); return; }
+    if (b.id === 'addKpi') state.kpis.push({ label: '', cur: '', prev: '' });
+    else if (b.id === 'addTask') state.tasks.push({ cat: TASK_CATS[0], text: '', status: 'done' });
+    else if (b.id === 'addPlan') state.plan.push({ cat: '', text: '' });
+    else if (b.id === 'pasteBtn') {
+      String($('pasteTasks').value).split(/\r?\n/).forEach(function (l) {
+        if (!clean(l)) return;
+        var c = l.split('\t').map(clean);
+        var t = c.length === 1 ? { cat: 'Інше', text: c[0], status: 'done' } : { cat: c[0] || 'Інше', text: c[1] || '', status: /процес|progress|wip/i.test(c[2] || '') ? 'wip' : /план|plan/i.test(c[2] || '') ? 'plan' : 'done' };
+        if (TASK_CATS.indexOf(t.cat) === -1) { var g = TASK_CATS.filter(function (x) { return x.toLowerCase().indexOf(t.cat.toLowerCase().slice(0, 5)) === 0; })[0]; t.cat = g || 'Інше'; }
+        if (t.text) state.tasks.push(t);
+      });
+      $('pasteTasks').value = '';
+    }
+    else if (b.id === 'gscClear') { state.gsc = { cur: {}, prev: {}, files: { cur: [], prev: [] } }; $('gscStatus').textContent = 'Дані Search Console очищено.'; renderFiles(); }
+    else if (b.id === 'logoDel') { state.meta.logo = ''; }
+    else if (b.id === 'psiRun') { runPsi(b); return; }
+    else if (b.id === 'aiComment') { aiComment(b); return; }
+    else return;
+    renderLists(); render(); save();
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-drop]'), function (z) {
+    z.addEventListener('dragover', function (e) { e.preventDefault(); z.classList.add('over'); });
+    z.addEventListener('dragleave', function () { z.classList.remove('over'); });
+    z.addEventListener('drop', function (e) { e.preventDefault(); z.classList.remove('over'); handleFiles(e.dataTransfer.files, z.dataset.drop); });
+  });
+
+  $('logo').addEventListener('change', function (e) {
+    var f = e.target.files[0]; if (!f) return;
+    if (f.size > 400000) { $('topStatus').textContent = 'Логотип більший за 400 КБ — стисніть його, щоб звіт зберігався в браузері.'; }
+    var r = new FileReader(); r.onload = function () { state.meta.logo = r.result; render(); save(); }; r.readAsDataURL(f);
+  });
+
+  $('posFile').addEventListener('change', function (e) {
+    var f = e.target.files[0]; if (!f) return;
+    f.text().then(function (t) {
+      var rows = parseCsv(t);
+      if (rows.length < 2) { $('posStatus').textContent = 'Файл порожній або не CSV.'; return; }
+      state.pos.header = rows[0].map(clean); state.pos.raw = rows.slice(1); state.pos.file = f.name;
+      state.pos.map = guessMap(state.pos.header); applyPosMap(); renderMapper(); render(); save();
+    });
+    e.target.value = '';
+  });
+
+  /* ---------- PageSpeed ---------- */
+  function runPsi(btn) {
+    var urls = lines($('psiUrls').value).filter(function (u) { return /^https?:\/\//i.test(u); }).slice(0, 5);
+    if (!urls.length) { $('psiStatus').textContent = 'Додайте адреси, що починаються з https://'; return; }
+    btn.disabled = true; state.psi.results = [];
+    var i = 0;
+    (function next() {
+      if (i >= urls.length) { btn.disabled = false; $('psiStatus').textContent = 'Готово.'; render(); save(); return; }
+      var u = urls[i++]; $('psiStatus').textContent = 'Перевіряю ' + i + ' з ' + urls.length + ' (до 40 секунд на сторінку)…';
+      var q = new URLSearchParams({ url: u, strategy: 'mobile', key: PSI_KEY }); q.append('category', 'performance');
+      fetch('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?' + q).then(function (r) { return r.json().then(function (d) { if (!r.ok) throw new Error((d.error && d.error.message) || ('помилка ' + r.status)); return d; }); })
+        .then(function (d) {
+          var f = (d.loadingExperience && d.loadingExperience.metrics) || (d.originLoadingExperience && d.originLoadingExperience.metrics) || {};
+          var mm = function (k, tr) { return f[k] ? { value: tr(f[k].percentile), category: f[k].category } : null; };
+          state.psi.results.push({ url: u, score: Math.round(((d.lighthouseResult || {}).categories || {}).performance.score * 100),
+            lcp: mm('LARGEST_CONTENTFUL_PAINT_MS', function (v) { return (v / 1000).toLocaleString('uk-UA', { maximumFractionDigits: 1 }) + ' с'; }),
+            inp: mm('INTERACTION_TO_NEXT_PAINT', function (v) { return v + ' мс'; }),
+            cls: mm('CUMULATIVE_LAYOUT_SHIFT_SCORE', function (v) { return (v / 100).toLocaleString('uk-UA', { maximumFractionDigits: 2 }); }) });
+        })
+        .catch(function (e) { state.psi.results.push({ url: u, error: e.message }); })
+        .then(function () { render(); next(); });
+    })();
+  }
+
+  /* ---------- ШІ ---------- */
+  function aiComment(btn) {
+    var st = $('aiStatus');
+    var facts = summaryFacts();
+    var tasks = state.tasks.filter(function (t) { return clean(t.text); }).map(function (t) { return t.cat + ': ' + t.text; });
+    var plan = state.plan.filter(function (t) { return clean(t.text); }).map(function (t) { return t.text; });
+    if (!facts.length && !tasks.length) { st.textContent = 'Спершу додайте дані або виконані роботи — ШІ пише висновок на їх основі.'; return; }
+    if (!('LanguageModel' in self)) { st.textContent = 'Вбудований ШІ доступний лише в Google Chrome 148+ на компʼютері.'; return; }
+    btn.disabled = true; st.textContent = 'Готую модель ШІ…';
+    var LM = self.LanguageModel;
+    (function pick(i, langs) {
+      if (i >= langs.length) return Promise.reject(new Error('Модель ШІ недоступна на цьому пристрої.'));
+      var o = { expectedInputs: [{ type: 'text', languages: [langs[i]] }], expectedOutputs: [{ type: 'text', languages: [langs[i]] }] };
+      return LM.availability(o).then(function (a) { return a === 'unavailable' ? pick(i + 1, langs) : o; });
+    })(0, ['uk', 'en']).then(function (o) {
+      o.monitor = function (m) { m.addEventListener('downloadprogress', function (e) { st.textContent = 'Завантаження моделі ШІ: ' + Math.round(e.loaded * 100) + '%'; }); };
+      return LM.create(o);
+    }).then(function (s) {
+      st.textContent = 'ШІ пише висновок…';
+      var schema = { type: 'object', properties: { text: { type: 'string' } }, required: ['text'] };
+      var prompt = 'You are an SEO specialist writing the conclusion of a monthly SEO report for a business client. Write in Ukrainian, 4-6 short sentences, plain language without jargon. Use ONLY the facts below; do not invent numbers. Structure: what changed, the most likely reason based on completed work, what we do next. If results dropped, say it calmly and explain the plan.\n\nFacts:\n- ' + facts.join('\n- ') + (tasks.length ? '\n\nCompleted work:\n- ' + tasks.join('\n- ') : '') + (plan.length ? '\n\nNext steps:\n- ' + plan.join('\n- ') : '');
+      return s.prompt(prompt, { responseConstraint: schema }).then(function (r) { if (s.destroy) s.destroy(); return JSON.parse(r).text; });
+    }).then(function (t) {
+      state.meta.comment = clean(t); document.querySelector('[data-m=comment]').value = state.meta.comment;
+      st.textContent = 'Готово. Це чернетка — перевірте й відредагуйте.'; render(); save();
+    }).catch(function (e) { st.textContent = e.message; }).then(function () { btn.disabled = false; });
+  }
+
+  /* ---------- демо ---------- */
+  function demo() {
+    var seed = 7; var rnd = function () { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    var s = blank();
+    s.meta = { project: 'Демо Клімат', domain: 'demo-klimat.com.ua', period: 'Жовтень 2026', prevLabel: 'Вересень 2026', author: 'SEO-спеціаліст', accent: '#2F6FEB', logo: '', comment: '' };
+    var mk = function (start, days, base, trend, pos0, posStep) { var out = []; for (var i = 0; i < days; i++) { var d = new Date(start); d.setDate(d.getDate() + i); var wk = [0, 6].indexOf(d.getDay()) !== -1 ? 0.75 : 1; var c = Math.round((base + trend * i) * wk * (0.85 + rnd() * 0.3)); var im = Math.round(c * (26 + rnd() * 6)); out.push({ key: d.toISOString().slice(0, 10), clicks: c, impressions: im, ctr: c / im, position: +(pos0 - posStep * i + rnd() * 0.6).toFixed(1) }); } return out; };
+    s.gsc.cur.dates = mk('2026-10-01', 31, 205, 1.6, 11.6, 0.05); s.gsc.prev.dates = mk('2026-09-01', 30, 190, 0.3, 12.9, 0.02);
+    var qs = ['кондиціонер купити', 'кондиціонери ужгород', 'кондиціонер з установкою', 'інверторний кондиціонер', 'як обрати кондиціонер', 'кондиціонер для квартири', 'зволожувач повітря', 'зволожувач повітря купити', 'очищувач повітря', 'тепловий насос ціна', 'кондиціонер daikin', 'мобільний кондиціонер', 'обслуговування кондиціонера', 'чистка кондиціонера', 'як обрати зволожувач повітря', 'кондиціонер 12 btu', 'тепловий насос повітря вода', 'вентиляція з рекуперацією', 'рекуператор купити', 'осушувач повітря'];
+    s.gsc.cur.queries = qs.map(function (q, i) { var c = Math.round((420 - i * 19) * (0.8 + rnd() * 0.5)); return { key: q, clicks: c, impressions: c * 30, ctr: 0.033, position: +(3 + i * 0.7 + rnd() * 2).toFixed(1) }; });
+    s.gsc.prev.queries = qs.map(function (q, i) { var c = Math.round((400 - i * 19) * (0.7 + rnd() * 0.6)); return { key: q, clicks: c, impressions: c * 31, ctr: 0.032, position: +(4 + i * 0.7 + rnd() * 3).toFixed(1) }; });
+    var pg = ['/', '/kondytsionery/', '/zvolozhuvachi/', '/blog/yak-obraty-kondytsioner/', '/teplovi-nasosy/', '/ochyshchuvachi/', '/posluhy/montazh/', '/blog/yak-obraty-zvolozhuvach/', '/rekuperatory/', '/osushuvachi/'];
+    s.gsc.cur.pages = pg.map(function (p, i) { var c = Math.round((1300 - i * 110) * (0.85 + rnd() * 0.4)); return { key: 'https://demo-klimat.com.ua' + p, clicks: c, impressions: c * 28, position: +(5 + i + rnd() * 2).toFixed(1) }; });
+    s.gsc.prev.pages = pg.map(function (p, i) { var c = Math.round((1200 - i * 110) * (0.75 + rnd() * 0.5)); return { key: 'https://demo-klimat.com.ua' + p, clicks: c, impressions: c * 29, position: +(6 + i + rnd() * 3).toFixed(1) }; });
+    s.gsc.files = { cur: ['демо: Search Console, жовтень'], prev: ['демо: Search Console, вересень'] };
+    var kws = qs.concat(['кондиціонер mitsubishi', 'кондиціонер gree', 'монтаж кондиціонера ціна', 'кондиціонер в офіс', 'спліт система', 'мульти спліт система', 'канальний кондиціонер', 'кондиціонер в спальню тихий', 'тепловий насос для будинку', 'осушувач для підвалу']);
+    s.pos.file = 'демо: позиції.csv'; s.pos.header = ['Ключ', 'Позиція', 'Попередня позиція'];
+    s.pos.rows = kws.map(function (k, i) { var prev = Math.max(1, Math.round(4 + i * 1.8 + rnd() * 12)); var cur = Math.max(1, Math.round(prev - 6 + rnd() * 9)); if (i % 11 === 10) { prev = 101; cur = Math.round(40 + rnd() * 30); } return { kw: k, cur: cur, prev: prev, url: '', vol: null }; });
+    s.kpis = [{ label: 'Органічні сесії (GA4)', cur: '8640', prev: '7590' }, { label: 'Заявки з органіки', cur: '74', prev: '61' }, { label: 'Дзвінки', cur: '38', prev: '35' }];
+    s.tasks = [
+      { cat: 'Технічне SEO', text: 'Виправлено 14 внутрішніх посилань на сторінки з помилкою 404', status: 'done' },
+      { cat: 'Технічне SEO', text: 'Налаштовано canonical для сторінок фільтрів каталогу', status: 'done' },
+      { cat: 'Контент', text: 'Написано й опубліковано 2 статті в блог за ТЗ', status: 'done' },
+      { cat: 'Контент', text: 'Оновлено тексти категорій «Кондиціонери» і «Теплові насоси»', status: 'done' },
+      { cat: 'Мікророзмітка', text: 'Додано Product і BreadcrumbList на картки товарів', status: 'done' },
+      { cat: 'Локальне SEO', text: 'Оптимізовано профіль Google Business, додано 8 фото', status: 'wip' }
+    ];
+    s.plan = [{ cat: 'Контент', text: 'Тексти для категорій «Рекуператори» та «Осушувачі»' }, { cat: 'Посилання', text: '3 зовнішні статті з посиланнями на категорії' }, { cat: 'Швидкість', text: 'Стиснути зображення в картках товарів, щоб покращити LCP' }];
+    s.meta.comment = 'За жовтень органічний трафік зріс, а ключові запити по кондиціонерах піднялися ближче до ТОП-3. Найбільше вплинули оновлені тексти категорій і виправлення технічних помилок. У листопаді фокус — нові категорії та покращення швидкості карток товарів.';
+    return s;
+  }
+
+  $('demo').addEventListener('click', function () { state = demo(); writeMeta(); renderFiles(); renderLists(); state.pos.raw = []; $('mapper').innerHTML = ''; $('posStatus').textContent = 'Демо: ' + state.pos.rows.length + ' ключів.'; $('gscStatus').textContent = 'Демо-дані Search Console завантажено.'; render(); $('topStatus').textContent = 'Завантажено демо-звіт з вигаданими даними.'; });
+  $('reset').addEventListener('click', function () { if (!confirm('Очистити звіт повністю?')) return; state = blank(); writeMeta(); renderFiles(); renderLists(); $('mapper').innerHTML = ''; ['gscStatus', 'posStatus', 'psiStatus', 'aiStatus', 'topStatus'].forEach(function (id) { $(id).textContent = ''; }); render(); try { localStorage.removeItem(STORE); } catch (e) {} });
+  $('print').addEventListener('click', function () { var t = document.title; document.title = 'SEO-звіт ' + (state.meta.project || '') + ' ' + (state.meta.period || ''); window.print(); document.title = t; });
+
+  try { var saved = JSON.parse(localStorage.getItem(STORE) || 'null'); if (saved && saved.meta) { state = Object.assign(blank(), saved); state.sections = Object.assign(blank().sections, saved.sections || {}); } } catch (e) {}
+  writeMeta(); renderFiles(); renderLists(); if (state.pos.header.length && state.pos.raw.length) renderMapper(); render();
+  window.OnePaneReport = { parseCsv: parseCsv, parseNum: parseNum, ingestCsv: ingestCsv, totals: totals, guessMap: guessMap, posStats: posStats, getState: function () { return state; }, render: render };
+})();
+</script>
+</body>
+</html>
