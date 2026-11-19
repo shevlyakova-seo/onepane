@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Генератор ТЗ для копірайтера — OnePane</title>
+<meta name="description" content="Створіть ТЗ для тексту на сайт або зовнішньої статті за 10 хвилин: структура з конкурентів, ключі й LSI, мета-теги, E-E-A-T і експорт у Google Docs. Безкоштовно.">
+<link rel="canonical" href="https://shevlyakova-seo.github.io/onepane/brief/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://shevlyakova-seo.github.io/onepane/brief/">
+<meta property="og:title" content="Генератор ТЗ для копірайтера — OnePane">
+<meta property="og:description" content="ТЗ для тексту на сайт або зовнішньої статті: структура з конкурентів, ключі, LSI, мета-теги й експорт у Google Docs.">
+<meta property="og:locale" content="uk_UA">
+<meta name="theme-color" content="#0E1116">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237C9CFF'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0E1116;--surface:#151A22;--alt:#11151C;--field:#0F141B;--border:#262D38;--line:#1C222C;--text:#E6EAF0;--text2:#B4BDCA;--muted:#9AA4B2;--accent:#7C9CFF;--on-accent:#0E1116;--link:#A9BCFF;--ok:#86EFAC;--ok-bg:#16301F;--warn:#FCD34D;--warn-bg:#3A3018;--err:#FCA5A5;--err-bg:#3A1E22;--mono:'JetBrains Mono',ui-monospace,monospace}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--link)}a:hover{color:#D3DDFF}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1440px;margin:0 auto;padding:0 28px}
+/* Шапка */
+.top{position:sticky;top:0;z-index:20;background:rgba(14,17,22,.94);backdrop-filter:blur(8px);border-bottom:1px solid #222936}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:14px;padding-bottom:14px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;color:var(--text);text-decoration:none}
+.logo i{width:26px;height:26px;border-radius:7px;background:var(--accent);display:inline-block}
+.menu{display:flex;gap:22px;flex-wrap:wrap;font-size:15px}
+.menu a{color:var(--muted);text-decoration:none}.menu a:hover,.menu a[aria-current]{color:var(--text)}
+.hero{padding:36px 0 20px}
+.hero h1{margin:0 0 8px;font-size:40px;line-height:1.1;font-weight:800;letter-spacing:-.02em}
+.hero p{margin:0;color:var(--text2);max-width:760px;font-size:17px}
+/* Розкладка */
+.layout{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start;padding-bottom:60px}
+.form{flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:14px}
+.preview{flex:1 1 520px;min-width:0;position:sticky;top:76px;display:flex;flex-direction:column;gap:12px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px}
+details.card>summary{list-style:none;cursor:pointer;padding:16px 20px;display:flex;align-items:center;gap:12px;font-weight:700;font-size:17px}
+details.card>summary::-webkit-details-marker{display:none}
+details.card>summary .n{font-family:var(--mono);font-size:13px;color:var(--accent);border:1px solid #2E3850;border-radius:6px;padding:1px 7px}
+details.card>summary .s{margin-left:auto;font-size:13px;font-weight:500;color:var(--muted)}
+details.card>summary::after{content:'+';color:var(--accent);font-size:22px;font-weight:400;line-height:1}
+details.card[open]>summary::after{content:'−'}
+.body{padding:4px 20px 20px;display:flex;flex-direction:column;gap:14px}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:var(--text2)}
+label.f small{font-weight:500;color:var(--muted);font-size:12.5px}
+input[type=text],input[type=url],input[type=number],input[type=date],select,textarea{font:inherit;font-size:15px;font-weight:500;color:var(--text);background:var(--field);border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;width:100%;min-height:44px}
+textarea{min-height:88px;resize:vertical;line-height:1.5}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg label{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--border);border-radius:999px;padding:8px 14px;cursor:pointer;font-size:14px;color:var(--text2);min-height:40px}
+.seg input{accent-color:var(--accent)}
+.seg label:has(input:checked){border-color:var(--accent);color:var(--text);background:#141A28}
+.checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px}
+.checks label{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--text2);cursor:pointer}
+.checks input{accent-color:var(--accent);margin-top:3px;width:16px;height:16px;flex:0 0 auto}
+.btn{font:inherit;font-size:14px;font-weight:700;border:none;border-radius:10px;padding:11px 16px;min-height:44px;cursor:pointer;background:var(--accent);color:var(--on-accent);display:inline-flex;align-items:center;gap:8px}
+.btn.ghost{background:transparent;color:var(--text);border:1.5px solid #343D4D}
+.btn.small{min-height:36px;padding:7px 12px;font-size:13px}
+.btn:disabled{opacity:.5;cursor:progress}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.note{font-size:13px;color:var(--muted);margin:0}
+.ai{font-family:var(--mono);font-size:11px;color:var(--accent);border:1px solid #2E3850;border-radius:4px;padding:1px 5px}
+.status{font-size:13px;color:var(--muted);min-height:18px}
+/* Таблиці у формі */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px;min-width:520px}
+.tbl th{text-align:left;color:var(--muted);font-weight:600;font-size:12px;padding:9px 10px;border-bottom:1px solid var(--border)}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);color:var(--text2);vertical-align:top;word-break:break-word}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td.num{font-family:var(--mono);white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;gap:8px;align-items:center;border:1.5px solid var(--border);border-radius:999px;padding:6px 12px;font-size:13px;color:var(--text2);cursor:pointer;background:transparent;font-family:inherit}
+.chip b{font-family:var(--mono);color:var(--muted);font-weight:500}
+.chip[aria-pressed=true]{border-color:var(--accent);color:var(--text);background:#141A28}
+/* Редактор структури */
+.struct{display:flex;flex-direction:column;gap:10px}
+.h2row{border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;background:var(--alt)}
+.h2head{display:flex;gap:8px;align-items:center}
+.h2head .tag{font-family:var(--mono);font-size:12px;color:var(--accent);flex:0 0 auto}
+.h2head input{flex:1 1 auto}
+.icon{font:inherit;width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;flex:0 0 auto;font-size:15px}
+.icon:hover{color:var(--text);border-color:#3A4352}
+.h2row textarea{min-height:60px;font-size:14px}
+.links-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) 36px;gap:8px;align-items:center}
+/* Превʼю документа */
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.paper{background:#FFFFFF;color:#1F2430;border-radius:14px;padding:36px 40px;max-height:calc(100vh - 210px);overflow:auto;font-family:Arial,'Helvetica Neue',sans-serif;font-size:14px;line-height:1.55}
+.paper h1{font-size:22px;margin:0 0 4px;color:#111}
+.paper h2{font-size:17px;margin:22px 0 8px;color:#111;border-bottom:1px solid #E3E6EB;padding-bottom:4px}
+.paper h3{font-size:15px;margin:14px 0 6px;color:#111}
+.paper p{margin:0 0 8px}
+.paper ul,.paper ol{margin:0 0 8px;padding-left:22px}
+.paper li{margin-bottom:3px}
+.paper table{border-collapse:collapse;width:100%;margin:6px 0 10px;font-size:13px}
+.paper th,.paper td{border:1px solid #CDD3DC;padding:6px 8px;text-align:left;vertical-align:top}
+.paper th{background:#F1F3F6}
+.paper .muted{color:#5D6676}
+.paper .ph{color:#9A6B00;background:#FFF5D6;padding:0 3px;border-radius:3px}
+/* Збережені */
+.saved{display:flex;flex-direction:column;gap:6px;max-height:220px;overflow:auto}
+.saved label{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--text2);border:1px solid var(--border);border-radius:10px;padding:8px 10px}
+.saved label span{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.saved input{accent-color:var(--accent)}
+.foot{border-top:1px solid #222936;padding:24px 0;font-size:14px;color:var(--muted)}
+@media (max-width:991px){.preview{position:static}.paper{max-height:none}}
+@media (max-width:767px){.wrap{padding:0 16px}.hero h1{font-size:30px}.row,.row3,.checks{grid-template-columns:minmax(0,1fr)}.paper{padding:22px 18px}.links-row{grid-template-columns:minmax(0,1fr) 36px}.links-row input:nth-child(2){grid-column:1/2}}
+@media print{body{background:#fff}.top,.hero,.form,.bar,.foot,.pv-extra{display:none!important}.layout{display:block}.preview{position:static}.paper{max-height:none;overflow:visible;padding:0;border-radius:0}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../"><i aria-hidden="true"></i>OnePane</a>
+    <nav class="menu" aria-label="Інструменти">
+      <a href="../#audit">Аудит URL</a>
+      <a href="./" aria-current="page">Генератор ТЗ</a>
+      <a href="../schema/">Мікророзмітка</a>
+      <a href="../report/">Звіт</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Генератор ТЗ для копірайтера</h1>
+    <p>Один шаблон для текстів на сайт і зовнішніх статей: структура з конкурентів, ключі та LSI з правилами вживання, мета-теги, E-E-A-T, посилання й чекліст здачі. Дані зберігаються лише у вашому браузері.</p>
+  </section>
+
+  <div class="layout">
+    <form class="form" id="f" autocomplete="off" novalidate>
+
+      <details class="card" open>
+        <summary><span class="n">1</span>Тип і загальна інформація</summary>
+        <div class="body">
+          <div class="seg" role="radiogroup" aria-label="Куди текст">
+            <label><input type="radio" name="kind" value="site" checked> Текст на сайт</label>
+            <label><input type="radio" name="kind" value="external"> Зовнішня стаття з посиланням</label>
+          </div>
+          <div class="row">
+            <label class="f">Тип сторінки
+              <select name="pageType" id="pageType"></select>
+            </label>
+            <label class="f">№ ТЗ у пакеті
+              <input type="number" name="n" min="1" value="1">
+            </label>
+          </div>
+          <div class="row">
+            <label class="f">Проєкт (сайт клієнта)
+              <input type="url" name="project" placeholder="https://example.com/">
+            </label>
+            <label class="f" id="pageUrlWrap">URL сторінки
+              <small>Для існуючої сторінки. Порожньо — нова сторінка</small>
+              <input type="url" name="pageUrl" placeholder="https://example.com/kategoriya/">
+            </label>
+          </div>
+          <label class="f">Тема / робочий заголовок
+            <small>Можна кілька варіантів — кожен з нового рядка</small>
+            <textarea name="topics" rows="2" placeholder="Як обрати зволожувач повітря для квартири"></textarea>
+          </label>
+          <label class="f">Контекст завдання (необовʼязково)
+            <small>Наприклад: «впали позиції», «немає тексту», «оновлення старої статті»</small>
+            <input type="text" name="context">
+          </label>
+          <div class="row">
+            <label class="f">Пошуковий інтент
+              <select name="intent">
+                <option value="auto">Визначити за ключами</option>
+                <option value="informational">Інформаційний</option>
+                <option value="commercial">Комерційний</option>
+                <option value="transactional">Транзакційний</option>
+                <option value="navigational">Навігаційний</option>
+                <option value="mixed">Змішаний</option>
+              </select>
+            </label>
+            <label class="f">Дедлайн
+              <input type="date" name="deadline">
+            </label>
+          </div>
+        </div>
+      </details>
+
+      <details class="card" open>
+        <summary><span class="n">2</span>Мета, аудиторія, тон</summary>
+        <div class="body">
+          <label class="f">Мета тексту
+            <small>Що читач має зрозуміти й зробити після прочитання</small>
+            <textarea name="goal" rows="4"></textarea>
+          </label>
+          <div class="btns"><button type="button" class="btn ghost small" data-ai="goal"><span class="ai">ШІ</span> Чернетка мети</button></div>
+          <label class="f">Аудиторія
+            <textarea name="audience" rows="2" placeholder="Хто читає, що знає про тему, що його турбує"></textarea>
+          </label>
+          <div class="f" style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600;color:var(--text2)">Тональність
+            <div class="chips" id="toneChips"></div>
+          </div>
+          <label class="f">Тональність — уточнення (необовʼязково)
+            <input type="text" name="toneNote" placeholder="Технічні речі простою мовою, без надлишкової термінології">
+          </label>
+          <div class="row3">
+            <label class="f">Мова тексту
+              <select name="lang">
+                <option value="українська">Українська</option>
+                <option value="російська">Російська</option>
+                <option value="англійська">Англійська</option>
+                <option value="польська">Польська</option>
+                <option value="чеська">Чеська</option>
+              </select>
+            </label>
+            <label class="f">Переклад
+              <select name="translate">
+                <option value="">Без перекладу</option>
+                <option value="російську">На російську</option>
+                <option value="українську">На українську</option>
+                <option value="англійську">На англійську</option>
+              </select>
+            </label>
+            <label class="f">Обсяг, симв. без пробілів
+              <span style="display:flex;gap:6px"><input type="number" name="volMin" min="300" step="100" placeholder="від"><input type="number" name="volMax" min="300" step="100" placeholder="до"></span>
+            </label>
+          </div>
+        </div>
+      </details>
+
+      <details class="card" open>
+        <summary><span class="n">3</span>Ключові слова</summary>
+        <div class="body">
+          <label class="f">Основний ключ
+            <input type="text" name="mainKey" placeholder="зволожувач повітря">
+          </label>
+          <label class="f">Додаткові ключі
+            <small>Кожен з нового рядка. Частоту можна дописати через табуляцію, «;» або «|» — так, як копіюється з Serpstat/Ahrefs/Keyword Planner</small>
+            <textarea name="addKeys" rows="5" placeholder="зволожувач повітря купити;1300&#10;зволожувач для квартири;880"></textarea>
+          </label>
+          <label class="f">LSI / супутні терміни
+            <small>Кожен з нового рядка. Можна підібрати з конкурентів у кроці 4</small>
+            <textarea name="lsi" rows="4"></textarea>
+          </label>
+          <div class="status" id="intentInfo"></div>
+        </div>
+      </details>
+
+      <details class="card" open>
+        <summary><span class="n">4</span>Конкуренти та приклади <span class="s">через Worker</span></summary>
+        <div class="body">
+          <label class="f">URL конкурентів з топу або прикладів
+            <small>3–5 адрес, кожна з нового рядка. Сервіс завантажить їх і порахує обсяг, заголовки, FAQ, таблиці</small>
+            <textarea name="competitors" rows="4" placeholder="https://competitor-1.com/stattya/&#10;https://competitor-2.com/blog/"></textarea>
+          </label>
+          <div class="btns">
+            <button type="button" class="btn" id="analyze">Проаналізувати конкурентів</button>
+          </div>
+          <div class="status" id="compStatus" role="status" aria-live="polite"></div>
+          <div id="compOut"></div>
+        </div>
+      </details>
+
+      <details class="card" open>
+        <summary><span class="n">5</span>Мета-теги і структура</summary>
+        <div class="body">
+          <div id="metaBlock" class="row">
+            <label class="f">Title — варіанти
+              <small>До 60 символів, основний ключ на початку. Кожен з нового рядка</small>
+              <textarea name="titles" rows="3"></textarea>
+            </label>
+            <label class="f">Description — варіанти
+              <small>150–160 символів, з закликом до дії</small>
+              <textarea name="descs" rows="3"></textarea>
+            </label>
+          </div>
+          <div class="status" id="metaInfo"></div>
+          <div class="btns" id="metaAi"><button type="button" class="btn ghost small" data-ai="meta"><span class="ai">ШІ</span> Title і Description</button></div>
+          <label class="f">H1 (якщо порожньо — «містить основний ключ»)
+            <input type="text" name="h1">
+          </label>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+            <strong style="font-size:15px">Структура H2 / H3</strong>
+            <div class="btns">
+              <button type="button" class="btn ghost small" id="addH2">+ H2</button>
+              <button type="button" class="btn ghost small" data-ai="structure"><span class="ai">ШІ</span> Запропонувати структуру</button>
+            </div>
+          </div>
+          <div class="struct" id="struct"></div>
+          <p class="note">H3 — кожен з нового рядка під своїм H2. Коментар — що саме розкрити в блоці.</p>
+          <label class="f">FAQ — питання (кожне з нового рядка; порожньо — «3–5 популярних запитів»)
+            <textarea name="faqQs" rows="3"></textarea>
+          </label>
+          <div class="status" id="aiStatus" role="status" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="card" open>
+        <summary><span class="n">6</span>Посилання</summary>
+        <div class="body">
+          <p class="note" id="linksNote"></p>
+          <div id="links" style="display:flex;flex-direction:column;gap:8px"></div>
+          <div class="btns"><button type="button" class="btn ghost small" id="addLink">+ Посилання</button></div>
+        </div>
+      </details>
+
+      <details class="card" open>
+        <summary><span class="n">7</span>Вимоги до тексту</summary>
+        <div class="body">
+          <strong style="font-size:14px;color:var(--text2)">Обовʼязкові елементи</strong>
+          <div class="checks">
+            <label><input type="checkbox" name="el_lists" checked> Списки й маркери</label>
+            <label><input type="checkbox" name="el_table"> Таблиця (порівняння, ціни, характеристики)</label>
+            <label><input type="checkbox" name="el_faq" checked> FAQ-блок</label>
+            <label><input type="checkbox" name="el_cta" checked> Заклик до дії</label>
+            <label><input type="checkbox" name="el_images"> Зображення з alt</label>
+            <label><input type="checkbox" name="el_author"> Блок автора / експерта</label>
+            <label><input type="checkbox" name="el_sources"> Посилання на джерела фактів і цифр</label>
+            <label><input type="checkbox" name="el_ymyl"> YMYL: медицина / фінанси / право</label>
+          </div>
+          <strong style="font-size:14px;color:var(--text2)">Перевірка якості</strong>
+          <div class="checks">
+            <label><input type="checkbox" name="q_uniq" checked> Унікальність ≥ 90% (text.ru)</label>
+            <label><input type="checkbox" name="q_textru"> Метрики «вода / нудота / заспамленість»</label>
+            <label><input type="checkbox" name="q_ai"> Перевірка AI-детектором</label>
+            <label><input type="checkbox" name="q_bold"> Виділити ключі жирним</label>
+          </div>
+          <label class="f">Додаткові вимоги клієнта
+            <textarea name="extra" rows="3" placeholder="Згадати бренд, не згадувати конкурентів, ціни не вказувати…"></textarea>
+          </label>
+          <label class="f">Автор ТЗ
+            <input type="text" name="author" placeholder="Імʼя SEO-спеціаліста">
+          </label>
+        </div>
+      </details>
+    </form>
+
+    <aside class="preview" aria-label="Готове ТЗ">
+      <div class="bar">
+        <div class="btns">
+          <button type="button" class="btn" id="copyDoc">Копіювати в Google Docs</button>
+          <button type="button" class="btn ghost" id="dlDoc">.doc</button>
+          <button type="button" class="btn ghost" id="printDoc">PDF</button>
+        </div>
+        <div class="btns">
+          <button type="button" class="btn ghost small" id="demo">Демо</button>
+          <button type="button" class="btn ghost small" id="reset">Очистити</button>
+        </div>
+      </div>
+      <div class="status" id="exportStatus" role="status" aria-live="polite"></div>
+      <article class="paper" id="paper"></article>
+      <div class="card pv-extra" style="padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+          <strong>Пакет ТЗ</strong>
+          <div class="btns">
+            <button type="button" class="btn ghost small" id="saveBrief">Зберегти ТЗ</button>
+            <button type="button" class="btn ghost small" id="exportPack">Експорт вибраних в один .doc</button>
+          </div>
+        </div>
+        <div class="saved" id="saved"></div>
+        <p class="note">Збережені ТЗ живуть лише в цьому браузері. Клацніть назву, щоб відкрити ТЗ для редагування.</p>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="foot"><div class="wrap">© 2026 OnePane · <a href="../">Аудит URL</a> · <a href="../schema/">Мікророзмітка</a> · <a href="../report/">Звіт</a> · <a href="mailto:shevlyakova.seo@gmail.com">shevlyakova.seo@gmail.com</a></div></footer>
+
+<script>
+(function () {
+  'use strict';
+  var WORKER = 'https://onepane-audit.shevlyakova-seo.workers.dev';
+  var STORE_DRAFT = 'onepane-brief-draft';
+  var STORE_SAVED = 'onepane-briefs';
+
+  var PAGE_TYPES = {
+    site: [['blog', 'Стаття в блог'], ['category', 'Категорія інтернет-магазину'], ['product', 'Картка товару'], ['service', 'Сторінка послуги'], ['landing', 'Посадкова сторінка'], ['home', 'Головна сторінка']],
+    external: [['guest', 'Стаття для зовнішнього розміщення'], ['pr', 'PR-стаття / новина'], ['review', 'Огляд / підбірка']]
+  };
+  var TONES = ['експертний', 'дружній', 'офіційний', 'легкий', 'переконливий', 'простий для широкої аудиторії'];
+  var INTENT_LABEL = { informational: 'Інформаційний', commercial: 'Комерційний', transactional: 'Транзакційний', navigational: 'Навігаційний', mixed: 'Змішаний' };
+  var STOP = ('і й та або а але що як для на в у з із за до від по під над при про без через це цей ця ці той та те ті його її їх ми ви ви вони він вона воно ти я мене вас нас яка який яке які щоб чи не ні так також ще вже бо адже тому тут там де коли який котрий свій своя своє свої бути є був була було були може можна треба має мають всі весь вся усе все кожен кожна дуже більш більше менш найбільш також тільки лише навіть саме ось ж же б би '+
+    'и в во на с со к ко от до по за из у о об для при без про через над под что как это этот эта эти тот та то те его ее их мы вы они он она оно ты я меня вас нас который которая которое которые чтобы ли не ни так также еще уже потому здесь там где когда свой своя свое свои быть есть был была было были может можно нужно надо все весь вся всё каждый очень более менее только лишь даже именно вот же бы '+
+    'the a an and or of to in on for with from by is are be this that it as at your our you we').split(/\s+/);
+  var STOPSET = {}; STOP.forEach(function (w) { STOPSET[w] = 1; });
+
+  var f = document.getElementById('f');
+  var state = defaultState();
+  var comp = { pages: [], groups: [], lsi: [] };
+
+  function defaultState() {
+    return { kind: 'site', pageType: 'blog', n: 1, project: '', pageUrl: '', topics: '', context: '', intent: 'auto', deadline: '',
+      goal: '', audience: '', tones: ['експертний', 'дружній'], toneNote: '', lang: 'українська', translate: '', volMin: '', volMax: '',
+      mainKey: '', addKeys: '', lsi: '', competitors: '', titles: '', descs: '', h1: '', structure: [], faqQs: '',
+      links: [{ anchor: '', url: '' }], el_lists: true, el_table: false, el_faq: true, el_cta: true, el_images: false, el_author: false, el_sources: false, el_ymyl: false,
+      q_uniq: true, q_textru: false, q_ai: false, q_bold: false, extra: '', author: '', compSummary: null };
+  }
+
+  /* ---------- утиліти ---------- */
+  function esc(v) { return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function clean(t) { return String(t || '').replace(/\s+/g, ' ').trim(); }
+  function lines(t) { return String(t || '').split(/\r?\n/).map(clean).filter(Boolean); }
+  function $(id) { return document.getElementById(id); }
+  function num(v) { var n = parseInt(v, 10); return isNaN(n) ? null : n; }
+  function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+  function ph(t) { return '<span class="ph">' + esc(t) + '</span>'; }
+
+  function parseKeys(text) {
+    return lines(text).map(function (l) {
+      var m = l.split(/\t|;|\|/);
+      var key = clean(m[0]).replace(/^["']|["']$/g, '');
+      var freq = m.length > 1 ? num(String(m[1]).replace(/[^\d]/g, '')) : null;
+      return { key: key, freq: freq };
+    }).filter(function (k) { return k.key; });
+  }
+
+  function detectIntent(keys) {
+    var all = keys.join(' ').toLowerCase();
+    var com = /(купит|купити|ціна|цін|цена|замов|заказ|доставк|недорог|продаж|магазин|інтернет-магазин|прайс|вартість|стоимост|оптом|в наличии|в наявності)/.test(all);
+    var info = /(^|\s)(як|що|чому|навіщо|коли|скільки|чи|как|что|почему|зачем|когда|сколько|how|what|why)(\s|$)|інструкці|инструкц|поради|советы|своїми руками|своими руками|відгуки|отзывы/.test(all);
+    if (com && info) return 'mixed';
+    if (com) return 'commercial';
+    if (info) return 'informational';
+    return 'mixed';
+  }
+
+  function intentOf(s) {
+    if (s.intent !== 'auto') return s.intent;
+    var keys = [s.mainKey].concat(parseKeys(s.addKeys).map(function (k) { return k.key; })).filter(Boolean);
+    return keys.length ? detectIntent(keys) : null;
+  }
+
+  function volume(s) {
+    var a = num(s.volMin), b = num(s.volMax);
+    if (a && b && b < a) { var t = a; a = b; b = t; }
+    if (a && !b) b = a; if (b && !a) a = b;
+    return a ? { min: a, max: b, mid: Math.round((a + b) / 2) } : null;
+  }
+
+  /* ---------- правила ключів ---------- */
+  function keyRules(s) {
+    var v = volume(s);
+    var adds = parseKeys(s.addKeys);
+    var lsi = lines(s.lsi);
+    var r = { main: '', add: '', lsi: '', general: [] };
+    if (s.kind === 'external') {
+      r.main = 'рівно 1 раз у точній формі';
+      r.add = 'непряме входження: можна змінювати відмінки, порядок слів, додавати службові слова';
+      r.lsi = lsi.length ? '1 раз кожен, природно' : '';
+      r.general = [
+        'Щільність усіх ключів разом — не більше 1 на 1000 символів' + (v ? ' (≈ ' + Math.max(1, Math.floor(v.mid / 1000)) + '–' + Math.max(2, Math.ceil(v.max / 1000)) + ' на весь текст)' : '') + '.',
+        'Основний ключ — у H1 (якщо звучить незграбно, H1 формулюємо читабельно, а ключ переносимо у вступ).',
+        '1–2 ключі — у H2 або H3; не в кожному підзаголовку підряд.',
+        'Анкор посилання не повторює точне входження основного ключа в іншому місці тексту.'
+      ];
+    } else {
+      var mainRange = '4–6';
+      if (v) {
+        var lo = Math.max(2, Math.round(v.min / 1100));
+        var hi = Math.max(lo + 1, Math.round(v.max / 800));
+        mainRange = lo + '–' + hi;
+      }
+      r.main = mainRange + ' разів у точній формі: H1, перші 100 символів вступу, середина тексту, висновок';
+      r.add = adds.length > 8 ? '1–2 рази кожен; можна змінювати відмінки й порядок слів' : '2–3 рази кожен; можна змінювати відмінки й порядок слів';
+      r.lsi = lsi.length ? '1–2 рази кожен, як фон, без виділення' : '';
+      r.general = [
+        'H1 повторює або варіює основний ключ.',
+        'H2 — додаткові або комбіновані ключі; 1–2 H2 у формі питання.',
+        'H3 — LSI, синоніми, уточнення.',
+        'Перший абзац — основний ключ і коротка відповідь на запит у перших 100 символах.',
+        'Ключі розподілені рівномірно; не ставити два ключі підряд, не вставляти ключ окремим реченням.'
+      ];
+    }
+    return r;
+  }
+
+  /* ---------- рендер ТЗ ---------- */
+  function pageTypeLabel(s) {
+    var list = PAGE_TYPES[s.kind] || [];
+    for (var i = 0; i < list.length; i++) if (list[i][0] === s.pageType) return list[i][1];
+    return '';
+  }
+
+  function li(arr) { return arr.length ? '<ul>' + arr.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' : ''; }
+
+  function buildDoc(s) {
+    var ext = s.kind === 'external';
+    var intent = intentOf(s);
+    var v = volume(s);
+    var topics = lines(s.topics);
+    var adds = parseKeys(s.addKeys);
+    var lsi = lines(s.lsi);
+    var rules = keyRules(s);
+    var links = (s.links || []).filter(function (l) { return clean(l.anchor) || clean(l.url); });
+    var titles = lines(s.titles), descs = lines(s.descs);
+    var faq = lines(s.faqQs);
+    var h = [];
+
+    h.push('<h1>ТЗ ' + (ext ? 'для зовнішнього тексту' : 'для тексту на сайт') + ' №' + esc(s.n || 1) + '</h1>');
+    h.push('<p class="muted">' + esc(pageTypeLabel(s)) + (s.deadline ? ' · дедлайн: ' + esc(new Date(s.deadline).toLocaleDateString('uk-UA')) : '') + (s.author ? ' · ТЗ склав(ла): ' + esc(s.author) : '') + '</p>');
+
+    h.push('<h2>1. Загальна інформація</h2><table><tbody>');
+    h.push('<tr><th style="width:32%">Проєкт (клієнт)</th><td>' + (s.project ? esc(s.project) : ph('вкажіть сайт клієнта')) + '</td></tr>');
+    if (!ext) h.push('<tr><th>Сторінка</th><td>' + (s.pageUrl ? esc(s.pageUrl) : 'нова сторінка') + '</td></tr>');
+    h.push('<tr><th>Тема' + (ext ? ' (рекомендована)' : '') + '</th><td>' + (topics.length ? topics.map(esc).join('<br><span class="muted">або</span><br>') : ph('вкажіть тему')) + '</td></tr>');
+    if (s.context) h.push('<tr><th>Контекст</th><td>' + esc(s.context) + '</td></tr>');
+    h.push('<tr><th>Тип контенту</th><td>' + esc(pageTypeLabel(s)) + (ext ? ' з посиланням на сайт клієнта' : '') + '</td></tr>');
+    h.push('<tr><th>Пошуковий інтент</th><td>' + (intent ? esc(INTENT_LABEL[intent]) + (s.intent === 'auto' ? ' <span class="muted">(визначено за ключами)</span>' : '') : ph('додайте ключі')) + '</td></tr>');
+    h.push('<tr><th>Мова</th><td>' + esc(s.lang) + (s.translate ? ' + переклад на ' + esc(s.translate) : '') + '</td></tr>');
+    h.push('<tr><th>Обсяг</th><td>' + (v ? (v.min === v.max ? fmt(v.min) : fmt(v.min) + '–' + fmt(v.max)) + ' символів без пробілів' : ph('вкажіть обсяг')) + (s.compSummary ? ' <span class="muted">(медіана конкурентів — ' + fmt(s.compSummary.median) + ')</span>' : '') + '</td></tr>');
+    h.push('</tbody></table>');
+
+    h.push('<h2>2. Мета тексту</h2><p>' + (s.goal ? esc(s.goal).replace(/\n/g, '<br>') : ph('опишіть, що читач має зрозуміти й зробити')) + '</p>');
+    h.push('<h3>Аудиторія</h3><p>' + (s.audience ? esc(s.audience).replace(/\n/g, '<br>') : ph('хто читає')) + '</p>');
+    h.push('<h3>Тональність і стиль</h3><p>' + esc((s.tones || []).join(', ')) + (s.toneNote ? '. ' + esc(s.toneNote) : '') + '</p>');
+
+    if (!ext) {
+      h.push('<h2>3. Мета-теги</h2><table><thead><tr><th>Тег</th><th>Вимоги</th><th>Варіанти</th></tr></thead><tbody>');
+      h.push('<tr><td>Title</td><td>До 60 символів, основний ключ на початку, без повторів</td><td>' + (titles.length ? titles.map(function (t) { return esc(t) + ' <span class="muted">(' + t.length + ')</span>'; }).join('<br>') : 'копірайтер пропонує 2 варіанти') + '</td></tr>');
+      h.push('<tr><td>Description</td><td>150–160 символів, ключ + вигода + заклик до дії</td><td>' + (descs.length ? descs.map(function (t) { return esc(t) + ' <span class="muted">(' + t.length + ')</span>'; }).join('<br>') : 'копірайтер пропонує 2 варіанти') + '</td></tr>');
+      h.push('</tbody></table>');
+    }
+
+    var sec = ext ? 3 : 4;
+    h.push('<h2>' + sec + '. Ключові слова</h2>');
+    h.push('<table><thead><tr><th>Ключ</th><th>Тип</th><th>Частота</th><th>Скільки разів і як</th></tr></thead><tbody>');
+    h.push('<tr><td><b>' + (s.mainKey ? esc(s.mainKey) : ph('основний ключ')) + '</b></td><td>основний</td><td>' + '—' + '</td><td>' + esc(rules.main) + '</td></tr>');
+    adds.forEach(function (k) { h.push('<tr><td>' + esc(k.key) + '</td><td>додатковий</td><td>' + (k.freq != null ? fmt(k.freq) : '—') + '</td><td>' + esc(rules.add) + '</td></tr>'); });
+    h.push('</tbody></table>');
+    if (lsi.length) h.push('<p><b>LSI / супутні терміни</b> (' + esc(rules.lsi) + '): ' + lsi.map(esc).join(', ') + '.</p>');
+    h.push('<h3>Правила вживання ключів</h3>' + li(rules.general.map(esc)));
+
+    sec++;
+    h.push('<h2>' + sec + '. Структура тексту</h2>');
+    var parts = [];
+    parts.push('<b>H1:</b> ' + (s.h1 ? esc(s.h1) : 'містить основний ключ' + (ext ? ' (або читабельне формулювання теми)' : '')));
+    parts.push('<b>Вступ</b> (2–3 речення): про що текст і яку користь отримає читач' + (!ext ? '; основний ключ і коротка відповідь у перших 100 символах' : '') + '.');
+    h.push(li(parts));
+    var st = (s.structure || []).filter(function (b) { return clean(b.h2); });
+    if (st.length) {
+      h.push('<ol>' + st.map(function (b) {
+        var h3 = lines(b.h3);
+        return '<li><b>H2:</b> ' + esc(b.h2) + (b.note ? ' <span class="muted">— ' + esc(b.note) + '</span>' : '') + (h3.length ? '<ul>' + h3.map(function (x) { return '<li>H3: ' + esc(x) + '</li>'; }).join('') + '</ul>' : '') + '</li>';
+      }).join('') + '</ol>');
+    } else {
+      h.push('<p>' + ph('додайте H2/H3 у кроці 5 або проаналізуйте конкурентів') + '</p>');
+    }
+    if (s.el_faq) h.push('<p><b>FAQ-блок:</b> ' + (faq.length ? '</p>' + li(faq.map(esc)) : '3–5 популярних запитів за темою; питання = запит, відповідь — 2–4 речення з конкретикою.</p>'));
+    h.push('<p><b>Висновок:</b> коротке резюме' + (s.el_cta ? ' + заклик до дії' + (ext ? ' зі згадкою клієнта' : '') : '') + '.</p>');
+    if (s.compSummary && s.compSummary.groups && s.compSummary.groups.length) {
+      h.push('<p class="muted">Теми, які розкривають конкуренти: ' + s.compSummary.groups.map(esc).join('; ') + '.</p>');
+    }
+
+    sec++;
+    var els = [];
+    if (s.el_lists) els.push('Списки й маркери там, де є перелік кроків, переваг чи критеріїв.');
+    if (s.el_table) els.push('Таблиця: порівняння, характеристики або ціни.');
+    if (s.el_faq) els.push('FAQ-блок наприкінці тексту.');
+    if (s.el_cta) els.push('Заклик до дії: що зробити далі (звернутися, замовити, отримати консультацію).');
+    if (s.el_images) els.push('Зображення: 2–3 місця з підписами; alt описує зміст зображення природною фразою, без переспаму.');
+    if (s.el_author) els.push('Блок автора або експерта: імʼя, посада, досвід.');
+    els.push('Абзаци до 3–4 речень, речення до 20–25 слів, один підзапит — один блок тексту.');
+    h.push('<h2>' + sec + '. Обовʼязкові елементи й оформлення</h2>' + li(els.map(esc)));
+
+    sec++;
+    var eeat = ['Усі цифри, характеристики й твердження — достовірні; не вигадувати статистику, ціни, відгуки.', 'Практичні поради з досвіду, а не загальні фрази.'];
+    if (s.el_sources) eeat.push('Для цифр і фактів — посилання на джерела (офіційні сайти, дослідження, нормативи).');
+    if (s.el_ymyl) eeat.push('YMYL-тема: без обіцянок результату й гарантій; медичні, фінансові чи юридичні твердження — лише перевірені; додати застереження «потрібна консультація фахівця»; бажана перевірка експертом.');
+    h.push('<h2>' + sec + '. Достовірність і E-E-A-T</h2>' + li(eeat.map(esc)));
+
+    sec++;
+    h.push('<h2>' + sec + '. Посилання</h2>');
+    if (links.length) {
+      h.push('<table><thead><tr><th>Анкор</th><th>Сторінка</th></tr></thead><tbody>' + links.map(function (l) { return '<tr><td>' + (clean(l.anchor) ? esc(l.anchor) : ph('анкор')) + '</td><td>' + (clean(l.url) ? esc(l.url) : ph('URL')) + '</td></tr>'; }).join('') + '</tbody></table>');
+    } else {
+      h.push('<p>' + ph(ext ? 'додайте анкор і сторінку клієнта' : 'додайте сторінки для перелінковки') + '</p>');
+    }
+    h.push(li((ext ? [
+      'Посилання вписане в природне речення в першій половині тексту, не у вступі й не в заголовку.',
+      'Одне посилання на сайт клієнта; анкор — як у таблиці.',
+      'Без закликів «перейдіть за посиланням».'
+    ] : [
+      'Посилання — у тілі тексту, не в заголовках і не поруч одне з одним.',
+      'Анкор вписаний у речення природно; одна сторінка — одне посилання.'
+    ]).map(esc)));
+
+    var comps = lines(s.competitors);
+    if (comps.length) {
+      sec++;
+      h.push('<h2>' + sec + '. Приклади й конкуренти</h2><p class="muted">Для розуміння теми й глибини. Не переписувати й не копіювати структуру дослівно.</p>' + li(comps.map(esc)));
+    }
+
+    sec++;
+    var q = [];
+    if (s.q_uniq) q.push('Унікальність — понад 90% (text.ru).');
+    if (s.q_textru) q.push('Заспамленість 35–55%, «вода» 10–20%, «нудота» 1–3% (text.ru / advego) — як орієнтир, не самоціль.');
+    if (s.q_ai) q.push('Ймовірність AI — не більше 50% (gptzero.me або scribbr.com/ai-detector). Текст має читатися як написаний фахівцем.');
+    if (s.q_bold) q.push('Ключові слова в тексті виділити жирним.');
+    q.push('Без «води», штампів і канцеляризмів («у сучасному світі», «важливо зазначити», «не секрет, що»).');
+    q.push('Не ставити два ключі підряд; якщо фраза звучить неприродно — додати службові слова.');
+    q.push('Не згадувати конкурентів і не давати неперевірених обіцянок.');
+    if (s.extra) lines(s.extra).forEach(function (x) { q.push(x); });
+    h.push('<h2>' + sec + '. Вимоги до якості</h2>' + li(q.map(esc)));
+
+    sec++;
+    var deliver = ['Google Doc з відкритим доступом на коментування.', 'Заголовки позначені як H1/H2/H3 (стилями документа).'];
+    if (!ext) deliver.push('Title і Description — окремо на початку документа.');
+    if (s.translate) deliver.push('Переклад на ' + s.translate + ' — окремим блоком після основного тексту, зі збереженою структурою.');
+    h.push('<h2>' + sec + '. Формат здачі</h2>' + li(deliver.map(esc)));
+
+    sec++;
+    var check = ['Обсяг у межах ТЗ', 'Основний ключ ужито потрібну кількість разів і в H1', 'Усі посилання з таблиці вставлено з правильними анкорами', 'Структура відповідає ТЗ, кожен H2 розкритий', 'Факти й цифри перевірені', 'Унікальність перевірена'];
+    if (s.el_faq) check.push('Є FAQ-блок');
+    if (!ext) check.push('Є Title і Description у межах довжини');
+    h.push('<h2>' + sec + '. Чекліст перед здачею</h2><ul>' + check.map(function (c) { return '<li>☐ ' + esc(c) + '</li>'; }).join('') + '</ul>');
+
+    return h.join('\n');
+  }
+
+  /* ---------- форма ↔ стан ---------- */
+  function fillPageTypes() {
+    var sel = $('pageType');
+    var list = PAGE_TYPES[state.kind];
+    sel.innerHTML = list.map(function (p) { return '<option value="' + p[0] + '">' + esc(p[1]) + '</option>'; }).join('');
+    if (!list.some(function (p) { return p[0] === state.pageType; })) state.pageType = list[0][0];
+    sel.value = state.pageType;
+  }
+
+  function writeForm() {
+    Array.prototype.forEach.call(f.elements, function (el) {
+      if (!el.name || !(el.name in state)) return;
+      if (el.type === 'radio') el.checked = state[el.name] === el.value;
+      else if (el.type === 'checkbox') el.checked = !!state[el.name];
+      else if (el.name !== 'pageType') el.value = state[el.name] == null ? '' : state[el.name];
+    });
+    fillPageTypes();
+    renderTones(); renderStruct(); renderLinks(); applyKindUi();
+  }
+
+  function readField(el) {
+    if (!el.name || !(el.name in state)) return;
+    if (el.type === 'radio') { if (el.checked) state[el.name] = el.value; }
+    else if (el.type === 'checkbox') state[el.name] = el.checked;
+    else state[el.name] = el.value;
+  }
+
+  function applyKindUi() {
+    var ext = state.kind === 'external';
+    $('pageUrlWrap').style.display = ext ? 'none' : '';
+    $('metaBlock').style.display = ext ? 'none' : '';
+    $('metaAi').style.display = ext ? 'none' : '';
+    $('metaInfo').style.display = ext ? 'none' : '';
+    $('linksNote').textContent = ext ? 'Посилання на сайт клієнта, яке автор розмістить у статті. Зазвичай одне.' : 'Внутрішня перелінковка: анкори й сторінки сайту, на які треба послатися.';
+  }
+
+  function renderTones() {
+    $('toneChips').innerHTML = TONES.map(function (t) {
+      return '<button type="button" class="chip" data-tone="' + esc(t) + '" aria-pressed="' + (state.tones.indexOf(t) !== -1) + '">' + esc(t) + '</button>';
+    }).join('');
+  }
+
+  function renderStruct() {
+    var box = $('struct');
+    if (!state.structure.length) { box.innerHTML = '<p class="note">Поки порожньо. Додайте H2 вручну, з тем конкурентів або через ШІ.</p>'; return; }
+    box.innerHTML = state.structure.map(function (b, i) {
+      return '<div class="h2row" data-i="' + i + '"><div class="h2head"><span class="tag">H2</span>' +
+        '<input type="text" data-k="h2" value="' + esc(b.h2) + '" aria-label="Заголовок H2 №' + (i + 1) + '">' +
+        '<button type="button" class="icon" data-act="up" aria-label="Вище">↑</button><button type="button" class="icon" data-act="down" aria-label="Нижче">↓</button><button type="button" class="icon" data-act="del" aria-label="Видалити H2">✕</button></div>' +
+        '<input type="text" data-k="note" value="' + esc(b.note || '') + '" placeholder="Коментар: що розкрити" aria-label="Коментар до H2">' +
+        '<textarea data-k="h3" rows="2" placeholder="H3 — кожен з нового рядка" aria-label="H3 під цим H2">' + esc(b.h3 || '') + '</textarea></div>';
+    }).join('');
+  }
+
+  function renderLinks() {
+    if (!state.links.length) state.links.push({ anchor: '', url: '' });
+    $('links').innerHTML = state.links.map(function (l, i) {
+      return '<div class="links-row" data-i="' + i + '"><input type="text" data-k="anchor" value="' + esc(l.anchor) + '" placeholder="Анкор" aria-label="Анкор ' + (i + 1) + '"><input type="url" data-k="url" value="' + esc(l.url) + '" placeholder="https://…" aria-label="URL ' + (i + 1) + '"><button type="button" class="icon" data-act="del" aria-label="Видалити посилання">✕</button></div>';
+    }).join('');
+  }
+
+  function metaInfo() {
+    var t = lines(state.titles), d = lines(state.descs);
+    var bad = t.filter(function (x) { return x.length > 60; }).length + d.filter(function (x) { return x.length < 150 || x.length > 160; }).length;
+    $('metaInfo').textContent = (t.length || d.length) ? ('Title: ' + t.map(function (x) { return x.length; }).join(', ') + ' · Description: ' + d.map(function (x) { return x.length; }).join(', ') + (bad ? ' — є варіанти поза межами' : ' — усе в межах')) : '';
+  }
+
+  function intentInfo() {
+    var i = intentOf(state);
+    $('intentInfo').textContent = i ? 'Інтент: ' + INTENT_LABEL[i] + (state.intent === 'auto' ? ' (визначено автоматично за ключами)' : '') : '';
+  }
+
+  var saveTimer;
+  function update() {
+    $('paper').innerHTML = buildDoc(state);
+    metaInfo(); intentInfo();
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function () { try { localStorage.setItem(STORE_DRAFT, JSON.stringify(state)); } catch (e) {} }, 400);
+  }
+
+  f.addEventListener('input', function (e) {
+    var el = e.target;
+    var row = el.closest('.h2row');
+    if (row) { state.structure[+row.dataset.i][el.dataset.k] = el.value; update(); return; }
+    var lrow = el.closest('.links-row');
+    if (lrow) { state.links[+lrow.dataset.i][el.dataset.k] = el.value; update(); return; }
+    readField(el);
+    if (el.name === 'kind') { fillPageTypes(); applyKindUi(); }
+    update();
+  });
+  f.addEventListener('change', function (e) { var el = e.target; if (el.name && !el.closest('.h2row') && !el.closest('.links-row')) { readField(el); if (el.name === 'kind') { fillPageTypes(); applyKindUi(); } update(); } });
+
+  f.addEventListener('click', function (e) {
+    var t = e.target.closest('button');
+    if (!t) return;
+    if (t.dataset.tone) {
+      var i = state.tones.indexOf(t.dataset.tone);
+      if (i === -1) state.tones.push(t.dataset.tone); else state.tones.splice(i, 1);
+      t.setAttribute('aria-pressed', i === -1);
+      update(); return;
+    }
+    var row = t.closest('.h2row');
+    if (row && t.dataset.act) {
+      var k = +row.dataset.i, s = state.structure;
+      if (t.dataset.act === 'del') s.splice(k, 1);
+      if (t.dataset.act === 'up' && k > 0) s.splice(k - 1, 0, s.splice(k, 1)[0]);
+      if (t.dataset.act === 'down' && k < s.length - 1) s.splice(k + 1, 0, s.splice(k, 1)[0]);
+      renderStruct(); update(); return;
+    }
+    var lrow = t.closest('.links-row');
+    if (lrow && t.dataset.act === 'del') { state.links.splice(+lrow.dataset.i, 1); renderLinks(); update(); return; }
+    if (t.id === 'addH2') { state.structure.push({ h2: '', note: '', h3: '' }); renderStruct(); update(); var ins = $('struct').querySelectorAll('.h2row input[data-k=h2]'); ins[ins.length - 1].focus(); return; }
+    if (t.id === 'addLink') { state.links.push({ anchor: '', url: '' }); renderLinks(); update(); return; }
+    if (t.id === 'analyze') { analyze(t); return; }
+    if (t.dataset.ai) { runAi(t.dataset.ai, t); return; }
+    if (t.dataset.addgroup != null) { var g = comp.groups[+t.dataset.addgroup]; state.structure.push({ h2: g.label, note: '', h3: '' }); t.disabled = true; t.textContent = 'Додано'; renderStruct(); update(); return; }
+    if (t.dataset.addlsi != null) {
+      var term = comp.lsi[+t.dataset.addlsi].term;
+      var cur = lines(state.lsi);
+      if (cur.indexOf(term) === -1) { cur.push(term); state.lsi = cur.join('\n'); f.elements.lsi.value = state.lsi; }
+      t.setAttribute('aria-pressed', 'true'); update(); return;
+    }
+    if (t.id === 'applyVol') { state.volMin = t.dataset.min; state.volMax = t.dataset.max; f.elements.volMin.value = state.volMin; f.elements.volMax.value = state.volMax; update(); return; }
+  });
+
+  /* ---------- аналіз конкурентів ---------- */
+  function stem(w) { return w.length > 5 ? w.slice(0, 5) : w; }
+  function words(t) { return (String(t).toLowerCase().match(/[\p{L}\p{N}'’-]+/gu) || []).map(function (w) { return w.replace(/^['’-]+|['’-]+$/g, ''); }).filter(function (w) { return w.length > 2 && !STOPSET[w] && !/^\d+$/.test(w); }); }
+
+  function extractPage(html, url) {
+    var doc = new DOMParser().parseFromString(html || '', 'text/html');
+    var schema = [];
+    Array.prototype.forEach.call(doc.querySelectorAll('script[type="application/ld+json" i]'), function (s) { var m = (s.textContent || '').match(/"@type"\s*:\s*"([^"]+)"/g); if (m) m.forEach(function (x) { schema.push(x.replace(/.*"([^"]+)"$/, '$1')); }); });
+    Array.prototype.forEach.call(doc.querySelectorAll('script,style,noscript,template,svg,iframe,nav,header,footer,aside,form'), function (n) { n.remove(); });
+    var root = doc.querySelector('article') || doc.querySelector('main') || doc.querySelector('[role=main]') || doc.body;
+    if (!root) return null;
+    var blocks = root.querySelectorAll('p,li,td,th,h1,h2,h3,h4,h5,h6,div,section,br,dt,dd,blockquote,figcaption');
+    Array.prototype.forEach.call(blocks, function (el) { el.appendChild(doc.createTextNode(' \n ')); });
+    var sentences = String(root.textContent || '').split(/[.!?;:…\n]+/).map(clean).filter(Boolean);
+    var text = clean(root.textContent);
+    var hs = function (sel) { return Array.prototype.map.call(root.querySelectorAll(sel), function (x) { return clean(x.textContent); }).filter(function (x) { return x && x.length < 160; }); };
+    var h2 = hs('h2'), h3 = hs('h3');
+    var faq = schema.indexOf('FAQPage') !== -1 || h2.concat(h3).some(function (x) { return /faq|питання|вопрос|запитання|часті/i.test(x); });
+    var host = ''; try { host = new URL(url).host.replace(/^www\./, ''); } catch (e) {}
+    return { url: url, host: host, h1: hs('h1')[0] || '', h2: h2, h3: h3, chars: text.replace(/\s/g, '').length, text: text, sentences: sentences,
+      tables: root.querySelectorAll('table').length, lists: root.querySelectorAll('ul,ol').length, images: root.querySelectorAll('img').length, faq: faq, schema: schema };
+  }
+
+  function groupHeadings(pages) {
+    var groups = [];
+    pages.forEach(function (p, pi) {
+      p.h2.forEach(function (h) {
+        if (/faq|часті питання|часто задава|питання й відповіді|питання та відповіді|вопрос|запитання|висновок|вывод|заключение|контакти|контакты|коментар|комментар/i.test(h)) return;
+        var st = words(h).map(stem);
+        if (!st.length) return;
+        var best = null, bestScore = 0;
+        groups.forEach(function (g) {
+          var inter = st.filter(function (x) { return g.stems.indexOf(x) !== -1; }).length;
+          var uni = st.length + g.stems.length - inter;
+          var score = uni ? inter / uni : 0;
+          if (score > bestScore) { bestScore = score; best = g; }
+        });
+        if (best && bestScore >= 0.4) { if (best.pages.indexOf(pi) === -1) best.pages.push(pi); best.all.push(h); }
+        else groups.push({ stems: st, label: h, pages: [pi], all: [h] });
+      });
+    });
+    return groups.sort(function (a, b) { return b.pages.length - a.pages.length || a.label.length - b.label.length; });
+  }
+
+  function findLsi(pages, s) {
+    var keyStems = {};
+    [s.mainKey].concat(parseKeys(s.addKeys).map(function (k) { return k.key; })).forEach(function (k) { words(k).forEach(function (w) { keyStems[stem(w)] = 1; }); });
+    var map = {};
+    function ok(w) { return w.length > 2 && !STOPSET[w] && !/\d/.test(w); }
+    pages.forEach(function (p, pi) {
+      var seen = {};
+      (p.sentences || [p.text]).forEach(function (sent) {
+        var w = (String(sent).toLowerCase().match(/[\p{L}\p{N}'’-]+/gu) || []).map(function (x) { return x.replace(/^['’-]+|['’-]+$/g, ''); });
+        for (var i = 0; i < w.length - 1; i++) {
+          var a = w[i], b = w[i + 1];
+          if (!ok(a) || !ok(b)) continue;
+          if (keyStems[stem(a)] && keyStems[stem(b)]) continue;
+          var key = stem(a) + ' ' + stem(b);
+          if (!map[key]) map[key] = { term: a + ' ' + b, pages: {}, n: 0 };
+          map[key].n++;
+          if (!seen[key]) { map[key].pages[pi] = 1; seen[key] = 1; }
+        }
+      });
+    });
+    var need = Math.min(2, pages.length);
+    return Object.keys(map).map(function (k) { var m = map[k]; return { term: m.term, pages: Object.keys(m.pages).length, n: m.n }; })
+      .filter(function (m) { return m.pages >= need && m.n >= 2; })
+      .sort(function (a, b) { return b.pages - a.pages || b.n - a.n; }).slice(0, 30);
+  }
+
+  function median(arr) { var a = arr.slice().sort(function (x, y) { return x - y; }); var m = Math.floor(a.length / 2); return a.length % 2 ? a[m] : Math.round((a[m - 1] + a[m]) / 2); }
+  function round100(n) { return Math.round(n / 100) * 100; }
+
+  function analyze(btn) {
+    var urls = lines(state.competitors).filter(function (u) { return /^https?:\/\//i.test(u); }).slice(0, 8);
+    var status = $('compStatus');
+    if (!urls.length) { status.textContent = 'Додайте хоча б одну адресу, що починається з https://'; return; }
+    btn.disabled = true;
+    status.textContent = 'Завантажую ' + urls.length + ' сторінок…';
+    Promise.all(urls.map(function (u) {
+      return fetch(WORKER + '/?url=' + encodeURIComponent(u)).then(function (r) { return r.json().then(function (d) { if (!r.ok) throw new Error(d.error || r.status); return extractPage(d.html, d.finalUrl || u); }); })
+        .catch(function (e) { return { url: u, error: e.message || 'помилка' }; });
+    })).then(function (res) {
+      var ok = res.filter(function (p) { return p && !p.error && p.chars > 200; });
+      comp.pages = res;
+      comp.groups = groupHeadings(ok);
+      comp.lsi = findLsi(ok, state);
+      if (ok.length) {
+        var med = median(ok.map(function (p) { return p.chars; }));
+        state.compSummary = { median: med, groups: comp.groups.filter(function (g) { return g.pages.length >= Math.min(2, ok.length); }).slice(0, 8).map(function (g) { return g.label; }) };
+      }
+      renderComp(ok.length);
+      status.textContent = ok.length ? 'Готово: проаналізовано ' + ok.length + ' з ' + res.length + '.' : 'Не вдалося отримати текст жодної сторінки.';
+      update();
+    }).then(function () { btn.disabled = false; }, function () { btn.disabled = false; });
+  }
+
+  function renderComp(okCount) {
+    var out = [];
+    out.push('<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Сайт</th><th>Символів без пробілів</th><th>H2</th><th>H3</th><th>FAQ</th><th>Таблиці</th><th>Списки</th></tr></thead><tbody>');
+    comp.pages.forEach(function (p) {
+      if (p.error) out.push('<tr><td>' + esc(p.url) + '</td><td colspan="6">не вдалося: ' + esc(p.error) + '</td></tr>');
+      else out.push('<tr><td>' + esc(p.host) + '</td><td class="num">' + fmt(p.chars) + '</td><td class="num">' + p.h2.length + '</td><td class="num">' + p.h3.length + '</td><td>' + (p.faq ? 'так' : '—') + '</td><td class="num">' + p.tables + '</td><td class="num">' + p.lists + '</td></tr>');
+    });
+    out.push('</tbody></table></div>');
+    if (state.compSummary) {
+      var med = state.compSummary.median;
+      var mn = Math.max(500, round100(med * 0.9)), mx = Math.max(mn + 500, round100(med * 1.2));
+      out.push('<div class="btns" style="align-items:center"><span class="note">Медіана обсягу: <b>' + fmt(med) + '</b> симв. без пробілів.</span><button type="button" class="btn ghost small" id="applyVol" data-min="' + mn + '" data-max="' + mx + '">Взяти обсяг ' + fmt(mn) + '–' + fmt(mx) + '</button></div>');
+    }
+    if (comp.groups.length) {
+      out.push('<strong style="font-size:14px">Теми H2 у конкурентів</strong><p class="note">Число — у скількох конкурентів є така тема. Натисніть, щоб додати в структуру й відредагувати.</p><div class="chips">');
+      comp.groups.slice(0, 20).forEach(function (g, i) { out.push('<button type="button" class="chip" data-addgroup="' + i + '" title="' + esc(g.all.join(' | ')) + '"><b>' + g.pages.length + '/' + okCount + '</b>' + esc(g.label) + '</button>'); });
+      out.push('</div>');
+    }
+    if (comp.lsi.length) {
+      out.push('<strong style="font-size:14px">Кандидати в LSI</strong><p class="note">Словосполучення, що повторюються в кількох конкурентів. Натисніть, щоб додати.</p><div class="chips">');
+      comp.lsi.forEach(function (m, i) { out.push('<button type="button" class="chip" data-addlsi="' + i + '" aria-pressed="' + (lines(state.lsi).indexOf(m.term) !== -1) + '"><b>' + m.pages + '</b>' + esc(m.term) + '</button>'); });
+      out.push('</div>');
+    }
+    $('compOut').innerHTML = out.join('');
+  }
+
+  /* ---------- ШІ Chrome ---------- */
+  function aiStatus(t) { $('aiStatus').textContent = t || ''; }
+  function langCode() { return { 'українська': 'uk', 'російська': 'ru', 'англійська': 'en', 'польська': 'pl', 'чеська': 'cs' }[state.lang] || 'en'; }
+
+  function aiSession() {
+    if (!('LanguageModel' in self)) return Promise.reject(new Error('Вбудований ШІ доступний лише в Google Chrome 148+ на компʼютері.'));
+    var LM = self.LanguageModel;
+    var tries = [langCode(), 'en'];
+    function pick(i) {
+      if (i >= tries.length) return Promise.reject(new Error('Модель ШІ недоступна на цьому пристрої.'));
+      var o = { expectedInputs: [{ type: 'text', languages: [tries[i]] }], expectedOutputs: [{ type: 'text', languages: [tries[i]] }] };
+      return LM.availability(o).then(function (a) { return a === 'unavailable' ? pick(i + 1) : o; });
+    }
+    return pick(0).then(function (o) {
+      o.monitor = function (m) { m.addEventListener('downloadprogress', function (e) { aiStatus('Завантаження моделі ШІ: ' + Math.round(e.loaded * 100) + '%'); }); };
+      return LM.create(o);
+    });
+  }
+
+  function brief() {
+    return 'Topic: ' + lines(state.topics).join(' / ') + '\nPage type: ' + pageTypeLabel(state) + (state.kind === 'external' ? ' (external guest article with a link to the client)' : '') +
+      '\nMain keyword: ' + state.mainKey + '\nSecondary keywords: ' + parseKeys(state.addKeys).map(function (k) { return k.key; }).join(', ') +
+      '\nAudience: ' + state.audience + '\nClient site: ' + state.project +
+      (state.compSummary && state.compSummary.groups.length ? '\nTopics covered by competitors: ' + state.compSummary.groups.join('; ') : '') +
+      '\nWrite everything in ' + ({ 'українська': 'Ukrainian', 'російська': 'Russian', 'англійська': 'English', 'польська': 'Polish', 'чеська': 'Czech' }[state.lang] || 'Ukrainian') + '.';
+  }
+
+  function runAi(kind, btn) {
+    if (!state.mainKey && !lines(state.topics).length) { aiStatus('Спершу вкажіть тему або основний ключ.'); return; }
+    btn.disabled = true; aiStatus('Готую модель ШІ…');
+    var schema, prompt;
+    if (kind === 'structure') {
+      schema = { type: 'object', properties: { sections: { type: 'array', minItems: 4, maxItems: 8, items: { type: 'object', properties: { h2: { type: 'string' }, note: { type: 'string' }, h3: { type: 'array', items: { type: 'string' }, maxItems: 4 } }, required: ['h2', 'note', 'h3'] } } }, required: ['sections'] };
+      prompt = 'You are a senior SEO content strategist. Propose an article outline (H2 with optional H3) for a copywriter brief. One sub-question per H2, logical order, 1-2 H2 phrased as questions, secondary keywords used naturally in some headings, no FAQ section (it is added separately). "note" = one short sentence: what to cover.\n\n' + brief();
+    } else if (kind === 'meta') {
+      schema = { type: 'object', properties: { titles: { type: 'array', items: { type: 'string' }, minItems: 2, maxItems: 3 }, descriptions: { type: 'array', items: { type: 'string' }, minItems: 2, maxItems: 2 } }, required: ['titles', 'descriptions'] };
+      prompt = 'Write SEO meta tags. Titles: max 60 characters each, main keyword at the very beginning, no quotes, no ALL CAPS. Descriptions: 150-160 characters each, include the main keyword, a concrete benefit and a call to action.\n\n' + brief();
+    } else {
+      schema = { type: 'object', properties: { goal: { type: 'string' } }, required: ['goal'] };
+      prompt = 'Write the "goal of the text" paragraph for a copywriter brief: 3-4 sentences. What the reader must understand, which aspects to cover, and what action the text should lead to' + (state.kind === 'external' ? ' (contacting the client company)' : '') + '. Plain, specific, no clichés.\n\n' + brief();
+    }
+    aiSession().then(function (sess) {
+      aiStatus('ШІ пише…');
+      return sess.prompt(prompt, { responseConstraint: schema }).then(function (r) { if (sess.destroy) sess.destroy(); return JSON.parse(r); });
+    }).then(function (data) {
+      if (kind === 'structure') {
+        (data.sections || []).forEach(function (s) { state.structure.push({ h2: clean(s.h2), note: clean(s.note), h3: (s.h3 || []).map(clean).filter(Boolean).join('\n') }); });
+        renderStruct();
+      } else if (kind === 'meta') {
+        state.titles = (data.titles || []).map(clean).join('\n'); state.descs = (data.descriptions || []).map(clean).join('\n');
+        f.elements.titles.value = state.titles; f.elements.descs.value = state.descs;
+      } else {
+        state.goal = clean(data.goal); f.elements.goal.value = state.goal;
+      }
+      aiStatus('Готово. Це чернетка — перевірте й відредагуйте.'); update();
+    }).catch(function (e) { aiStatus(e.message); }).then(function () { btn.disabled = false; });
+  }
+
+  /* ---------- експорт ---------- */
+  function docName(s) { return ('ТЗ ' + (s.kind === 'external' ? 'зовнішній' : 'сайт') + ' №' + (s.n || 1) + ' ' + (s.mainKey || lines(s.topics)[0] || '')).replace(/[\\/:*?"<>|]+/g, ' ').trim().slice(0, 90); }
+  var DOC_CSS = 'body{font-family:Arial,sans-serif;font-size:11pt;line-height:1.5;color:#1F2430}h1{font-size:18pt}h2{font-size:14pt;margin-top:16pt}h3{font-size:12pt}table{border-collapse:collapse;width:100%}th,td{border:1px solid #9AA3B2;padding:4pt 6pt;vertical-align:top;text-align:left}th{background:#F1F3F6}.muted{color:#5D6676}.ph{background:#FFF5D6;color:#9A6B00}';
+  function wrapDoc(inner, title) {
+    return '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>' + esc(title) + '</title><style>' + DOC_CSS + '</style></head><body>' + inner + '</body></html>';
+  }
+  function download(html, name) {
+    var blob = new Blob(['﻿', html], { type: 'application/msword' });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name + '.doc';
+    document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  }
+  function exportStatus(t) { $('exportStatus').textContent = t; setTimeout(function () { if ($('exportStatus').textContent === t) $('exportStatus').textContent = ''; }, 3500); }
+
+  $('copyDoc').addEventListener('click', function () {
+    var html = wrapDoc(buildDoc(state), docName(state));
+    var text = $('paper').innerText;
+    if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+      navigator.clipboard.write([new ClipboardItem({ 'text/html': new Blob([html], { type: 'text/html' }), 'text/plain': new Blob([text], { type: 'text/plain' }) })])
+        .then(function () { exportStatus('Скопійовано. Вставте в порожній Google Doc (Ctrl+V) — заголовки й таблиці збережуться.'); }, function () { exportStatus('Не вдалося скопіювати — дозвольте доступ до буфера обміну або скористайтеся .doc'); });
+    } else {
+      var r = document.createRange(); r.selectNodeContents($('paper')); var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      exportStatus(document.execCommand('copy') ? 'Скопійовано.' : 'Не вдалося скопіювати — скористайтеся .doc'); sel.removeAllRanges();
+    }
+  });
+  $('dlDoc').addEventListener('click', function () { download(wrapDoc(buildDoc(state), docName(state)), docName(state)); exportStatus('Файл .doc відкривається у Word і Google Docs.'); });
+  $('printDoc').addEventListener('click', function () { window.print(); });
+
+  /* ---------- пакет ---------- */
+  function getSaved() { try { return JSON.parse(localStorage.getItem(STORE_SAVED) || '[]'); } catch (e) { return []; } }
+  function setSaved(a) { try { localStorage.setItem(STORE_SAVED, JSON.stringify(a)); } catch (e) {} }
+  function renderSaved() {
+    var a = getSaved();
+    $('saved').innerHTML = a.length ? a.map(function (b, i) {
+      return '<label><input type="checkbox" data-pick="' + i + '" checked><span><a href="#" data-open="' + i + '">' + esc(docName(b)) + '</a></span><button type="button" class="icon" data-delsaved="' + i + '" aria-label="Видалити збережене ТЗ">✕</button></label>';
+    }).join('') : '<p class="note">Збережених ТЗ ще немає.</p>';
+  }
+  $('saveBrief').addEventListener('click', function () {
+    var a = getSaved(); var copy = JSON.parse(JSON.stringify(state)); copy.savedAt = Date.now();
+    var idx = -1; a.forEach(function (b, i) { if (docName(b) === docName(copy)) idx = i; });
+    if (idx === -1) a.push(copy); else a[idx] = copy;
+    setSaved(a); renderSaved(); exportStatus('Збережено в пакет.');
+  });
+  $('saved').addEventListener('click', function (e) {
+    var o = e.target.closest('[data-open]'); var d = e.target.closest('[data-delsaved]');
+    if (o) { e.preventDefault(); state = Object.assign(defaultState(), getSaved()[+o.dataset.open]); writeForm(); update(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    if (d) { e.preventDefault(); var a = getSaved(); a.splice(+d.dataset.delsaved, 1); setSaved(a); renderSaved(); }
+  });
+  $('exportPack').addEventListener('click', function () {
+    var a = getSaved(); var picks = Array.prototype.filter.call($('saved').querySelectorAll('[data-pick]'), function (c) { return c.checked; }).map(function (c) { return a[+c.dataset.pick]; });
+    if (!picks.length) { exportStatus('Спершу збережіть і виберіть хоча б одне ТЗ.'); return; }
+    picks.sort(function (x, y) { return (x.n || 0) - (y.n || 0); });
+    var inner = picks.map(function (b, i) { return (i ? '<br clear="all" style="page-break-before:always">' : '') + buildDoc(Object.assign(defaultState(), b)); }).join('');
+    var name = 'ТЗ пакет ' + (picks[0].project || '').replace(/^https?:\/\//, '').replace(/\/.*$/, '') + ' ' + new Date().toLocaleDateString('uk-UA');
+    download(wrapDoc(inner, name), name.replace(/[\\/:*?"<>|]+/g, ' ').trim());
+    exportStatus('Експортовано ' + picks.length + ' ТЗ в один файл.');
+  });
+
+  /* ---------- демо й скидання ---------- */
+  $('demo').addEventListener('click', function () {
+    state = Object.assign(defaultState(), {
+      kind: 'site', pageType: 'blog', n: 1, project: 'https://demo-klimat.com.ua/', topics: 'Як обрати зволожувач повітря для квартири: 6 критеріїв\nЗволожувач повітря: який обрати для дому',
+      context: 'нова стаття в блог', goal: 'Допомогти читачеві обрати зволожувач повітря під площу квартири та бюджет. Пояснити різницю між ультразвуковими, паровими й традиційними моделями, які характеристики справді важливі (продуктивність, обʼєм бака, рівень шуму, гігрометр) і як доглядати за приладом. Після прочитання людина має розуміти, яка модель їй підходить, і перейти в каталог.',
+      audience: 'Власники квартир і будинків, батьки малих дітей, люди з сухою шкірою чи алергією; купують перший зволожувач і не розбираються в характеристиках.',
+      tones: ['експертний', 'дружній'], toneNote: 'Технічні речі пояснювати простою мовою, з прикладами з побуту.', lang: 'українська', translate: 'російську', volMin: 4000, volMax: 5500,
+      mainKey: 'як обрати зволожувач повітря', addKeys: 'зволожувач повітря;12100\nзволожувач повітря для квартири;1900\nультразвуковий зволожувач;1600\nякий зволожувач повітря краще;880',
+      lsi: 'вологість повітря\nрівень шуму\nобʼєм резервуара\nгігрометр\nдистильована вода\nпродуктивність',
+      titles: 'Як обрати зволожувач повітря: 6 критеріїв для квартири', descs: 'Як обрати зволожувач повітря для квартири: типи, продуктивність, шум і догляд. Порівняйте моделі та оберіть свою в каталозі з доставкою по Україні!',
+      structure: [
+        { h2: 'Навіщо потрібен зволожувач повітря', note: 'норма вологості 40–60%, наслідки сухого повітря', h3: '' },
+        { h2: 'Які бувають зволожувачі: ультразвуковий, паровий, традиційний', note: 'таблиця порівняння', h3: 'Ультразвуковий зволожувач\nПаровий зволожувач\nТрадиційний (холодне випаровування)' },
+        { h2: 'Як обрати зволожувач повітря за площею кімнати', note: 'формула продуктивності', h3: '' },
+        { h2: 'Які характеристики справді важливі?', note: 'шум, бак, гігрометр, таймер', h3: 'Рівень шуму для спальні\nОбʼєм бака і час роботи' },
+        { h2: 'Як доглядати за зволожувачем', note: 'вода, чищення, фільтри', h3: '' }
+      ],
+      faqQs: 'Який зволожувач повітря краще для дитини?\nЧи можна заливати воду з-під крана?\nДе поставити зволожувач у кімнаті?',
+      links: [{ anchor: 'зволожувачі повітря', url: 'https://demo-klimat.com.ua/zvolozhuvachi/' }, { anchor: 'очищувачі повітря', url: 'https://demo-klimat.com.ua/ochyshchuvachi/' }],
+      el_table: true, el_images: true, el_sources: true, competitors: '', author: 'SEO-спеціаліст'
+    });
+    comp = { pages: [], groups: [], lsi: [] }; $('compOut').innerHTML = ''; $('compStatus').textContent = '';
+    writeForm(); update(); exportStatus('Завантажено демо-ТЗ з вигаданими даними.');
+  });
+  $('reset').addEventListener('click', function () {
+    if (!confirm('Очистити поточне ТЗ? Збережені в пакеті залишаться.')) return;
+    state = defaultState(); comp = { pages: [], groups: [], lsi: [] }; $('compOut').innerHTML = ''; $('compStatus').textContent = '';
+    writeForm(); update();
+  });
+
+  /* ---------- старт ---------- */
+  try { var d = localStorage.getItem(STORE_DRAFT); if (d) state = Object.assign(defaultState(), JSON.parse(d)); } catch (e) {}
+  writeForm(); update(); renderSaved();
+
+  window.OnePaneBrief = { buildDoc: buildDoc, keyRules: keyRules, detectIntent: detectIntent, extractPage: extractPage, groupHeadings: groupHeadings, findLsi: findLsi, parseKeys: parseKeys, getState: function () { return state; } };
+})();
+</script>
+</body>
+</html>
