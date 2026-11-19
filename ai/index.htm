@@ -1,0 +1,1016 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI-видимість сторінки: GEO-перевірка і llms.txt — OnePane</title>
+<meta name="description" content="Перевірте, чи можуть ChatGPT, Claude, Perplexity і Google AI Overviews знайти, прочитати й процитувати сторінку. Доступ AI-ботів, текст без JS, структура відповідей, довіра. Генератор llms.txt і robots.txt.">
+<link rel="canonical" href="https://shevlyakova-seo.github.io/onepane/ai/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://shevlyakova-seo.github.io/onepane/ai/">
+<meta property="og:title" content="AI-видимість сторінки — OnePane">
+<meta property="og:description" content="GEO-перевірка за URL: чи бачать сторінку AI-боти, чи її легко процитувати, і що виправити спершу. Плюс генератор llms.txt і правил robots.txt для AI.">
+<meta property="og:locale" content="uk_UA">
+<meta name="theme-color" content="#0E1116">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237C9CFF'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/onepane.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"OnePane — AI-видимість сторінки","url":"https://shevlyakova-seo.github.io/onepane/ai/","applicationCategory":"BusinessApplication","operatingSystem":"Any","inLanguage":"uk","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"UAH"},"description":"GEO-перевірка сторінки за URL: доступ AI-ботів, текст без JavaScript, структура відповідей, сигнали довіри. Генератор llms.txt і правил robots.txt для AI-краулерів."}
+</script>
+<style>
+.main{max-width:1100px}
+#results{display:flex;flex-direction:column;gap:16px}
+#howto{display:flex;flex-direction:column;gap:10px}
+#howto td:first-child{white-space:nowrap}
+#results[hidden],#howto[hidden]{display:none}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--border);margin-bottom:18px}
+.tab{font:inherit;font-size:15px;font-weight:700;color:var(--muted);background:transparent;border:none;border-bottom:2px solid transparent;padding:10px 14px;cursor:pointer;min-height:44px}
+.tab[aria-selected=true]{color:var(--text);border-bottom-color:var(--accent)}
+.panel{display:flex;flex-direction:column;gap:16px;padding-bottom:60px}
+.panel[hidden]{display:none}
+.urlbar{display:flex;gap:10px}
+.urlbar input{flex:1 1 auto}
+.score{display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center}
+.ring{--p:0;--c:var(--accent);width:150px;height:150px;border-radius:50%;background:conic-gradient(var(--c) calc(var(--p)*1%),#232A36 0);display:grid;place-items:center}
+.ring>div{width:118px;height:118px;border-radius:50%;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring b{font-size:40px;line-height:1;font-weight:800}
+.ring span{font-size:12px;color:var(--muted);margin-top:4px}
+.bars{display:flex;flex-direction:column;gap:12px}
+.bar{display:grid;grid-template-columns:150px minmax(0,1fr) 64px;gap:12px;align-items:center;font-size:14px;color:var(--text2)}
+.bar i{display:block;height:8px;border-radius:9px;background:#232A36;overflow:hidden}
+.bar i>s{display:block;height:100%;background:var(--accent);border-radius:9px}
+.bar em{font-style:normal;font-family:var(--mono);font-size:13px;text-align:right;color:var(--text)}
+.meta-line{font-size:13px;color:var(--muted);word-break:break-all}
+.todo{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;counter-reset:t}
+.todo li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;font-size:14.5px;color:var(--text2);counter-increment:t}
+.todo li::before{content:counter(t);font-family:var(--mono);font-size:13px;color:var(--accent);border:1px solid #2E3850;border-radius:6px;height:24px;display:grid;place-items:center}
+.todo b{color:var(--text)}
+.chk{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.chk:last-child{border-bottom:none}
+.chk .t{font-weight:700;font-size:14.5px;color:var(--text)}
+.chk .v{font-size:13.5px;color:var(--text2);margin-top:2px;word-break:break-word}
+.chk .fx{font-size:13.5px;color:var(--muted);margin-top:4px}
+.chk .fx::before{content:'→ ';color:var(--accent)}
+.role{font-size:12px;color:var(--muted)}
+.ai-out{display:flex;flex-direction:column;gap:10px;font-size:14.5px;color:var(--text2)}
+.ai-out ul{margin:4px 0 0;padding-left:20px}
+.ai-out blockquote{margin:0;border-left:3px solid var(--accent);padding:6px 12px;color:var(--text);background:#121826;border-radius:0 8px 8px 0}
+.code{background:#0B0F14;border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:0;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:#C9D4E5;white-space:pre-wrap;word-break:break-word;max-height:560px;overflow:auto}
+.sec{border:1px solid var(--border);border-radius:12px;background:var(--alt)}
+.sec>summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.sec>summary::-webkit-details-marker{display:none}
+.sec>summary input[type=text]{flex:1 1 220px;min-height:38px;padding:7px 10px;font-weight:700}
+.sec .lst{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px}
+.lk{display:grid;grid-template-columns:22px minmax(0,1fr) minmax(0,1.3fr);gap:8px;align-items:start}
+.lk input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px;margin-top:11px}
+.lk input[type=text]{min-height:38px;padding:7px 10px;font-size:14px}
+.lk small{grid-column:2/4;font-size:12px;color:var(--muted);word-break:break-all;margin-top:-4px}
+.two{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.two>*{flex:1 1 420px;min-width:0}
+.grp{display:flex;flex-direction:column;gap:8px;padding:14px 0;border-bottom:1px solid var(--line)}
+.grp:last-child{border-bottom:none}
+.grp .bots{font-size:13px;color:var(--muted);font-family:var(--mono)}
+@media (max-width:767px){.score{grid-template-columns:minmax(0,1fr);justify-items:center}.bars{width:100%}.bar{grid-template-columns:110px minmax(0,1fr) 54px}.urlbar{flex-direction:column}.chk{grid-template-columns:minmax(0,1fr);gap:6px}.lk{grid-template-columns:22px minmax(0,1fr)}.lk input[type=text]+input[type=text]{grid-column:2/3}.lk small{grid-column:2/3}}
+@media (max-width:991px){.two>aside{position:static!important}}
+@media print{.top,.tabs,.urlbar,.foot,.noprint{display:none!important}body{background:#fff;color:#000}.card,.sec{border-color:#ccc;background:#fff}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../"><i aria-hidden="true"></i>OnePane</a>
+    <nav class="menu" aria-label="Інструменти">
+      <a href="../#audit">Аудит URL</a>
+      <a href="./" aria-current="page">AI-видимість</a>
+      <a href="../brief/">Генератор ТЗ</a>
+      <a href="../schema/">Мікророзмітка</a>
+      <a href="../report/">Звіт</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap main">
+  <section class="hero">
+    <h1>AI-видимість сторінки</h1>
+    <p>Чи можуть ChatGPT, Claude, Perplexity і Google AI Overviews знайти, прочитати й процитувати вашу сторінку. Перевірка за URL, оцінка з 100 і список того, що виправити спершу.</p>
+  </section>
+
+  <div class="tabs" role="tablist" aria-label="Розділи">
+    <button class="tab" role="tab" id="t-check" aria-controls="p-check" aria-selected="true">GEO-перевірка</button>
+    <button class="tab" role="tab" id="t-llms" aria-controls="p-llms" aria-selected="false" tabindex="-1">Генератор llms.txt</button>
+    <button class="tab" role="tab" id="t-robots" aria-controls="p-robots" aria-selected="false" tabindex="-1">robots.txt для AI</button>
+  </div>
+
+  <!-- ============ ПЕРЕВІРКА ============ -->
+  <section class="panel" id="p-check" role="tabpanel" aria-labelledby="t-check">
+    <div class="card pad" style="display:flex;flex-direction:column;gap:10px">
+      <form class="urlbar" id="checkForm" novalidate>
+        <label class="f" style="flex:1 1 auto"><span style="position:absolute;left:-9999px">URL сторінки</span><input type="url" id="url" placeholder="https://example.com/storinka/" aria-label="URL сторінки" required></label>
+        <button type="submit" class="btn" id="checkBtn">Перевірити</button>
+      </form>
+      <div class="status" id="checkStatus" role="status" aria-live="polite"></div>
+      <p class="note">Сторінка завантажується без JavaScript — так, як її бачить більшість AI-краулерів. Перевіряється один URL, не весь сайт.</p>
+    </div>
+
+    <div id="results" hidden>
+      <section class="card pad score" aria-label="Оцінка">
+        <div class="ring" id="ring"><div><b id="total">0</b><span>з 100</span></div></div>
+        <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+          <div><strong id="verdict" style="font-size:18px"></strong><div class="meta-line" id="metaLine"></div></div>
+          <div class="bars" id="bars"></div>
+        </div>
+      </section>
+
+      <section class="card pad" style="display:flex;flex-direction:column;gap:12px">
+        <strong style="font-size:17px">Що зробити спершу</strong>
+        <ol class="todo" id="todo"></ol>
+      </section>
+
+      <section class="card pad" style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center"><strong style="font-size:17px">Доступ AI-ботів за robots.txt</strong><span class="note" id="robotsNote"></span></div>
+        <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Бот</th><th>Для чого</th><th>Доступ</th><th>Правило</th></tr></thead><tbody id="botRows"></tbody></table></div>
+        <p class="note">Боти пошуку й відповідей визначають, чи потрапить сторінка в AI-відповіді. Заборона ботів навчання — рішення власника сайту, на оцінку не впливає.</p>
+      </section>
+
+      <div id="groups" style="display:flex;flex-direction:column;gap:16px"></div>
+
+      <section class="card pad noprint" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
+          <strong style="font-size:17px">Як ШІ перекаже сторінку <span class="ai">ШІ</span></strong>
+          <button type="button" class="btn ghost small" id="aiBtn">Запустити розбір</button>
+        </div>
+        <p class="note">Вбудована модель Chrome читає текст сторінки й каже, на які питання вона відповідає і чого бракує. Працює на компʼютері в Google Chrome, дані нікуди не надсилаються.</p>
+        <div class="status" id="aiStatus" role="status" aria-live="polite"></div>
+        <div class="ai-out" id="aiOut"></div>
+      </section>
+
+      <div class="btns noprint">
+        <button type="button" class="btn" id="copyReport">Копіювати звіт</button>
+        <button type="button" class="btn ghost" id="printReport">Зберегти PDF</button>
+        <button type="button" class="btn ghost" id="toRobots">Згенерувати robots.txt для AI</button>
+        <button type="button" class="btn ghost" id="toLlms">Згенерувати llms.txt</button>
+        <span class="status" id="exportStatus" role="status" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <section class="card pad" id="howto">
+      <strong style="font-size:17px">Що перевіряється</strong>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Блок</th><th>Бали</th><th>Що входить</th></tr></thead><tbody>
+        <tr><td>Доступ</td><td>35</td><td>Статус сторінки, noindex, nosnippet і max-snippet, доступ Googlebot, Bingbot, OAI-SearchBot, Claude-SearchBot, PerplexityBot та інших ботів за robots.txt</td></tr>
+        <tr><td>Читабельність</td><td>20</td><td>Скільки тексту видно без JavaScript, ознаки SPA-оболонки, семантичні &lt;main&gt;/&lt;article&gt;, мова сторінки</td></tr>
+        <tr><td>Цитованість</td><td>25</td><td>H1 і підзаголовки, заголовки-питання, коротка відповідь одразу після заголовка, списки й таблиці, FAQ, довжина абзаців, цифри й факти</td></tr>
+        <tr><td>Довіра</td><td>20</td><td>Мікророзмітка й сутність бренду, автор, дата оновлення, сторінки «Про нас» і контакти, посилання на джерела, canonical</td></tr>
+      </tbody></table></div>
+      <p class="note">llms.txt показується окремо й на оцінку не впливає: Google його не використовує, а AI-сервіси підтримують його вибірково.</p>
+    </section>
+  </section>
+
+  <!-- ============ LLMS.TXT ============ -->
+  <section class="panel" id="p-llms" role="tabpanel" aria-labelledby="t-llms" hidden>
+    <div class="card pad" style="display:flex;flex-direction:column;gap:10px">
+      <strong>1. Сайт</strong>
+      <form class="urlbar" id="llmsForm" novalidate>
+        <label class="f" style="flex:1 1 auto"><span style="position:absolute;left:-9999px">Адреса сайту</span><input type="url" id="llmsUrl" placeholder="https://example.com/" aria-label="Адреса сайту" required></label>
+        <button type="submit" class="btn" id="llmsBtn">Знайти сторінки в sitemap</button>
+      </form>
+      <div class="status" id="llmsStatus" role="status" aria-live="polite"></div>
+      <p class="note">Sitemap шукається в robots.txt, потім за адресами /sitemap.xml, /sitemap_index.xml і /wp-sitemap.xml. Беруться до 500 сторінок цього домену.</p>
+    </div>
+
+    <div class="two">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="card pad" style="display:flex;flex-direction:column;gap:12px">
+          <strong>2. Про сайт</strong>
+          <label class="f">Назва сайту або компанії <input type="text" id="lName" placeholder="Демо Клімат"></label>
+          <label class="f">Короткий опис (1–2 речення) <textarea id="lSummary" placeholder="Інтернет-магазин кондиціонерів у Києві з монтажем і сервісом."></textarea></label>
+          <label class="f">Додатково для ШІ <small>Необовʼязково: регіон, для кого сайт, що важливо знати</small><textarea id="lDetails" placeholder="Працюємо по Києву та області. Ціни вказані з ПДВ."></textarea></label>
+        </div>
+        <div class="card pad" style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center"><strong>3. Розділи й сторінки</strong><span class="note" id="lCount"></span></div>
+          <div class="btns">
+            <button type="button" class="btn ghost small" id="lFetch" disabled>Підтягнути назви й описи обраних</button>
+            <button type="button" class="btn ghost small" id="lAddSec">+ Розділ</button>
+          </div>
+          <div class="status" id="lFetchStatus" role="status" aria-live="polite"></div>
+          <div id="sections" style="display:flex;flex-direction:column;gap:10px"><p class="note">Знайдіть сторінки в sitemap або додайте розділ вручну.</p></div>
+        </div>
+      </div>
+      <aside style="display:flex;flex-direction:column;gap:12px;position:sticky;top:76px" aria-label="Готовий llms.txt">
+        <div class="btns"><button type="button" class="btn" id="lCopy">Копіювати</button><button type="button" class="btn ghost" id="lDl">Завантажити llms.txt</button><span class="status" id="lOutStatus" role="status" aria-live="polite"></span></div>
+        <pre class="code" id="lOut" tabindex="0" aria-label="Вміст llms.txt"></pre>
+        <p class="note">Файл кладеться в корінь сайту: <code>https://ваш-сайт/llms.txt</code>. Це Markdown-карта найважливіших сторінок для AI-агентів. Google його не використовує, тож це доповнення, а не заміна robots.txt і sitemap.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ ROBOTS ============ -->
+  <section class="panel" id="p-robots" role="tabpanel" aria-labelledby="t-robots" hidden>
+    <div class="two">
+      <div class="card pad" style="display:flex;flex-direction:column;gap:4px">
+        <strong>Правила для AI-ботів</strong>
+        <div id="rGroups"></div>
+        <label class="f" style="margin-top:8px">Закриті розділи для всіх AI-ботів <small>Кожен шлях з нового рядка. Якщо перевіряли сторінку, сюди підставлені Disallow з групи «User-agent: *»: окрема група для бота скасовує загальні правила, тому їх треба повторити.</small><textarea id="rPaths" placeholder="/cart/&#10;/checkout/&#10;/account/" style="font-family:var(--mono);font-size:13.5px"></textarea></label>
+        <div id="rExisting"></div>
+      </div>
+      <aside style="display:flex;flex-direction:column;gap:12px;position:sticky;top:76px" aria-label="Готові правила">
+        <div class="btns"><button type="button" class="btn" id="rCopy">Копіювати правила</button><span class="status" id="rStatus" role="status" aria-live="polite"></span></div>
+        <pre class="code" id="rOut" tabindex="0" aria-label="Правила robots.txt"></pre>
+        <p class="note">Додайте блок у кінець robots.txt. Googlebot, Bingbot і Applebot тут навмисно не згадуються: окрема група для них перекрила б ваші основні правила. AI Overviews і Copilot працюють на їхньому індексі, тому вони мають бути відкриті в основній групі.</p>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap">© 2026 OnePane · <a href="../">Аудит URL</a> · <a href="../brief/">Генератор ТЗ</a> · <a href="../schema/">Мікророзмітка</a> · <a href="../report/">Звіт</a> · <a href="mailto:shevlyakova.seo@gmail.com">shevlyakova.seo@gmail.com</a></div></footer>
+
+<script>
+(function () {
+  'use strict';
+  var WORKER = 'https://onepane-audit.shevlyakova-seo.workers.dev';
+
+  var ROLE = { search: 'Пошук і відповіді', user: 'Запит користувача', train: 'Навчання моделей' };
+  var BOTS = [
+    { ua: 'Googlebot', co: 'Google', role: 'search', what: 'Google Пошук, AI Overviews, AI Mode', w: 8, gen: false },
+    { ua: 'Bingbot', co: 'Microsoft', role: 'search', what: 'Bing і Copilot', w: 5, gen: false },
+    { ua: 'OAI-SearchBot', co: 'OpenAI', role: 'search', what: 'Пошук у ChatGPT', w: 5, gen: true },
+    { ua: 'Claude-SearchBot', co: 'Anthropic', role: 'search', what: 'Пошук у Claude', w: 3, gen: true },
+    { ua: 'PerplexityBot', co: 'Perplexity', role: 'search', what: 'Відповіді Perplexity', w: 3, gen: true },
+    { ua: 'Applebot', co: 'Apple', role: 'search', what: 'Siri, Spotlight, Apple Intelligence', w: 2, gen: false },
+    { ua: 'DuckAssistBot', co: 'DuckDuckGo', role: 'search', what: 'Відповіді DuckAssist', w: 1, gen: true },
+    { ua: 'ChatGPT-User', co: 'OpenAI', role: 'user', what: 'Відкриває сторінку на запит у ChatGPT', w: 1, gen: true },
+    { ua: 'Claude-User', co: 'Anthropic', role: 'user', what: 'Відкриває сторінку на запит у Claude', w: 0.5, gen: true },
+    { ua: 'Perplexity-User', co: 'Perplexity', role: 'user', what: 'Відкриває сторінку на запит у Perplexity', w: 0.5, gen: true },
+    { ua: 'GPTBot', co: 'OpenAI', role: 'train', what: 'Навчання моделей OpenAI', w: 0, gen: true },
+    { ua: 'ClaudeBot', co: 'Anthropic', role: 'train', what: 'Навчання моделей Anthropic', w: 0, gen: true },
+    { ua: 'Google-Extended', co: 'Google', role: 'train', what: 'Навчання Gemini (не впливає на Пошук)', w: 0, gen: true },
+    { ua: 'Applebot-Extended', co: 'Apple', role: 'train', what: 'Навчання моделей Apple', w: 0, gen: true },
+    { ua: 'meta-externalagent', co: 'Meta', role: 'train', what: 'Навчання моделей Meta', w: 0, gen: true },
+    { ua: 'CCBot', co: 'Common Crawl', role: 'train', what: 'Відкритий датасет для навчання', w: 0, gen: true },
+    { ua: 'Bytespider', co: 'ByteDance', role: 'train', what: 'Навчання моделей ByteDance', w: 0, gen: true }
+  ];
+  var SECTIONS = [
+    { id: 'access', label: 'Доступ', max: 35 },
+    { id: 'read', label: 'Читабельність', max: 20 },
+    { id: 'cite', label: 'Цитованість', max: 25 },
+    { id: 'trust', label: 'Довіра', max: 20 },
+    { id: 'extra', label: 'Додатково', max: 0 }
+  ];
+  var STATUS = { pass: ['OK', 'b-ok'], warn: ['Увага', 'b-warn'], fail: ['Помилка', 'b-err'], info: ['Інфо', 'b-info'] };
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function clean(s) { return String(s || '').replace(/\s+/g, ' ').trim(); }
+  function words(s) { var t = clean(s); return t ? t.split(' ').filter(function (w) { return /[\p{L}\p{N}]/u.test(w); }).length : 0; }
+  function badge(st) { return '<span class="badge ' + STATUS[st][1] + '">' + STATUS[st][0] + '</span>'; }
+  function normUrl(raw) {
+    var v = clean(raw);
+    if (!v) return '';
+    if (!/^https?:\/\//i.test(v)) v = 'https://' + v;
+    try { return new URL(v).toString(); } catch (e) { return ''; }
+  }
+  function viaWorker(u) {
+    return fetch(WORKER + '/?url=' + encodeURIComponent(u)).then(function (r) {
+      return r.json().then(function (d) { if (!r.ok) throw new Error(d.error || 'Помилка ' + r.status); return d; });
+    });
+  }
+  function copyText(text, statusEl) {
+    var done = function () { statusEl.textContent = 'Скопійовано'; setTimeout(function () { statusEl.textContent = ''; }, 2500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+    } else { fallbackCopy(text); done(); }
+  }
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(ta);
+  }
+
+  /* ---------- Вкладки ---------- */
+  var tabs = [].slice.call(document.querySelectorAll('.tab'));
+  function selectTab(tab) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      $(t.getAttribute('aria-controls')).hidden = !on;
+    });
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { selectTab(t); });
+    t.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      selectTab(n); n.focus();
+    });
+  });
+
+  /* ---------- robots.txt ---------- */
+  function parseRobots(text) {
+    var groups = [], cur = null, lastAgent = false, sitemaps = [];
+    String(text || '').split(/\r?\n/).forEach(function (raw) {
+      var line = raw.replace(/#.*$/, '').trim();
+      var i = line.indexOf(':');
+      if (!line || i === -1) return;
+      var k = line.slice(0, i).trim().toLowerCase(), v = line.slice(i + 1).trim();
+      if (k === 'user-agent') {
+        if (!cur || !lastAgent) { cur = { agents: [], rules: [] }; groups.push(cur); }
+        cur.agents.push(v.toLowerCase()); lastAgent = true;
+      } else if (k === 'allow' || k === 'disallow') {
+        if (cur) cur.rules.push({ allow: k === 'allow', path: v });
+        lastAgent = false;
+      } else {
+        if (k === 'sitemap' && v) sitemaps.push(v);
+        lastAgent = false;
+      }
+    });
+    return { groups: groups, sitemaps: sitemaps };
+  }
+  function ruleRe(p) {
+    var anch = p.slice(-1) === '$', body = anch ? p.slice(0, -1) : p;
+    return new RegExp('^' + body.split('*').map(function (x) { return x.replace(/[.+?^${}()|[\]\\]/g, '\\$&'); }).join('.*') + (anch ? '$' : ''));
+  }
+  function robotsCheck(parsed, url, agent) {
+    agent = agent.toLowerCase();
+    var specific = parsed.groups.filter(function (g) { return g.agents.indexOf(agent) !== -1; });
+    var chosen = specific.length ? specific : parsed.groups.filter(function (g) { return g.agents.indexOf('*') !== -1; });
+    var u = new URL(url), target = u.pathname + u.search, best = null;
+    chosen.forEach(function (g) {
+      g.rules.forEach(function (r) {
+        if (!r.path || !ruleRe(r.path).test(target)) return;
+        var len = r.path.replace(/[*$]/g, '').length;
+        if (!best || len > best.len || (len === best.len && r.allow && !best.allow)) best = { len: len, allow: r.allow, path: r.path };
+      });
+    });
+    return { allowed: !best || best.allow, rule: best ? (best.allow ? 'Allow: ' : 'Disallow: ') + best.path : 'немає обмежень', group: specific.length ? agent : chosen.length ? '*' : '' };
+  }
+
+  /* ---------- Розбір сторінки ---------- */
+  var QWORDS = /^(як|що|чому|навіщо|нащо|скільки|коли|де|куди|звідки|який|яка|яке|які|якого|чи|хто|кому|чим|как|что|почему|зачем|сколько|когда|где|какой|какая|какое|какие|можно|ли|кто|how|what|why|when|where|which|who|whom|can|could|does|do|is|are|should|will|jak|co|czy|kiedy|gdzie|dlaczego|ile|który|jaki)(?![\p{L}\p{N}])/iu;
+  var CONTENT_TYPES = /^(Article|BlogPosting|NewsArticle|TechArticle|Product|Service|FAQPage|HowTo|Recipe|Event|Course|MedicalWebPage|MedicalProcedure|Offer|SoftwareApplication|WebApplication|JobPosting|Review|VideoObject|QAPage)$/;
+  var ENTITY_TYPES = /^(Organization|Corporation|LocalBusiness|Person|MedicalClinic|Dentist|Hospital|Physician|Store|OnlineStore|Restaurant|ProfessionalService|LegalService|HomeAndConstructionBusiness|HVACBusiness|AutoDealer|AutoRepair|BeautySalon|RealEstateAgent|MedicalBusiness|MedicalOrganization|Pharmacy|EducationalOrganization|NewsMediaOrganization)$/;
+  var SOCIAL = /(facebook|instagram|t\.me|telegram|youtube|youtu\.be|tiktok|twitter|x\.com|linkedin|pinterest|wa\.me|whatsapp|viber|google\.com\/maps|goo\.gl|maps\.app)/i;
+
+  function walkLd(node, fn) {
+    if (!node || typeof node !== 'object') return;
+    if (Array.isArray(node)) { node.forEach(function (n) { walkLd(n, fn); }); return; }
+    fn(node);
+    Object.keys(node).forEach(function (k) { if (node[k] && typeof node[k] === 'object') walkLd(node[k], fn); });
+  }
+
+  function analyze(data) {
+    var doc = new DOMParser().parseFromString(data.html || '', 'text/html');
+    var base = data.finalUrl;
+    var host = new URL(base).hostname.replace(/^www\./, '');
+    var abs = function (h) { try { return new URL(h, base).toString(); } catch (e) { return ''; } };
+    var p = { url: base, status: data.status, title: clean((doc.querySelector('title') || {}).textContent) };
+
+    var robotsMeta = [].slice.call(doc.querySelectorAll('meta[name="robots" i], meta[name="googlebot" i]')).map(function (m) { return (m.getAttribute('content') || '').toLowerCase(); }).join(', ');
+    var allRobots = (robotsMeta + ', ' + ((data.headers && data.headers.xRobotsTag) || '')).toLowerCase();
+    p.robotsMeta = clean(robotsMeta + (data.headers && data.headers.xRobotsTag ? ' | X-Robots-Tag: ' + data.headers.xRobotsTag : ''));
+    p.noindex = /(^|[\s,:])(noindex|none)\b/.test(allRobots);
+    p.nosnippet = /\bnosnippet\b/.test(allRobots);
+    var ms = allRobots.match(/max-snippet\s*:\s*(-?\d+)/);
+    p.maxSnippet = ms ? parseInt(ms[1], 10) : null;
+    p.dataNosnippet = doc.querySelectorAll('[data-nosnippet]').length;
+    p.lang = (doc.documentElement.getAttribute('lang') || '').trim();
+
+    var types = [], ld = [], authorLd = false, dates = [], sameAs = [];
+    [].slice.call(doc.querySelectorAll('script[type="application/ld+json" i]')).forEach(function (s) {
+      try {
+        var j = JSON.parse(s.textContent);
+        ld.push(j);
+        walkLd(j, function (o) {
+          [].concat(o['@type'] || []).forEach(function (t) { if (typeof t === 'string' && types.indexOf(t) === -1) types.push(t); });
+          if (o.author) authorLd = true;
+          ['dateModified', 'datePublished', 'uploadDate'].forEach(function (k) { if (typeof o[k] === 'string') dates.push({ k: k, v: o[k] }); });
+          if (o.sameAs) sameAs = sameAs.concat([].concat(o.sameAs));
+        });
+      } catch (e) {}
+    });
+    p.types = types;
+    p.hasFaqSchema = types.indexOf('FAQPage') !== -1;
+    p.contentType = types.filter(function (t) { return CONTENT_TYPES.test(t); });
+    p.entityType = types.filter(function (t) { return ENTITY_TYPES.test(t); });
+    p.sameAs = sameAs;
+
+    [['article:modified_time', 'dateModified'], ['og:updated_time', 'dateModified'], ['article:published_time', 'datePublished']].forEach(function (m) {
+      var el = doc.querySelector('meta[property="' + m[0] + '"]');
+      if (el && el.getAttribute('content')) dates.push({ k: m[1], v: el.getAttribute('content') });
+    });
+    [].slice.call(doc.querySelectorAll('time[datetime]')).slice(0, 5).forEach(function (t) { dates.push({ k: 'time', v: t.getAttribute('datetime') }); });
+    var parsed = dates.map(function (d) { return { k: d.k, t: Date.parse(d.v) }; }).filter(function (d) { return !isNaN(d.t) && d.t < Date.now() + 864e5; });
+    p.lastDate = parsed.length ? Math.max.apply(null, parsed.map(function (d) { return d.t; })) : null;
+    p.hasModified = parsed.some(function (d) { return d.k === 'dateModified'; });
+
+    var metaAuthor = doc.querySelector('meta[name="author" i]');
+    var byline = doc.querySelector('[rel~="author"], [itemprop="author"], .author, .byline, .post-author, .entry-author, [class*="author" i]');
+    p.author = authorLd ? 'у мікророзмітці' : metaAuthor && metaAuthor.getAttribute('content') ? 'meta author: ' + clean(metaAuthor.getAttribute('content')) : byline && clean(byline.textContent) ? 'на сторінці: ' + clean(byline.textContent).slice(0, 60) : '';
+
+    var canon = doc.querySelector('link[rel~="canonical" i]');
+    p.canonical = canon ? abs(canon.getAttribute('href')) : '';
+
+    var root = doc.querySelector('main, article, [role="main"]');
+    p.semantic = !!root;
+    var clone = (root || doc.body || doc.documentElement).cloneNode(true);
+    [].slice.call(clone.querySelectorAll('script, style, noscript, template, svg, iframe' + (root ? '' : ', nav, header, footer, aside'))).forEach(function (n) { n.remove(); });
+    [].slice.call(clone.querySelectorAll('nav, [role="navigation"]')).forEach(function (n) { n.remove(); });
+    p.text = clean(clone.textContent);
+    p.words = words(p.text);
+    p.digits = (p.text.match(/\d+([.,]\d+)?\s?(%|грн|₴|\$|€|zł|kč|₸|км|кг|м²|м2|год|хв|днів|років|роки|шт)?/gi) || []).length;
+
+    var bodyClone = doc.body ? doc.body.cloneNode(true) : null;
+    var allWords = 0;
+    if (bodyClone) { [].slice.call(bodyClone.querySelectorAll('script, style, noscript, template, svg')).forEach(function (n) { n.remove(); }); allWords = words(bodyClone.textContent); }
+    var scripts = doc.querySelectorAll('script[src]').length;
+    var shell = doc.querySelector('#root, #app, #__next, #__nuxt, [data-reactroot], app-root');
+    var noscriptJs = [].slice.call(doc.querySelectorAll('noscript')).some(function (n) { return /javascript|js/i.test(n.textContent); });
+    p.spa = allWords < 80 && (!!shell || scripts >= 6 || noscriptJs);
+    p.allWords = allWords;
+
+    p.h1 = [].slice.call(doc.querySelectorAll('h1')).map(function (h) { return clean(h.textContent); }).filter(Boolean);
+    var seq = [].slice.call(clone.querySelectorAll('h1, h2, h3, h4, p, li'));
+    var heads = seq.filter(function (e) { return /^H[1-4]$/.test(e.tagName); });
+    p.sub = heads.filter(function (h) { return /^H[23]$/.test(h.tagName); }).length;
+    var qs = [];
+    seq.forEach(function (e, i) {
+      if (!/^H[2-4]$/.test(e.tagName)) return;
+      var t = clean(e.textContent);
+      if (!t || !(/\?\s*$/.test(t) || QWORDS.test(t))) return;
+      var ans = null;
+      for (var j = i + 1; j < seq.length; j++) {
+        if (/^H[1-4]$/.test(seq[j].tagName)) break;
+        if (seq[j].tagName === 'P' && clean(seq[j].textContent)) { ans = clean(seq[j].textContent); break; }
+      }
+      qs.push({ q: t, ansWords: ans ? words(ans) : 0 });
+    });
+    p.questions = qs;
+    p.directAnswers = qs.filter(function (q) { return q.ansWords >= 12 && q.ansWords <= 90; }).length;
+    var paras = [].slice.call(clone.querySelectorAll('p')).map(function (e) { return words(e.textContent); }).filter(function (n) { return n > 0; });
+    p.firstPara = paras.length ? paras[0] : 0;
+    p.longParas = paras.filter(function (n) { return n > 120; }).length;
+    p.lists = [].slice.call(clone.querySelectorAll('ul, ol')).filter(function (l) { return l.querySelectorAll('li').length >= 3; }).length;
+    p.tables = clone.querySelectorAll('table').length;
+
+    var internal = [], external = [];
+    [].slice.call(doc.querySelectorAll('a[href]')).forEach(function (a) {
+      var h = abs(a.getAttribute('href'));
+      if (!/^https?:/i.test(h)) return;
+      var hh = new URL(h).hostname.replace(/^www\./, '');
+      if (hh === host) internal.push({ href: h, text: clean(a.textContent) }); else external.push({ href: h, inContent: false });
+    });
+    p.aboutLinks = internal.filter(function (l) { return /(about|pro-nas|pro_nas|o-nas|o-kompanii|pro-kompaniyu|kompaniya|company|contact|kontakt|контакт|про-нас)/i.test(l.href) || /(про нас|про компанію|контакти|контакты|о нас|о компании|about|contact|kontakt|o nas)/i.test(l.text); }).length;
+    p.sources = [].slice.call(clone.querySelectorAll('a[href]')).map(function (a) { return abs(a.getAttribute('href')); }).filter(function (h) {
+      if (!/^https?:/i.test(h)) return false;
+      var hh = new URL(h).hostname.replace(/^www\./, '');
+      return hh !== host && !SOCIAL.test(h);
+    }).length;
+    return p;
+  }
+
+  /* ---------- Перевірки й бали ---------- */
+  function buildChecks(p, data, robots, llms) {
+    var checks = [], pts = { access: 0, read: 0, cite: 0, trust: 0 };
+    var add = function (sec, name, status, value, fix, got) {
+      checks.push({ sec: sec, name: name, status: status, value: value, fix: fix || '', lost: 0 });
+      if (got != null) pts[sec] += got;
+    };
+    var lostAdd = function (lost) { checks[checks.length - 1].lost = lost; };
+
+    var ok200 = data.status === 200;
+    add('access', 'HTTP-статус', ok200 ? 'pass' : 'fail', String(data.status) + (data.chain && data.chain.length > 1 ? ' після ' + (data.chain.length - 1) + ' редирект(ів)' : ''), ok200 ? '' : 'Сторінка має віддавати 200. Інакше її не проіндексують і не процитують.');
+    if (!ok200) lostAdd(100);
+    add('access', 'Індексація (noindex)', p.noindex ? 'fail' : 'pass', p.robotsMeta || 'заборон немає', p.noindex ? 'Приберіть noindex, якщо сторінка має зʼявлятися в пошуку та AI-відповідях.' : '');
+    if (p.noindex) lostAdd(100);
+    var snipBad = p.nosnippet || p.maxSnippet === 0;
+    var snipLow = !snipBad && p.maxSnippet != null && p.maxSnippet > 0 && p.maxSnippet < 50;
+    add('access', 'Дозвіл на цитування (nosnippet, max-snippet)', snipBad ? 'fail' : snipLow ? 'warn' : 'pass',
+      snipBad ? 'Заборонено показувати текст сторінки' : snipLow ? 'max-snippet:' + p.maxSnippet + ' — дуже короткий уривок' : 'обмежень немає' + (p.dataNosnippet ? '; data-nosnippet на ' + p.dataNosnippet + ' блоках' : ''),
+      snipBad ? 'Google не бере текст із такої сторінки в AI Overviews. Приберіть nosnippet / max-snippet:0 або закрийте data-nosnippet лише окремі блоки.' : snipLow ? 'Збільште max-snippet або поставте -1 (без обмежень).' : '',
+      snipBad ? 0 : snipLow ? 3 : 6);
+    if (snipBad) lostAdd(6); else if (snipLow) lostAdd(3);
+
+    var botRes = BOTS.map(function (b) {
+      var r;
+      if (robots.status >= 500) r = { allowed: false, rule: 'robots.txt повертає ' + robots.status, group: '' };
+      else if (!robots.status || robots.status >= 400 || !robots.parsed) r = { allowed: true, rule: robots.status ? 'robots.txt не знайдено (' + robots.status + ')' : 'robots.txt недоступний', group: '' };
+      else r = robotsCheck(robots.parsed, data.finalUrl, b.ua);
+      return { bot: b, res: r };
+    });
+    var blockedSearch = botRes.filter(function (x) { return x.bot.role !== 'train' && !x.res.allowed; });
+    var gotBots = botRes.reduce(function (s, x) { return s + (x.bot.role !== 'train' && x.res.allowed ? x.bot.w : 0); }, 0);
+    var maxBots = BOTS.reduce(function (s, b) { return s + b.w; }, 0);
+    var gBlocked = blockedSearch.some(function (x) { return x.bot.ua === 'Googlebot' || x.bot.ua === 'Bingbot'; });
+    add('access', 'Боти пошуку й відповідей', blockedSearch.length ? (gBlocked || blockedSearch.length > 2 ? 'fail' : 'warn') : 'pass',
+      blockedSearch.length ? 'Закрито: ' + blockedSearch.map(function (x) { return x.bot.ua; }).join(', ') : 'усі відкриті',
+      blockedSearch.length ? 'Відкрийте цих ботів у robots.txt. Поки вони закриті, сервіс не може взяти сторінку у свої відповіді. Готові правила є у вкладці «robots.txt для AI».' : '',
+      gotBots);
+    lostAdd(maxBots - gotBots);
+    var trainBlocked = botRes.filter(function (x) { return x.bot.role === 'train' && !x.res.allowed; }).map(function (x) { return x.bot.ua; });
+    add('access', 'Боти навчання моделей', 'info', trainBlocked.length ? 'Заборонено: ' + trainBlocked.join(', ') : 'усі дозволені', 'Це ваш вибір: на появу в AI-пошуку не впливає.');
+
+    // Читабельність
+    var w = p.words;
+    var wSt = w >= 300 ? 'pass' : w >= 150 ? 'warn' : 'fail';
+    var wPts = w >= 300 ? 10 : w >= 150 ? 6 : w >= 50 ? 2 : 0;
+    add('read', 'Текст без JavaScript', wSt, 'слів в основному вмісті: ' + w, w >= 300 ? '' : 'AI-краулери здебільшого не виконують JavaScript. Основний текст має бути в HTML одразу, а не підвантажуватися скриптом. Для інформаційних сторінок потрібно від 300 слів по суті.', wPts);
+    lostAdd(10 - wPts);
+    add('read', 'Ознаки SPA-оболонки', p.spa ? 'fail' : 'pass', p.spa ? 'HTML майже порожній, контент малює JavaScript' : 'контент є в HTML', p.spa ? 'Увімкніть серверний рендеринг (SSR) або пререндеринг: Next.js, Nuxt, prerender.io. Інакше ChatGPT, Claude і Perplexity бачать порожню сторінку.' : '', p.spa ? 0 : 4);
+    if (p.spa) lostAdd(4);
+    add('read', 'Семантичний блок <main> / <article>', p.semantic ? 'pass' : 'warn', p.semantic ? 'є' : 'немає', p.semantic ? '' : 'Обгорніть основний вміст у <main> або <article>, щоб краулер відділив його від меню й футера.', p.semantic ? 3 : 0);
+    if (!p.semantic) lostAdd(3);
+    add('read', 'Мова сторінки', p.lang ? 'pass' : 'warn', p.lang ? 'lang="' + p.lang + '"' : 'атрибут lang не вказано', p.lang ? '' : 'Додайте <html lang="uk"> (або іншу мову), щоб модель правильно визначила мову відповіді.', p.lang ? 3 : 0);
+    if (!p.lang) lostAdd(3);
+
+    // Цитованість
+    var h1n = p.h1.length;
+    add('cite', 'H1', h1n === 1 ? 'pass' : h1n ? 'warn' : 'fail', h1n ? p.h1.slice(0, 2).join(' | ') + (h1n > 1 ? ' (усього ' + h1n + ')' : '') : 'немає', h1n === 1 ? '' : h1n ? 'Залиште один H1, що прямо називає тему сторінки.' : 'Додайте H1 з головною темою: модель використовує його як назву джерела.', h1n === 1 ? 3 : h1n ? 1 : 0);
+    lostAdd(h1n === 1 ? 0 : h1n ? 2 : 3);
+    var subPts = p.sub >= 3 ? 4 : p.sub ? 2 : 0;
+    add('cite', 'Підзаголовки H2–H3', p.sub >= 3 ? 'pass' : p.sub ? 'warn' : 'fail', 'знайдено: ' + p.sub, p.sub >= 3 ? '' : 'Розбийте текст на смислові блоки з H2/H3. AI бере для цитати саме окремий блок, а не всю сторінку.', subPts);
+    lostAdd(4 - subPts);
+    var qn = p.questions.length, qPts = qn >= 2 ? 4 : qn ? 2 : 0;
+    add('cite', 'Заголовки-питання', qn >= 2 ? 'pass' : 'warn', qn ? qn + ': ' + p.questions.slice(0, 3).map(function (q) { return '«' + q.q + '»'; }).join(', ') : 'немає', qn >= 2 ? '' : 'Сформулюйте 2–5 підзаголовків як питання користувачів («Скільки коштує…», «Як обрати…»). Так їх легше зіставити з запитом у ChatGPT чи AI Overviews.', qPts);
+    lostAdd(4 - qPts);
+    var daPts, daSt, daVal, daFix = '';
+    if (qn) {
+      var ratio = p.directAnswers / qn;
+      daPts = ratio >= 0.6 ? 4 : p.directAnswers ? 2 : 0;
+      daSt = ratio >= 0.6 ? 'pass' : 'warn';
+      daVal = p.directAnswers + ' з ' + qn + ' питань мають коротку відповідь (12–90 слів) першим абзацом';
+      if (ratio < 0.6) daFix = 'Одразу після заголовка-питання дайте відповідь у 1–3 реченнях, а подробиці винесіть нижче. Такий абзац найчастіше потрапляє в цитату.';
+    } else {
+      daPts = p.firstPara >= 12 && p.firstPara <= 80 ? 3 : 0;
+      daSt = daPts ? 'pass' : 'warn';
+      daVal = p.firstPara ? 'перший абзац: ' + p.firstPara + ' слів' : 'абзаців <p> не знайдено';
+      if (!daPts) daFix = 'Почніть сторінку з короткого абзацу (2–3 речення), який прямо відповідає на головне питання теми.';
+    }
+    add('cite', 'Відповідь одразу після заголовка', daSt, daVal, daFix, daPts);
+    lostAdd(4 - daPts);
+    var lt = p.lists + p.tables;
+    add('cite', 'Списки й таблиці', lt ? 'pass' : 'warn', 'списків: ' + p.lists + ', таблиць: ' + p.tables, lt ? '' : 'Додайте список кроків, переваг або таблицю порівняння. Структуровані фрагменти AI переносить у відповідь майже дослівно.', lt ? 3 : 0);
+    if (!lt) lostAdd(3);
+    var faq = p.hasFaqSchema || qn >= 3;
+    add('cite', 'Блок FAQ', faq ? 'pass' : 'warn', p.hasFaqSchema ? 'є FAQPage у мікророзмітці' : qn >= 3 ? 'питань у заголовках: ' + qn : 'немає', faq ? '' : 'Додайте 3–6 питань і відповідей наприкінці сторінки. Розмітку FAQPage можна зробити в генераторі мікророзмітки OnePane.', faq ? 3 : 0);
+    if (!faq) lostAdd(3);
+    var lpPts = p.longParas === 0 ? 2 : p.longParas <= 3 ? 1 : 0;
+    add('cite', 'Довжина абзаців', p.longParas ? 'warn' : 'pass', p.longParas ? p.longParas + ' абзац(ів) довші за 120 слів' : 'довгих абзаців немає', p.longParas ? 'Розбийте довгі абзаци на 2–4 речення: одна думка — один абзац.' : '', lpPts);
+    lostAdd(2 - lpPts);
+    var dg = p.digits >= 5;
+    add('cite', 'Цифри й конкретика', dg ? 'pass' : 'warn', 'числових фактів: ' + p.digits, dg ? '' : 'Додайте конкретику: ціни, терміни, розміри, кількість, відсотки. AI охочіше цитує речення з фактами, ніж загальні фрази.', dg ? 2 : 0);
+    if (!dg) lostAdd(2);
+
+    // Довіра
+    var sPts = (p.types.length ? 2 : 0) + (p.entityType.length ? 2 : 0);
+    add('trust', 'Мікророзмітка', sPts === 4 ? 'pass' : p.types.length ? 'warn' : 'fail', p.types.length ? p.types.slice(0, 8).join(', ') : 'не знайдено', sPts === 4 ? '' : p.types.length ? 'Додайте сутність бренду (Organization або LocalBusiness), щоб модель повʼязала сторінку з компанією.' : 'Додайте JSON-LD: Organization/LocalBusiness і тип сторінки (Article, Product, Service). Генератор мікророзмітки OnePane зробить це за 2 хвилини.', sPts);
+    lostAdd(4 - sPts);
+    add('trust', 'Автор', p.author ? 'pass' : 'warn', p.author || 'не вказано', p.author ? '' : 'Вкажіть автора або експерта з посадою (лікар, інженер, юрист) і посиланням на його профіль. Для тем про здоровʼя й гроші це особливо важливо (E-E-A-T).', p.author ? 4 : 0);
+    if (!p.author) lostAdd(4);
+    var age = p.lastDate ? Math.round((Date.now() - p.lastDate) / 864e5) : null;
+    var dPts = age == null ? 0 : age <= 365 ? 4 : 2;
+    add('trust', 'Дата публікації / оновлення', age == null ? 'warn' : age <= 365 ? 'pass' : 'warn', age == null ? 'не знайдено' : new Date(p.lastDate).toLocaleDateString('uk-UA') + ' (' + age + ' дн. тому)' + (p.hasModified ? '' : ', без dateModified'), age == null ? 'Покажіть дату оновлення на сторінці й у мікророзмітці (dateModified). AI-сервіси надають перевагу свіжим джерелам.' : age > 365 ? 'Оновіть контент і dateModified: матеріалу понад рік.' : '', dPts);
+    lostAdd(4 - dPts);
+    var idn = p.aboutLinks > 0 || p.sameAs.length > 0;
+    add('trust', 'Хто стоїть за сайтом', idn ? 'pass' : 'warn', (p.aboutLinks ? 'посилань на «Про нас» / контакти: ' + p.aboutLinks : 'посилань на «Про нас» / контакти не знайдено') + (p.sameAs.length ? '; sameAs: ' + p.sameAs.length : ''), idn ? '' : 'Дайте посилання на сторінки «Про нас» і «Контакти», а в розмітку Organization додайте sameAs на соцмережі й профілі компанії.', idn ? 3 : 0);
+    if (!idn) lostAdd(3);
+    var src = p.sources > 0;
+    add('trust', 'Посилання на джерела', src ? 'pass' : 'warn', 'зовнішніх посилань у тексті: ' + p.sources, src ? '' : 'Підкріпіть ключові твердження посиланнями на першоджерела: дослідження, стандарти, офіційні сайти.', src ? 3 : 0);
+    if (!src) lostAdd(3);
+    var cSelf = p.canonical && p.canonical.replace(/\/$/, '') === data.finalUrl.replace(/\/$/, '');
+    var cPts = !p.canonical ? 1 : cSelf ? 2 : 0;
+    add('trust', 'Canonical', !p.canonical ? 'warn' : cSelf ? 'pass' : 'warn', p.canonical || 'не вказано', !p.canonical ? 'Додайте self-canonical, щоб цитувалася саме ця адреса.' : cSelf ? '' : 'Canonical веде на іншу сторінку, тож цитуватимуть її. Переконайтеся, що так і задумано.', cPts);
+    lostAdd(2 - cPts);
+
+    // Додатково
+    add('extra', 'llms.txt', 'info', llms.found ? 'є: ' + llms.url : llms.soft ? 'адреса відповідає HTML-сторінкою замість файлу' : llms.status ? 'не знайдено (' + llms.status + ')' : 'не вдалося перевірити', llms.found ? '' : 'Необовʼязково. Згенерувати можна у вкладці «Генератор llms.txt».');
+    add('extra', 'robots.txt', robots.status === 200 ? 'pass' : robots.status >= 500 ? 'fail' : 'info', robots.status ? robots.status + (robots.url ? ' · ' + robots.url : '') : 'недоступний', robots.status >= 500 ? 'Сервер повертає помилку на robots.txt. Багато ботів тоді взагалі не сканують сайт.' : '');
+    if (data.headers && data.headers.lastModified) add('extra', 'Заголовок Last-Modified', 'info', data.headers.lastModified, '');
+
+    var gate = !ok200 || p.noindex;
+    var total = Math.round(pts.access + pts.read + pts.cite + pts.trust);
+    if (gate) total = Math.min(total, 15);
+    return { checks: checks, pts: pts, total: total, gate: gate, bots: botRes };
+  }
+
+  /* ---------- Відображення ---------- */
+  var last = null;
+  function render(p, data, res, robots) {
+    var t = res.total;
+    var col = t >= 80 ? 'var(--ok)' : t >= 50 ? 'var(--warn)' : 'var(--err)';
+    $('ring').style.setProperty('--p', t);
+    $('ring').style.setProperty('--c', col);
+    $('total').textContent = t;
+    $('verdict').textContent = res.gate ? 'Сторінка закрита від індексації: AI її не процитує' : t >= 80 ? 'Добре підготовлена до AI-пошуку' : t >= 50 ? 'Частково готова: є що покращити' : 'Слабка AI-видимість';
+    $('metaLine').textContent = data.finalUrl + (p.title ? ' · ' + p.title : '');
+    $('bars').innerHTML = SECTIONS.filter(function (s) { return s.max; }).map(function (s) {
+      var v = Math.round(res.pts[s.id] * 10) / 10;
+      return '<div class="bar"><span>' + s.label + '</span><i><s style="width:' + Math.round(v / s.max * 100) + '%"></s></i><em>' + v + '/' + s.max + '</em></div>';
+    }).join('');
+
+    var todo = res.checks.filter(function (c) { return (c.status === 'fail' || c.status === 'warn') && c.fix; }).sort(function (a, b) {
+      return (b.lost + (b.status === 'fail' ? 0.5 : 0)) - (a.lost + (a.status === 'fail' ? 0.5 : 0));
+    }).slice(0, 5);
+    $('todo').innerHTML = todo.length ? todo.map(function (c) { return '<li><div><b>' + esc(c.name) + '.</b> ' + esc(c.fix) + '</div></li>'; }).join('') : '<li><div>Критичних проблем не знайдено. Підтримуйте контент свіжим і перевіряйте ключові сторінки раз на квартал.</div></li>';
+
+    $('robotsNote').textContent = robots.status === 200 ? 'robots.txt знайдено' : robots.status ? 'robots.txt: ' + robots.status : 'robots.txt недоступний';
+    $('botRows').innerHTML = res.bots.map(function (x) {
+      var st = x.res.allowed ? 'pass' : x.bot.role === 'train' ? 'info' : 'fail';
+      var lbl = x.res.allowed ? 'Дозволено' : 'Заборонено';
+      return '<tr><td><b style="color:var(--text)">' + esc(x.bot.ua) + '</b><div class="role">' + esc(x.bot.co) + '</div></td><td>' + esc(x.bot.what) + '<div class="role">' + ROLE[x.bot.role] + '</div></td><td><span class="badge ' + STATUS[st][1] + '">' + lbl + '</span></td><td style="font-family:var(--mono);font-size:12.5px">' + esc(x.res.rule) + (x.res.group ? '<div class="role">група: ' + esc(x.res.group) + '</div>' : '') + '</td></tr>';
+    }).join('');
+
+    $('groups').innerHTML = SECTIONS.map(function (s) {
+      var list = res.checks.filter(function (c) { return c.sec === s.id; });
+      if (!list.length) return '';
+      var head = s.max ? Math.round(res.pts[s.id] * 10) / 10 + ' з ' + s.max : 'не впливає на оцінку';
+      return '<section class="card pad"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:4px"><strong style="font-size:17px">' + s.label + '</strong><span class="note">' + head + '</span></div>' +
+        list.map(function (c) { return '<div class="chk"><div>' + badge(c.status) + '</div><div><div class="t">' + esc(c.name) + '</div><div class="v">' + esc(c.value) + '</div>' + (c.fix && c.status !== 'pass' ? '<div class="fx">' + esc(c.fix) + '</div>' : '') + '</div></div>'; }).join('') + '</section>';
+    }).join('');
+
+    $('results').hidden = false;
+    $('howto').hidden = true;
+    $('aiOut').innerHTML = ''; $('aiStatus').textContent = '';
+  }
+
+  function reportText() {
+    if (!last) return '';
+    var r = last.res, lines = [];
+    lines.push('AI-видимість сторінки — OnePane');
+    lines.push('URL: ' + last.data.finalUrl);
+    lines.push('Оцінка: ' + r.total + '/100 (' + SECTIONS.filter(function (s) { return s.max; }).map(function (s) { return s.label + ' ' + Math.round(r.pts[s.id] * 10) / 10 + '/' + s.max; }).join(', ') + ')');
+    lines.push('');
+    lines.push('Що зробити спершу:');
+    r.checks.filter(function (c) { return (c.status === 'fail' || c.status === 'warn') && c.fix; }).sort(function (a, b) { return b.lost - a.lost; }).slice(0, 5).forEach(function (c, i) { lines.push((i + 1) + '. ' + c.name + ': ' + c.fix); });
+    SECTIONS.forEach(function (s) {
+      lines.push(''); lines.push(s.label.toUpperCase());
+      r.checks.filter(function (c) { return c.sec === s.id; }).forEach(function (c) { lines.push('[' + STATUS[c.status][0] + '] ' + c.name + ': ' + c.value); });
+    });
+    lines.push(''); lines.push('Доступ ботів:');
+    r.bots.forEach(function (x) { lines.push('- ' + x.bot.ua + ' (' + ROLE[x.bot.role] + '): ' + (x.res.allowed ? 'дозволено' : 'заборонено')); });
+    lines.push(''); lines.push('Перевірено: ' + new Date().toLocaleString('uk-UA') + ' · https://shevlyakova-seo.github.io/onepane/ai/');
+    return lines.join('\n');
+  }
+
+  function checkLlms(origin) {
+    var u = origin + '/llms.txt';
+    return viaWorker(u).then(function (d) {
+      var ct = (d.headers && d.headers.contentType) || '';
+      var ok = d.status === 200 && !/html/i.test(ct);
+      return { url: u, status: d.status, found: ok, soft: d.status === 200 && /html/i.test(ct) };
+    }).catch(function () { return { url: u, status: 0, found: false }; });
+  }
+
+  $('checkForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var u = normUrl($('url').value);
+    if (!u) { $('checkStatus').textContent = 'Вставте коректну адресу, наприклад https://example.com/storinka/'; return; }
+    $('url').value = u;
+    $('checkBtn').disabled = true;
+    $('checkStatus').textContent = 'Завантажую сторінку й robots.txt…';
+    viaWorker(u).then(function (data) {
+      if (!data.html) throw new Error('Сторінка не віддала HTML (статус ' + data.status + ', тип ' + ((data.headers && data.headers.contentType) || 'невідомо') + ').');
+      $('checkStatus').textContent = 'Перевіряю llms.txt і рахую оцінку…';
+      var origin = new URL(data.finalUrl).origin;
+      var robots = { status: (data.robots && data.robots.status) || 0, url: data.robots && data.robots.url, text: (data.robots && data.robots.text) || '' };
+      robots.parsed = robots.status === 200 ? parseRobots(robots.text) : null;
+      return checkLlms(origin).then(function (llms) {
+        var p = analyze(data);
+        var res = buildChecks(p, data, robots, llms);
+        last = { p: p, data: data, res: res, robots: robots, llms: llms };
+        render(p, data, res, robots);
+        prefillFromCheck();
+        $('checkStatus').textContent = 'Готово. Перевірено ' + new Date().toLocaleTimeString('uk-UA') + '.';
+      });
+    }).catch(function (err) {
+      $('checkStatus').textContent = 'Не вдалося перевірити: ' + err.message;
+    }).then(function () { $('checkBtn').disabled = false; });
+  });
+
+  $('copyReport').addEventListener('click', function () { copyText(reportText(), $('exportStatus')); });
+  $('printReport').addEventListener('click', function () { window.print(); });
+  $('toRobots').addEventListener('click', function () { selectTab($('t-robots')); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  $('toLlms').addEventListener('click', function () { selectTab($('t-llms')); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  /* ---------- ШІ-розбір ---------- */
+  $('aiBtn').addEventListener('click', function () {
+    if (!last) return;
+    var st = $('aiStatus'), out = $('aiOut');
+    if (typeof self === 'undefined' || !('LanguageModel' in self)) { st.textContent = 'Вбудований ШІ недоступний у цьому браузері. Потрібен Google Chrome на компʼютері (версія 138+).'; return; }
+    var LM = self.LanguageModel, btn = $('aiBtn');
+    btn.disabled = true; out.innerHTML = '';
+    var langs = ['uk', 'en'];
+    function pick(i) {
+      if (i >= langs.length) return Promise.reject(new Error('Модель ШІ недоступна на цьому пристрої.'));
+      var o = { expectedInputs: [{ type: 'text', languages: ['en', langs[i]].filter(function (v, k, a) { return a.indexOf(v) === k; }) }], expectedOutputs: [{ type: 'text', languages: [langs[i]] }] };
+      return LM.availability(o).then(function (a) { return a === 'unavailable' ? pick(i + 1) : { opts: o, lang: langs[i] }; });
+    }
+    st.textContent = 'Готую модель…';
+    pick(0).then(function (sel) {
+      sel.opts.monitor = function (m) { m.addEventListener('downloadprogress', function (e) { st.textContent = 'Завантаження моделі: ' + Math.round(e.loaded * 100) + '%'; }); };
+      return LM.create(sel.opts).then(function (s) {
+        st.textContent = 'ШІ читає сторінку…';
+        var p = last.p;
+        var prompt = 'You are evaluating a web page as a source for AI search answers (ChatGPT, Perplexity, Google AI Overviews).\n' +
+          'Answer in ' + (sel.lang === 'uk' ? 'Ukrainian' : 'English') + '.\n' +
+          'Return: topic (one short phrase); summary (2 sentences, what a user learns from this page); answered (up to 5 concrete user questions this page clearly answers); missing (up to 5 important questions on this topic the page does NOT answer); quote (one sentence from the page text that an AI answer would most likely cite, copied exactly).\n\n' +
+          'Title: ' + (p.title || '-') + '\nH1: ' + (p.h1[0] || '-') + '\nHeadings: ' + p.questions.map(function (q) { return q.q; }).slice(0, 10).join(' | ') + '\nPage text: ' + p.text.slice(0, 3500);
+        var schema = { type: 'object', properties: { topic: { type: 'string' }, summary: { type: 'string' }, answered: { type: 'array', items: { type: 'string' }, maxItems: 5 }, missing: { type: 'array', items: { type: 'string' }, maxItems: 5 }, quote: { type: 'string' } }, required: ['topic', 'summary', 'answered', 'missing', 'quote'] };
+        return s.prompt(prompt, { responseConstraint: schema }).then(function (r) {
+          if (s.destroy) s.destroy();
+          var j = JSON.parse(r);
+          var li = function (a) { return (a || []).length ? '<ul>' + a.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '<p class="note">—</p>'; };
+          out.innerHTML = '<div><b style="color:var(--text)">Тема:</b> ' + esc(j.topic) + '</div><div>' + esc(j.summary) + '</div>' +
+            '<div><b style="color:var(--ok)">Відповідає на питання</b>' + li(j.answered) + '</div>' +
+            '<div><b style="color:var(--warn)">Чого бракує</b>' + li(j.missing) + '<p class="note" style="margin-top:6px">Ці питання варто закрити окремими блоками з підзаголовками: так сторінка підходитиме під більше запитів.</p></div>' +
+            (j.quote ? '<div><b style="color:var(--text)">Найімовірніша цитата</b><blockquote>' + esc(j.quote) + '</blockquote></div>' : '');
+          st.textContent = sel.lang === 'uk' ? 'Готово.' : 'Готово. Модель на цьому пристрої відповідає лише англійською.';
+        });
+      });
+    }).catch(function (err) { st.textContent = 'ШІ-розбір не вдався: ' + err.message; }).then(function () { btn.disabled = false; });
+  });
+
+  /* ---------- Генератор llms.txt ---------- */
+  var L = { origin: '', sections: [] };
+  var LANG_SEG = /^(uk|ua|en|ru|pl|cs|cz|de|kk|kz|fr|es|it)$/i;
+  function human(seg) {
+    var s = seg;
+    try { s = decodeURIComponent(seg); } catch (e) {}
+    s = s.replace(/\.(html?|php|aspx?)$/i, '').replace(/[-_+]+/g, ' ').trim();
+    return s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
+  }
+  function fetchXml(u) {
+    return viaWorker(u).then(function (d) {
+      if (d.status !== 200 || !d.html) return null;
+      var x = new DOMParser().parseFromString(d.html, 'application/xml');
+      if (x.getElementsByTagName('parsererror').length) return null;
+      return x;
+    }).catch(function () { return null; });
+  }
+  function locs(x, tag) { return [].slice.call(x.getElementsByTagNameNS('*', tag)).map(function (n) { var l = n.getElementsByTagNameNS('*', 'loc')[0]; return l ? clean(l.textContent) : ''; }).filter(Boolean); }
+
+  function findSitemaps(origin) {
+    var st = $('llmsStatus');
+    st.textContent = 'Шукаю sitemap…';
+    return viaWorker(origin + '/').then(function (d) {
+      var r = d.robots && d.robots.status === 200 ? parseRobots(d.robots.text) : { sitemaps: [] };
+      var home = { title: '', desc: '', site: '' };
+      if (d.html) {
+        var doc = new DOMParser().parseFromString(d.html, 'text/html');
+        home.title = clean((doc.querySelector('title') || {}).textContent);
+        var md = doc.querySelector('meta[name="description" i]'); home.desc = md ? clean(md.getAttribute('content')) : '';
+        var sn = doc.querySelector('meta[property="og:site_name"]'); home.site = sn ? clean(sn.getAttribute('content')) : '';
+      }
+      var cands = r.sitemaps.concat([origin + '/sitemap.xml', origin + '/sitemap_index.xml', origin + '/wp-sitemap.xml']).filter(function (v, i, a) { return a.indexOf(v) === i; });
+      return { cands: cands, home: home };
+    });
+  }
+
+  function collectUrls(cands) {
+    var st = $('llmsStatus'), urls = [], tried = 0;
+    function next(i) {
+      if (i >= cands.length || urls.length) return Promise.resolve(urls);
+      tried++;
+      st.textContent = 'Читаю ' + cands[i] + '…';
+      return fetchXml(cands[i]).then(function (x) {
+        if (!x) return next(i + 1);
+        var child = locs(x, 'sitemap');
+        if (child.length) {
+          child.sort(function (a, b) { var s = function (u) { return /(image|video|news|author|tag|attachment)/i.test(u) ? 2 : /(page|post|product|category|cat|service)/i.test(u) ? 0 : 1; }; return s(a) - s(b); });
+          var chain = Promise.resolve();
+          child.slice(0, 6).forEach(function (c) {
+            chain = chain.then(function () {
+              if (urls.length >= 500) return;
+              st.textContent = 'Читаю ' + c + '…';
+              return fetchXml(c).then(function (cx) { if (cx) urls = urls.concat(locs(cx, 'url')); });
+            });
+          });
+          return chain.then(function () { return urls.length ? urls : next(i + 1); });
+        }
+        urls = locs(x, 'url');
+        return urls.length ? urls : next(i + 1);
+      });
+    }
+    return next(0);
+  }
+
+  function groupUrls(urls, origin) {
+    var host = new URL(origin).hostname.replace(/^www\./, '');
+    var seen = {}, list = [];
+    urls.forEach(function (u) {
+      try { var x = new URL(u); if (x.hostname.replace(/^www\./, '') !== host) return; var k = x.origin + x.pathname; if (seen[k]) return; seen[k] = 1; list.push(x); } catch (e) {}
+    });
+    list = list.slice(0, 500);
+    var map = {}, order = [];
+    list.forEach(function (x) {
+      var segs = x.pathname.split('/').filter(Boolean);
+      var key, name;
+      if (!segs.length) { key = '__home'; name = 'Головне'; }
+      else if (LANG_SEG.test(segs[0]) && segs.length > 1) { key = segs[0] + '/' + segs[1]; name = human(segs[1]) + ' (' + segs[0].toUpperCase() + ')'; }
+      else if (segs.length === 1) { key = '__top'; name = 'Основні сторінки'; }
+      else { key = segs[0]; name = human(segs[0]); }
+      if (!map[key]) { map[key] = { name: name, links: [] }; order.push(key); }
+      map[key].links.push({ url: x.toString(), title: segs.length ? human(segs[segs.length - 1]) : '', desc: '', on: false, edited: false, depth: segs.length });
+    });
+    var secs = order.map(function (k) { var s = map[k]; s.key = k; s.links.sort(function (a, b) { return a.depth - b.depth || a.url.length - b.url.length; }); return s; });
+    secs.sort(function (a, b) { return (a.key === '__home' ? -2 : a.key === '__top' ? -1 : 0) - (b.key === '__home' ? -2 : b.key === '__top' ? -1 : 0) || b.links.length - a.links.length; });
+    secs.forEach(function (s, i) {
+      s.optional = i >= 8 && s.key !== '__home';
+      s.links.forEach(function (l, j) { l.on = j < (s.key === '__top' ? 12 : 8); });
+      s.showAll = false;
+    });
+    return secs;
+  }
+
+  function renderSections() {
+    var box = $('sections');
+    if (!L.sections.length) { box.innerHTML = '<p class="note">Знайдіть сторінки в sitemap або додайте розділ вручну.</p>'; updateCount(); renderLlms(); return; }
+    box.innerHTML = L.sections.map(function (s, si) {
+      var shown = s.showAll ? s.links : s.links.slice(0, 12);
+      return '<details class="sec"' + (si < 3 ? ' open' : '') + '><summary><input type="text" data-si="' + si + '" data-f="name" value="' + esc(s.name) + '" aria-label="Назва розділу"><label class="note" style="display:inline-flex;gap:6px;align-items:center"><input type="checkbox" data-si="' + si + '" data-f="optional"' + (s.optional ? ' checked' : '') + ' style="accent-color:var(--accent)"> Optional</label><span class="note cnt">' + s.links.filter(function (l) { return l.on; }).length + '/' + s.links.length + '</span><button type="button" class="icon" data-si="' + si + '" data-act="delsec" aria-label="Видалити розділ">✕</button></summary><div class="lst">' +
+        shown.map(function (l, li) {
+          return '<div class="lk"><input type="checkbox" data-si="' + si + '" data-li="' + li + '" data-f="on"' + (l.on ? ' checked' : '') + ' aria-label="Додати в llms.txt"><input type="text" data-si="' + si + '" data-li="' + li + '" data-f="title" value="' + esc(l.title) + '" placeholder="Назва сторінки" aria-label="Назва сторінки"><input type="text" data-si="' + si + '" data-li="' + li + '" data-f="desc" value="' + esc(l.desc) + '" placeholder="Короткий опис (необовʼязково)" aria-label="Опис сторінки"><small>' + esc(l.url) + '</small></div>';
+        }).join('') +
+        (s.links.length > 12 && !s.showAll ? '<button type="button" class="btn ghost small" data-si="' + si + '" data-act="all">Показати всі ' + s.links.length + '</button>' : '') +
+        '<div class="rowline" style="grid-template-columns:minmax(0,1fr) auto"><input type="url" placeholder="https://… додати сторінку вручну" data-si="' + si + '" data-f="newurl" aria-label="Нова сторінка"><button type="button" class="btn ghost small" data-si="' + si + '" data-act="addurl">Додати</button></div>' +
+        '</div></details>';
+    }).join('');
+    updateCount();
+    renderLlms();
+  }
+  function updateCount() {
+    var on = 0, all = 0;
+    L.sections.forEach(function (s) { s.links.forEach(function (l) { all++; if (l.on) on++; }); });
+    $('lCount').textContent = all ? 'обрано ' + on + ' з ' + all : '';
+    $('lFetch').disabled = !on;
+  }
+
+  $('sections').addEventListener('input', function (e) {
+    var t = e.target, si = t.getAttribute('data-si'), li = t.getAttribute('data-li'), f = t.getAttribute('data-f');
+    if (si == null || !f || f === 'newurl') return;
+    var s = L.sections[+si];
+    if (li == null) { if (f === 'name') s.name = t.value; else if (f === 'optional') s.optional = t.checked; }
+    else { var l = s.links[+li]; if (f === 'on') l.on = t.checked; else { l[f] = t.value; l.edited = true; } }
+    if (f === 'on' || f === 'optional') { var sum = t.closest('details').querySelector('summary .cnt'); if (sum) sum.textContent = s.links.filter(function (x) { return x.on; }).length + '/' + s.links.length; updateCount(); }
+    renderLlms();
+  });
+  $('sections').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-act]');
+    if (!b) return;
+    e.preventDefault();
+    var si = +b.getAttribute('data-si'), act = b.getAttribute('data-act');
+    if (act === 'delsec') { L.sections.splice(si, 1); renderSections(); }
+    else if (act === 'all') { L.sections[si].showAll = true; renderSections(); }
+    else if (act === 'addurl') {
+      var inp = b.parentNode.querySelector('input');
+      var u = normUrl(inp.value);
+      if (!u) return;
+      var path = new URL(u).pathname.split('/').filter(Boolean);
+      L.sections[si].links.unshift({ url: u, title: path.length ? human(path[path.length - 1]) : 'Головна', desc: '', on: true, edited: false, depth: path.length });
+      renderSections();
+    }
+  });
+  $('lAddSec').addEventListener('click', function () { L.sections.push({ name: 'Новий розділ', key: 'm' + Date.now(), links: [], optional: false, showAll: true }); renderSections(); });
+  ['lName', 'lSummary', 'lDetails'].forEach(function (id) { $(id).addEventListener('input', renderLlms); });
+
+  function llmsText() {
+    var out = [];
+    var name = clean($('lName').value) || (L.origin ? new URL(L.origin).hostname : 'Назва сайту');
+    out.push('# ' + name, '');
+    var sum = clean($('lSummary').value);
+    if (sum) out.push('> ' + sum, '');
+    var det = $('lDetails').value.trim();
+    if (det) out.push(det, '');
+    var md = function (s) { return String(s).replace(/[\[\]]/g, ''); };
+    var line = function (l) { return '- [' + md(clean(l.title) || l.url) + '](' + l.url + ')' + (clean(l.desc) ? ': ' + clean(l.desc) : ''); };
+    var main = L.sections.filter(function (s) { return !s.optional; }), opt = L.sections.filter(function (s) { return s.optional; });
+    main.forEach(function (s) {
+      var ls = s.links.filter(function (l) { return l.on; });
+      if (!ls.length) return;
+      out.push('## ' + (clean(s.name) || 'Розділ'), '');
+      ls.forEach(function (l) { out.push(line(l)); });
+      out.push('');
+    });
+    var optLinks = [];
+    opt.forEach(function (s) { s.links.filter(function (l) { return l.on; }).forEach(function (l) { optLinks.push(l); }); });
+    if (optLinks.length) { out.push('## Optional', ''); optLinks.forEach(function (l) { out.push(line(l)); }); out.push(''); }
+    return out.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
+  }
+  function renderLlms() { $('lOut').textContent = llmsText(); }
+
+  $('llmsForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var u = normUrl($('llmsUrl').value);
+    if (!u) { $('llmsStatus').textContent = 'Вставте адресу сайту, наприклад https://example.com/'; return; }
+    var origin = new URL(u).origin;
+    $('llmsUrl').value = origin + '/';
+    L.origin = origin;
+    $('llmsBtn').disabled = true;
+    findSitemaps(origin).then(function (f) {
+      if (!clean($('lName').value)) $('lName').value = f.home.site || f.home.title.split(/\s[|–—-]\s/)[0] || '';
+      if (!clean($('lSummary').value)) $('lSummary').value = f.home.desc || '';
+      return collectUrls(f.cands);
+    }).then(function (urls) {
+      if (!urls.length) { $('llmsStatus').textContent = 'Sitemap не знайдено або він порожній. Додайте розділи й сторінки вручну.'; L.sections = []; renderSections(); return; }
+      L.sections = groupUrls(urls, origin);
+      if (!L.sections.some(function (s) { return s.key === '__home'; })) L.sections.unshift({ name: 'Головне', key: '__home', links: [{ url: origin + '/', title: 'Головна', desc: '', on: true, edited: false, depth: 0 }], optional: false, showAll: true });
+      var n = L.sections.reduce(function (a, s) { return a + s.links.length; }, 0);
+      $('llmsStatus').textContent = 'Знайдено ' + n + ' сторінок у ' + L.sections.length + ' розділах. Автоматично обрано найважливіші, перевірте вибір.';
+      renderSections();
+    }).catch(function (err) { $('llmsStatus').textContent = 'Не вдалося: ' + err.message; }).then(function () { $('llmsBtn').disabled = false; });
+  });
+
+  $('lFetch').addEventListener('click', function () {
+    var todo = [];
+    L.sections.forEach(function (s) { s.links.forEach(function (l) { if (l.on && !l.edited && !l.fetched) todo.push(l); }); });
+    todo = todo.slice(0, 40);
+    var st = $('lFetchStatus'), btn = $('lFetch');
+    if (!todo.length) { st.textContent = 'Усі обрані сторінки вже заповнені.'; return; }
+    btn.disabled = true;
+    var done = 0, idx = 0;
+    function worker() {
+      if (idx >= todo.length) return Promise.resolve();
+      var l = todo[idx++];
+      return viaWorker(l.url).then(function (d) {
+        if (!d.html) return;
+        var doc = new DOMParser().parseFromString(d.html, 'text/html');
+        var h1 = doc.querySelector('h1'), t = clean((doc.querySelector('title') || {}).textContent);
+        var md = doc.querySelector('meta[name="description" i]');
+        var title = h1 && clean(h1.textContent) ? clean(h1.textContent) : t.split(/\s[|–—]\s/)[0];
+        if (title) l.title = title.slice(0, 90);
+        if (md && md.getAttribute('content')) l.desc = clean(md.getAttribute('content')).slice(0, 180);
+        l.fetched = true;
+      }).catch(function () {}).then(function () { done++; st.textContent = 'Заповнено ' + done + ' з ' + todo.length + '…'; return worker(); });
+    }
+    Promise.all([worker(), worker(), worker()]).then(function () { st.textContent = 'Готово: заповнено ' + done + ' сторінок. Відредагуйте описи, якщо треба.'; renderSections(); btn.disabled = false; });
+  });
+
+  $('lCopy').addEventListener('click', function () { copyText(llmsText(), $('lOutStatus')); });
+  $('lDl').addEventListener('click', function () {
+    var blob = new Blob([llmsText()], { type: 'text/plain;charset=utf-8' });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'llms.txt';
+    document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  });
+
+  /* ---------- robots.txt для AI ---------- */
+  var RG = [
+    { role: 'search', title: 'Пошук і відповіді', hint: 'Від них залежить, чи потрапить сайт у відповіді ChatGPT, Claude, Perplexity. Рекомендовано дозволити.', def: 'allow' },
+    { role: 'user', title: 'Запити користувачів', hint: 'Відкривають сторінку, коли людина просить ШІ подивитися посилання. Рекомендовано дозволити.', def: 'allow' },
+    { role: 'train', title: 'Навчання моделей', hint: 'На видимість у відповідях не впливають. Заборона означає, що тексти не підуть у навчальні дані.', def: 'allow' }
+  ];
+  var rMode = { search: 'allow', user: 'allow', train: 'allow' };
+  $('rGroups').innerHTML = RG.map(function (g) {
+    var bots = BOTS.filter(function (b) { return b.role === g.role && b.gen; }).map(function (b) { return b.ua; }).join(', ');
+    return '<div class="grp"><strong>' + g.title + '</strong><span class="note">' + g.hint + '</span><span class="bots">' + bots + '</span><div class="seg" role="radiogroup" aria-label="' + g.title + '">' +
+      '<label><input type="radio" name="rg-' + g.role + '" value="allow"' + (g.def === 'allow' ? ' checked' : '') + '> Дозволити</label>' +
+      '<label><input type="radio" name="rg-' + g.role + '" value="block"' + (g.def === 'block' ? ' checked' : '') + '> Заборонити</label></div></div>';
+  }).join('');
+  $('rGroups').addEventListener('change', function (e) { if (e.target.name && e.target.name.indexOf('rg-') === 0) { rMode[e.target.name.slice(3)] = e.target.value; renderRobots(); } });
+  $('rPaths').addEventListener('input', renderRobots);
+
+  function robotsText() {
+    var paths = $('rPaths').value.split(/\r?\n/).map(clean).filter(function (x) { return x && x.charAt(0) === '/'; });
+    var out = ['# --- AI-краулери (OnePane, ' + new Date().toISOString().slice(0, 10) + ') ---'];
+    ['search', 'user', 'train'].forEach(function (role) {
+      var bots = BOTS.filter(function (b) { return b.role === role && b.gen; });
+      out.push('', '# ' + ROLE[role]);
+      bots.forEach(function (b) { out.push('User-agent: ' + b.ua); });
+      if (rMode[role] === 'block') out.push('Disallow: /');
+      else { out.push('Allow: /'); paths.forEach(function (x) { out.push('Disallow: ' + x); }); }
+    });
+    return out.join('\n') + '\n';
+  }
+  function renderRobots() { $('rOut').textContent = robotsText(); }
+  $('rCopy').addEventListener('click', function () { copyText(robotsText(), $('rStatus')); });
+
+  function prefillFromCheck() {
+    if (!last) return;
+    var origin = new URL(last.data.finalUrl).origin;
+    if (!clean($('llmsUrl').value)) $('llmsUrl').value = origin + '/';
+    var r = last.robots, ex = $('rExisting');
+    if (r.parsed) {
+      if (!clean($('rPaths').value)) {
+        var star = r.parsed.groups.filter(function (g) { return g.agents.indexOf('*') !== -1; });
+        var dis = [];
+        star.forEach(function (g) { g.rules.forEach(function (x) { if (!x.allow && x.path && x.path !== '/' && dis.indexOf(x.path) === -1) dis.push(x.path); }); });
+        $('rPaths').value = dis.join('\n');
+      }
+      var names = BOTS.filter(function (b) { return b.gen; }).map(function (b) { return b.ua.toLowerCase(); });
+      var found = [];
+      r.parsed.groups.forEach(function (g) { g.agents.forEach(function (a) { if (names.indexOf(a) !== -1 && found.indexOf(a) === -1) found.push(a); }); });
+      var tb = last.res.bots.filter(function (x) { return x.bot.role === 'train'; });
+      var tbBlocked = tb.filter(function (x) { return !x.res.allowed; }).length;
+      rMode.train = tbBlocked > tb.length / 2 ? 'block' : 'allow';
+      var radio = document.querySelector('input[name="rg-train"][value="' + rMode.train + '"]'); if (radio) radio.checked = true;
+      ex.innerHTML = found.length ? '<p class="note" style="margin-top:12px;color:var(--warn)">У вашому robots.txt уже є групи для: ' + esc(found.join(', ')) + '. Видаліть їх перед вставкою нового блоку, щоб правила не конфліктували.</p>' : '<p class="note" style="margin-top:12px">У вашому robots.txt окремих груп для AI-ботів немає — блок можна просто додати в кінець.</p>';
+    }
+    renderRobots();
+  }
+
+  renderRobots();
+  renderLlms();
+  window.OnePaneAI = { analyze: analyze, buildChecks: buildChecks, parseRobots: parseRobots, robotsCheck: robotsCheck, groupUrls: groupUrls, llmsText: llmsText, robotsText: robotsText };
+})();
+</script>
+</body>
+</html>
